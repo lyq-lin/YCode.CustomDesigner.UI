@@ -11,9 +11,18 @@
         mc:Ignorable="d">
     <Grid>
         <ycode:YCodeCanvas>
-            <Border Width="130"
-                    Height="30"
-                    Background="Orange" />
+            <ycode:YCodeNode Canvas.Left="100"
+                             Canvas.Top="100">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBox Text="123" />
+
+                </Grid>
+            </ycode:YCodeNode>
         </ycode:YCodeCanvas>
     </Grid>
 </Window>
