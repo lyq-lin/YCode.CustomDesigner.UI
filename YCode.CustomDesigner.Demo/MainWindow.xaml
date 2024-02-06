@@ -11,18 +11,19 @@
         mc:Ignorable="d">
     <Grid>
         <ycode:YCodeCanvas>
-            <ycode:YCodeNode Canvas.Left="100"
-                             Canvas.Top="100">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+            <ycode:YCodeNode x:Name="A"
+                             Canvas.Left="100"
+                             Canvas.Top="100"
+                             Content="AAA" />
 
-                    <TextBox Text="123" />
+            <ycode:YCodeNode x:Name="B"
+                             Canvas.Left="300"
+                             Canvas.Top="200"
+                             Content="BBB" />
 
-                </Grid>
-            </ycode:YCodeNode>
+            <ycode:YCodeLine SourceId="A"
+                             TargetId="B" />
+
         </ycode:YCodeCanvas>
     </Grid>
 </Window>
