@@ -21,8 +21,8 @@
                              Canvas.Top="200"
                              Content="BBB" />
 
-            <ycode:YCodeLine SourceId="A"
-                             TargetId="B" />
+            <!--<ycode:YCodeLine SourceId="A"
+                             TargetId="B" />-->
 
         </ycode:YCodeCanvas>
     </Grid>

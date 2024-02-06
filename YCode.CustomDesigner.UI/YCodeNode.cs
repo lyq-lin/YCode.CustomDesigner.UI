@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace YCode.CustomDesigner.UI
 {
@@ -12,15 +14,31 @@ namespace YCode.CustomDesigner.UI
 				new FrameworkPropertyMetadata(typeof(YCodeNode)));
 		}
 
+		private YCodeCanvas? _canvas;
+
 		public YCodeNode()
 		{
 			this.Lines = new();
 
 			LayoutUpdated += this.OnLayoutUpdated;
+
+			Loaded += this.OnLoaded;
+		}
+
+		private void OnLoaded(object sender, RoutedEventArgs e)
+		{
+			var canvas = this.FindParent<YCodeCanvas>();
+
+			if (canvas != null)
+			{
+				_canvas = canvas;
+			}
 		}
 
 		internal Point Left { get; private set; }
 		internal Point Right { get; private set; }
+
+		internal Point? DragStartPoint { get; set; } = null;
 
 		internal List<YCodeLine> Lines { get; set; }
 
@@ -60,6 +78,45 @@ namespace YCode.CustomDesigner.UI
 			if (isMove)
 			{
 				this.Changed?.Invoke(this, EventArgs.Empty);
+			}
+		}
+
+		protected override void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e)
+		{
+			if (_canvas != null)
+			{
+				this.DragStartPoint = new Point?(e.GetPosition(_canvas));
+
+				e.Handled = true;
+			}
+		}
+
+		protected override void OnPreviewMouseMove(MouseEventArgs e)
+		{
+			if (_canvas != null)
+			{
+				if (e.RightButton != MouseButtonState.Pressed)
+				{
+					this.DragStartPoint = null;
+				}
+
+				if (this.DragStartPoint.HasValue)
+				{
+					//创建装饰器
+					var adornerLayer = AdornerLayer.GetAdornerLayer(_canvas);
+
+					if (adornerLayer != null)
+					{
+						var lineAdorner = new YCodeLineAdorner(_canvas, this);
+
+						if (lineAdorner != null)
+						{
+							adornerLayer.Add(lineAdorner);
+
+							e.Handled |= true;
+						}
+					}
+				}
 			}
 		}
 	}
