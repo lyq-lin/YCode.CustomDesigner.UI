@@ -2,7 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:YCode.CustomDesigner.UI">
 
-
     <Style TargetType="{x:Type local:YCodeNode}">
         <Setter Property="Height" Value="30" />
         <Setter Property="Width" Value="130" />
@@ -24,4 +23,5 @@
             </Setter.Value>
         </Setter>
     </Style>
+
 </ResourceDictionary>
