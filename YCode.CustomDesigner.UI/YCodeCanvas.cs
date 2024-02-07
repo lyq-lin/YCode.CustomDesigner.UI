@@ -14,11 +14,16 @@ namespace YCode.CustomDesigner.UI
 		{
 			if (e.Source is UIElement element)
 			{
-				this.CurrentElement = element;
+				var node = element.FindParent<YCodeNode>();
 
-				_elementPoint = e.GetPosition(element);
+				if (node != null)
+				{
+					this.CurrentElement = node;
 
-				return;
+					_elementPoint = e.GetPosition(node);
+
+					return;
+				}
 			}
 
 			this.CurrentElement = null;

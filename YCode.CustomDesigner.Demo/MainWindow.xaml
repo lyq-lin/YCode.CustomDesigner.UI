@@ -13,13 +13,15 @@
         <ycode:YCodeCanvas>
             <ycode:YCodeNode x:Name="A"
                              Canvas.Left="100"
-                             Canvas.Top="100"
-                             Content="AAA" />
+                             Canvas.Top="100">
+                <TextBlock Text="AAA" />
+            </ycode:YCodeNode>
 
             <ycode:YCodeNode x:Name="B"
                              Canvas.Left="300"
-                             Canvas.Top="200"
-                             Content="BBB" />
+                             Canvas.Top="200">
+                <TextBox Text="BBB" />
+            </ycode:YCodeNode>
 
             <!--<ycode:YCodeLine SourceId="A"
                              TargetId="B" />-->
