@@ -12,6 +12,10 @@ namespace YCode.CustomDesigner.UI
 			DefaultStyleKeyProperty.OverrideMetadata(
 				typeof(YCodeNode),
 				new FrameworkPropertyMetadata(typeof(YCodeNode)));
+
+			CommandManager.RegisterClassCommandBinding(
+				typeof(YCodeNode),
+				new CommandBinding(DeletedCommand, OnNodeDeleted));
 		}
 
 		private YCodeCanvas? _canvas;
@@ -25,6 +29,17 @@ namespace YCode.CustomDesigner.UI
 			Loaded += this.OnLoaded;
 		}
 
+		internal Point Left { get; private set; }
+		internal Point Right { get; private set; }
+
+		internal Point? DragStartPoint { get; set; } = null;
+
+		internal List<YCodeLine> Lines { get; set; }
+
+		internal event EventHandler? Changed;
+
+		public static ICommand DeletedCommand = new RoutedCommand();
+
 		private void OnLoaded(object sender, RoutedEventArgs e)
 		{
 			var canvas = this.FindParent<YCodeCanvas>();
@@ -34,15 +49,6 @@ namespace YCode.CustomDesigner.UI
 				_canvas = canvas;
 			}
 		}
-
-		internal Point Left { get; private set; }
-		internal Point Right { get; private set; }
-
-		internal Point? DragStartPoint { get; set; } = null;
-
-		internal List<YCodeLine> Lines { get; set; }
-
-		internal event EventHandler? Changed;
 
 		private void OnLayoutUpdated(object? sender, EventArgs e)
 		{
@@ -116,6 +122,19 @@ namespace YCode.CustomDesigner.UI
 							e.Handled |= true;
 						}
 					}
+				}
+			}
+		}
+
+		private static void OnNodeDeleted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (sender is YCodeNode node)
+			{
+				var canvas = node.FindParent<YCodeCanvas>();
+
+				if (canvas != null)
+				{
+					canvas.OnNodeDeleted(node);
 				}
 			}
 		}

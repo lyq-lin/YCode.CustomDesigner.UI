@@ -48,5 +48,13 @@ namespace YCode.CustomDesigner.UI
 				YCodeCanvas.SetTop(this.CurrentElement, top);
 			}
 		}
+
+		internal void OnNodeDeleted(YCodeNode removeItem)
+		{
+			if (removeItem != null)
+			{
+				this.Children.Remove(removeItem);
+			}
+		}
 	}
 }
