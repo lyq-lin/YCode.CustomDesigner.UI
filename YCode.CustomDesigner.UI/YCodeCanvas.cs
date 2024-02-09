@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using YCode.CustomDesigner.UI.Events;
 
 namespace YCode.CustomDesigner.UI
 {
@@ -9,6 +10,9 @@ namespace YCode.CustomDesigner.UI
 		private Point? _elementPoint;
 
 		internal UIElement? CurrentElement { get; set; }
+
+		public event EventHandler<YCodeNodeDeletedEventArgs>? ElementDeleted;
+		public event EventHandler<YCodeNodeDeletingEventArgs>? ElementDeleting;
 
 		protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
 		{
@@ -53,7 +57,16 @@ namespace YCode.CustomDesigner.UI
 		{
 			if (removeItem != null)
 			{
-				this.Children.Remove(removeItem);
+				var deleting = new YCodeNodeDeletingEventArgs(removeItem);
+
+				this.ElementDeleting?.Invoke(this, deleting);
+
+				if (!deleting.Cancel)
+				{
+					this.Children.Remove(removeItem);
+
+					this.ElementDeleted?.Invoke(this, new YCodeNodeDeletedEventArgs(removeItem));
+				}
 			}
 		}
 	}

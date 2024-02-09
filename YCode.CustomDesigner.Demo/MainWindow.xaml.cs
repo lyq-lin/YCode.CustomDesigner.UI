@@ -1,13 +1,5 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using YCode.CustomDesigner.UI;
 
 namespace YCode.CustomDesigner.Demo
 {
@@ -19,6 +11,26 @@ namespace YCode.CustomDesigner.Demo
 		public MainWindow()
 		{
 			InitializeComponent();
+		}
+
+		private void OnElementDeleted(object sender, UI.Events.YCodeNodeDeletedEventArgs e)
+		{
+			MessageBox.Show("该节点已删除!");
+		}
+
+		private void OnElementDeleting(object sender, UI.Events.YCodeNodeDeletingEventArgs e)
+		{
+			var node = e.RemoveItem as YCodeNode;
+
+			var result = MessageBox.Show(
+				  $"你确定删除该节点:{node.Name}吗?",
+					"删除操作",
+					MessageBoxButton.YesNo);
+
+			if (result == MessageBoxResult.No)
+			{
+				e.Cancel = true;
+			}
 		}
 	}
 }

@@ -10,7 +10,8 @@
         Height="450"
         mc:Ignorable="d">
     <Grid>
-        <ycode:YCodeCanvas>
+        <ycode:YCodeCanvas ElementDeleted="OnElementDeleted"
+                           ElementDeleting="OnElementDeleting">
             <ycode:YCodeNode x:Name="A"
                              Canvas.Left="100"
                              Canvas.Top="100">
