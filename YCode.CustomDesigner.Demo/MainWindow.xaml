@@ -20,7 +20,7 @@
             <ycode:YCodeNode x:Name="B"
                              Canvas.Left="300"
                              Canvas.Top="200">
-                <TextBox Text="BBB" />
+                <TextBlock Text="BBB" />
             </ycode:YCodeNode>
 
             <!--<ycode:YCodeLine SourceId="A"
