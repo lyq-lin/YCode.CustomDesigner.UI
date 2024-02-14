@@ -8,15 +8,14 @@
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate>
+                <ControlTemplate TargetType="Button">
                     <Border Name="border"
                             Width="14"
                             Height="14"
                             CornerRadius="10">
 
-                        <ContentControl HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Content="{Binding Content, RelativeSource={RelativeSource AncestorType=Button}}" />
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
 
                     </Border>
 
