@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 
@@ -27,7 +28,14 @@ namespace YCode.CustomDesigner.UI
 			LayoutUpdated += this.OnLayoutUpdated;
 
 			Loaded += this.OnLoaded;
+
+			this.SetBinding(YCodeNode.XProperty, new Binding("(Canvas.Left)") { Source = this });
+
+			this.SetBinding(YCodeNode.YProperty, new Binding("(Canvas.Top)") { Source = this });
 		}
+
+		public Point Position => new(this.X, this.Y);
+		public Vector Velocity { get; set; }
 
 		internal Point Left { get; private set; }
 		internal Point Right { get; private set; }
@@ -39,6 +47,29 @@ namespace YCode.CustomDesigner.UI
 		internal event EventHandler? Changed;
 
 		public static ICommand DeletedCommand = new RoutedCommand();
+
+		#region Denpendency Property
+
+		public int X
+		{
+			get { return (int)GetValue(XProperty); }
+			set { SetValue(XProperty, value); }
+		}
+
+		public static readonly DependencyProperty XProperty =
+			DependencyProperty.Register("X", typeof(int), typeof(YCodeNode));
+
+		public int Y
+		{
+			get { return (int)GetValue(YProperty); }
+			set { SetValue(YProperty, value); }
+		}
+
+		public static readonly DependencyProperty YProperty =
+			DependencyProperty.Register("Y", typeof(int), typeof(YCodeNode));
+
+		#endregion
+
 
 		private void OnLoaded(object sender, RoutedEventArgs e)
 		{

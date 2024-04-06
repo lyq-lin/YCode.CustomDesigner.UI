@@ -10,7 +10,21 @@
         Height="450"
         mc:Ignorable="d">
     <Grid>
-        <ycode:YCodeCanvas Background="Transparent"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <Button HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Click="OnSortClick"
+                    Content="一键排序" />
+        </StackPanel>
+
+        <ycode:YCodeCanvas x:Name="flow"
+                           Grid.Row="1"
+                           Background="Transparent"
                            ElementDeleted="OnElementDeleted"
                            ElementDeleting="OnElementDeleting">
             <ycode:YCodeNode x:Name="A"
@@ -25,8 +39,47 @@
                 <TextBlock Text="BBB" />
             </ycode:YCodeNode>
 
-            <!--<ycode:YCodeLine SourceId="A"
-                             TargetId="B" />-->
+            <ycode:YCodeNode x:Name="D"
+                             Canvas.Left="100"
+                             Canvas.Top="200">
+                <TextBlock Text="DDD" />
+            </ycode:YCodeNode>
+
+            <ycode:YCodeNode x:Name="C"
+                             Canvas.Left="300"
+                             Canvas.Top="100">
+                <TextBlock Text="CCC" />
+            </ycode:YCodeNode>
+
+            <ycode:YCodeNode x:Name="E"
+                             Canvas.Left="100"
+                             Canvas.Top="300">
+                <TextBlock Text="EEE" />
+            </ycode:YCodeNode>
+
+            <ycode:YCodeNode x:Name="F"
+                             Canvas.Left="300"
+                             Canvas.Top="300">
+                <TextBlock Text="FFF" />
+            </ycode:YCodeNode>
+
+            <ycode:YCodeNode x:Name="G"
+                             Canvas.Left="500"
+                             Canvas.Top="100">
+                <TextBlock Text="GGG" />
+            </ycode:YCodeNode>
+
+            <ycode:YCodeLine SourceId="A"
+                             TargetId="B" />
+
+            <ycode:YCodeLine SourceId="E"
+                             TargetId="F" />
+
+            <ycode:YCodeLine SourceId="A"
+                             TargetId="C" />
+
+            <ycode:YCodeLine SourceId="B"
+                             TargetId="D" />
 
         </ycode:YCodeCanvas>
     </Grid>

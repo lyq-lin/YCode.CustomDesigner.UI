@@ -8,29 +8,46 @@ namespace YCode.CustomDesigner.UI
 	public class YCodeCanvas : Canvas
 	{
 		private Point? _elementPoint;
+		private YCodeSortManager _sortManager;
+
 
 		public YCodeCanvas()
 		{
-			this.OnLoadMenu();
+			_sortManager = new YCodeSortManager(this);
 		}
 
 		internal UIElement? CurrentElement { get; set; }
 
+		#region Dependency Property
+
+		public bool IsSort
+		{
+			get { return (bool)GetValue(IsSortProperty); }
+			set { SetValue(IsSortProperty, value); }
+		}
+
+		public static readonly DependencyProperty IsSortProperty =
+			DependencyProperty.Register("IsSort", typeof(bool), typeof(YCodeCanvas), new PropertyMetadata(false));
+
+		#endregion
+
 		public event EventHandler<YCodeNodeDeletedEventArgs>? ElementDeleted;
 		public event EventHandler<YCodeNodeDeletingEventArgs>? ElementDeleting;
 
-		#region Dependency Property
-
-		public ICommand MenuDeletedCommand
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
-			get { return (ICommand)GetValue(MenuDeletedCommandProperty); }
-			set { SetValue(MenuDeletedCommandProperty, value); }
+			base.OnPropertyChanged(e);
+
+			if (IsSortProperty == e.Property && e.NewValue is bool flag)
+			{
+				if (flag)
+				{
+					_sortManager.Layout(1);
+
+					this.IsSort = false;
+				}
+			}
 		}
-
-		public static readonly DependencyProperty MenuDeletedCommandProperty =
-			DependencyProperty.Register("MenuDeletedCommand", typeof(ICommand), typeof(YCodeCanvas));
-
-		#endregion
 
 		protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
 		{
@@ -88,21 +105,6 @@ namespace YCode.CustomDesigner.UI
 			}
 		}
 
-		internal void OnLoadMenu()
-		{
-			this.ContextMenu = new ContextMenu();
 
-			var menuItem1 = new MenuItem
-			{
-				Header = "选项1"
-			};
-			this.ContextMenu.Items.Add(menuItem1);
-
-			var menuItem2 = new MenuItem
-			{
-				Header = "选项2"
-			};
-			this.ContextMenu.Items.Add(menuItem2);
-		}
 	}
 }

@@ -32,5 +32,10 @@ namespace YCode.CustomDesigner.Demo
 				e.Cancel = true;
 			}
 		}
+
+		private void OnSortClick(object sender, RoutedEventArgs e)
+		{
+			flow.IsSort = true;
+		}
 	}
 }
