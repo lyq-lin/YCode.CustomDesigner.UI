@@ -37,5 +37,12 @@ namespace YCode.CustomDesigner.Demo
 		{
 			flow.IsSort = true;
 		}
+
+		private void OnProcessClick(object sender, RoutedEventArgs e)
+		{
+			var node = flow.Children.OfType<YCodeLogicNode>().FirstOrDefault();
+
+			node?.Process();
+		}
 	}
 }

@@ -42,8 +42,6 @@ namespace YCode.CustomDesigner.UI
 			{
 				if (flag)
 				{
-					_sortManager.Layout(1);
-
 					this.IsSort = false;
 				}
 			}

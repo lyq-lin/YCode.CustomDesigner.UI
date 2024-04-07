@@ -15,11 +15,18 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel>
-            <Button HorizontalAlignment="Center"
+        <StackPanel Orientation="Horizontal">
+            <Button Margin="8,0,0,0"
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Click="OnSortClick"
                     Content="一键排序" />
+
+            <Button Margin="8,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Click="OnProcessClick"
+                    Content="运行流程" />
         </StackPanel>
 
         <ycode:YCodeCanvas x:Name="flow"
@@ -51,17 +58,17 @@
                 <TextBlock Text="CCC" />
             </ycode:YCodeNode>
 
-            <ycode:YCodeNode x:Name="E"
-                             Canvas.Left="100"
-                             Canvas.Top="300">
+            <ycode:YCodeLogicNode x:Name="E"
+                                  Canvas.Left="100"
+                                  Canvas.Top="300">
                 <TextBlock Text="EEE" />
-            </ycode:YCodeNode>
+            </ycode:YCodeLogicNode>
 
-            <ycode:YCodeNode x:Name="F"
-                             Canvas.Left="300"
-                             Canvas.Top="300">
+            <ycode:YCodeLogicNode x:Name="F"
+                                  Canvas.Left="300"
+                                  Canvas.Top="300">
                 <TextBlock Text="FFF" />
-            </ycode:YCodeNode>
+            </ycode:YCodeLogicNode>
 
             <ycode:YCodeNode x:Name="G"
                              Canvas.Left="500"
