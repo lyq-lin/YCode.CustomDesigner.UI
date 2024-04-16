@@ -132,7 +132,11 @@ namespace YCode.CustomDesigner.UI
 			{
 				var canvas = node.FindParent<YCodeCanvas>();
 
-				canvas?.OnNodeDeleted(node);
+				if (canvas != null)
+				{
+    Debug.WriteLine("Hello World");
+					canvas.OnNodeDeleted(node);
+				}
 			}
 		}
 	}
