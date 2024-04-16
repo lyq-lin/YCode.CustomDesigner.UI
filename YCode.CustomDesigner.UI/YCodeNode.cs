@@ -134,6 +134,7 @@ namespace YCode.CustomDesigner.UI
 
 				if (canvas != null)
 				{
+    Debug.WriteLine("Hello World");
 					canvas.OnNodeDeleted(node);
 				}
 			}
