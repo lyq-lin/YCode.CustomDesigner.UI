@@ -46,6 +46,7 @@ namespace YCode.CustomDesigner.UI
 
 			if (canvas != null)
 			{
+   Console.WriteLine("Test2");
 				YCodeCanvas = canvas;
 			}
 		}
@@ -131,6 +132,8 @@ namespace YCode.CustomDesigner.UI
 			if (sender is YCodeNode node)
 			{
 				var canvas = node.FindParent<YCodeCanvas>();
+
+Console.WriteLine("Test1");
 
 				canvas?.OnNodeDeleted(node);
 			}
