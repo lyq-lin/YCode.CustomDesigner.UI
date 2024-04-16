@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -132,10 +133,9 @@ namespace YCode.CustomDesigner.UI
 			{
 				var canvas = node.FindParent<YCodeCanvas>();
 
-				if (canvas != null)
-				{
-					canvas.OnNodeDeleted(node);
-				}
+				Debug.WriteLine("Test Local");
+
+				canvas?.OnNodeDeleted(node);
 			}
 		}
 	}
