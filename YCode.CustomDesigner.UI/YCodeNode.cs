@@ -132,6 +132,7 @@ namespace YCode.CustomDesigner.UI
 			{
 				var canvas = node.FindParent<YCodeCanvas>();
 
+				Console.WriteLine("Test Remote");
 				canvas?.OnNodeDeleted(node);
 			}
 		}
