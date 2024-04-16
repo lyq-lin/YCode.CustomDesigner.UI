@@ -25,7 +25,7 @@ namespace YCode.CustomDesigner.UI
 
 			LayoutUpdated += this.OnLayoutUpdated;
 
-			Console.WriteLine("Test123");
+			Console.WriteLine("Test1");
 
 			Loaded += this.OnLoaded;
 		}
@@ -134,7 +134,7 @@ namespace YCode.CustomDesigner.UI
 			{
 				var canvas = node.FindParent<YCodeCanvas>();
 
-				Console.WriteLine("Test12");
+				Console.WriteLine("Test1234");
 
 				canvas?.OnNodeDeleted(node);
 			}
