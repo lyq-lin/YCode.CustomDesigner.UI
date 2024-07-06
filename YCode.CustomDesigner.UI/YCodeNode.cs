@@ -18,7 +18,6 @@ namespace YCode.CustomDesigner.UI
 				new CommandBinding(DeletedCommand, OnNodeDeleted));
 		}
 
-
 		public YCodeNode()
 		{
 			this.Lines = new();

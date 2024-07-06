@@ -11,6 +11,8 @@ namespace YCode.CustomDesigner.Demo
 		public MainWindow()
 		{
 			InitializeComponent();
+
+			source.ItemsSource = new List<string>() { "123", "456", "789" };
 		}
 
 		private void OnElementDeleted(object sender, UI.Events.YCodeNodeDeletedEventArgs e)

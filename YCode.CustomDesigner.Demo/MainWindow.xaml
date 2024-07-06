@@ -73,7 +73,23 @@
             <ycode:YCodeNode x:Name="G"
                              Canvas.Left="500"
                              Canvas.Top="100">
-                <TextBlock Text="GGG" />
+                <ItemsControl x:Name="source">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Center"
+                                           Text="{Binding .}" />
+
+                                <Border Width="5"
+                                        Height="5"
+                                        Margin="-1,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        Background="CadetBlue"
+                                        CornerRadius="10" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </ycode:YCodeNode>
 
             <ycode:YCodeLine SourceId="A"
