@@ -10,6 +10,8 @@ namespace YCode.CustomDesigner.UI
 		private readonly PathFigure _figure;
 		private readonly BezierSegment _segment;
 
+		private bool _isLoaded;
+
 		public YCodeLine()
 		{
 			_figure = new PathFigure();
@@ -54,37 +56,48 @@ namespace YCode.CustomDesigner.UI
 
 		private void OnLoaded(object sender, RoutedEventArgs e)
 		{
-			var canvas = this.FindParent<YCodeCanvas>();
-
-			if (canvas != null)
+			if (!_isLoaded)
 			{
-				_canvas = canvas;
+				var canvas = this.FindParent<YCodeCanvas>();
 
-				if (this.Source == null || this.Target == null)
+				if (canvas != null)
 				{
-					var sObj = _canvas.FindName(this.SourceId);
+					_canvas = canvas;
 
-					var tObj = _canvas.FindName(this.TargetId);
-
-					if (sObj is YCodeNode source && tObj is YCodeNode target)
+					if (this.Source == null || this.Target == null)
 					{
-						this.Source = source;
-						this.Target = target;
+						var nodes = _canvas.Children.OfType<YCodeNode>();
+
+						var sObj = nodes.FirstOrDefault(x => this.SourceId.Equals(x.NodeId));
+
+						var tObj = nodes.FirstOrDefault(x => this.TargetId.Equals(x.NodeId));
+
+						if (sObj != null)
+						{
+							this.Source = sObj;
+						}
+
+						if (tObj != null)
+						{
+							this.Target = tObj;
+						}
 					}
+
+					if (this.Source != null && this.Target != null)
+					{
+						this.Source.Changed += this.OnChanged;
+
+						this.Target.Changed += this.OnChanged;
+
+						this.Source.Lines.Add(this);
+
+						this.Target.Lines.Add(this);
+					}
+
+					this.OnChanged(this, EventArgs.Empty);
 				}
 
-				if (this.Source != null && this.Target != null)
-				{
-					this.Source.Changed += this.OnChanged;
-
-					this.Target.Changed += this.OnChanged;
-
-					this.Source.Lines.Add(this);
-
-					this.Target.Lines.Add(this);
-				}
-
-				this.OnChanged(this, EventArgs.Empty);
+				_isLoaded = true;
 			}
 		}
 

@@ -28,6 +28,7 @@ namespace YCode.CustomDesigner.UI
 
 			Loaded += this.OnLoaded;
 		}
+
 		internal YCodeCanvas? YCodeCanvas { get; set; }
 
 		internal Point Left { get; private set; }
@@ -40,6 +41,19 @@ namespace YCode.CustomDesigner.UI
 		internal event EventHandler? Changed;
 
 		public static ICommand DeletedCommand = new RoutedCommand();
+
+		#region Dependency Property
+
+		public string NodeId
+		{
+			get { return (string)GetValue(NodeIdProperty); }
+			set { SetValue(NodeIdProperty, value); }
+		}
+
+		public static readonly DependencyProperty NodeIdProperty =
+			DependencyProperty.Register("NodeId", typeof(string), typeof(YCodeNode), new PropertyMetadata(String.Empty));
+
+		#endregion
 
 		private void OnLoaded(object sender, RoutedEventArgs e)
 		{
@@ -132,8 +146,6 @@ namespace YCode.CustomDesigner.UI
 			if (sender is YCodeNode node)
 			{
 				var canvas = node.FindParent<YCodeCanvas>();
-
-				Console.WriteLine("Test1234");
 
 				canvas?.OnNodeDeleted(node);
 			}
