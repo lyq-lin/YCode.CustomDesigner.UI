@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace YCode.CustomDesigner.UI.ViewModel
+namespace YCode.CustomDesigner.UI
 {
 	public class YCodeNotifyPropertyChanged : INotifyPropertyChanged
 	{

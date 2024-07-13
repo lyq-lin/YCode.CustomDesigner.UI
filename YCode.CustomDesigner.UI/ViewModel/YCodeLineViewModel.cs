@@ -1,6 +1,4 @@
-﻿using YCode.CustomDesigner.UI.ViewModel;
-
-namespace YCode.CustomDesigner.UI
+﻿namespace YCode.CustomDesigner.UI
 {
 	public class YCodeLineViewModel : YCodeNotifyPropertyChanged
 	{

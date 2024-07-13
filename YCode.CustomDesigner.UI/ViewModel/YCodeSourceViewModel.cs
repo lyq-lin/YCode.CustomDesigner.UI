@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using YCode.CustomDesigner.UI.ViewModel;
 
 namespace YCode.CustomDesigner.UI
 {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 
-namespace YCode.CustomDesigner.UI.Events
+namespace YCode.CustomDesigner.UI
 {
 	public class YCodeNodeDeletingEventArgs : CancelEventArgs
 	{
