@@ -1,5 +1,4 @@
 ﻿using YCode.CustomDesigner.UI;
-using YCode.CustomDesigner.UI.ViewModel;
 
 namespace YCode.CustomDesigner.Demo
 {
@@ -11,19 +10,27 @@ namespace YCode.CustomDesigner.Demo
 		{
 			_source = new YCodeSourceViewModel();
 
-			_source.Nodes.Add(new YCodeNodeViewModel()
+			_source.Nodes.Add(new YCodeColumnNodeViewModel<ColumnField>()
 			{
 				Id = "A",
 				Name = "AAA",
+				Columns = [
+					new ColumnField() { Id = "Column1", Name = "Column1", Description = "This is Column1" },
+					new ColumnField() { Id = "Column2", Name = "Column2", Description = "This is Column2" },
+				],
 				X = 100,
 				Y = 100,
 			});
 
-			_source.Nodes.Add(new YCodeNodeViewModel()
+			_source.Nodes.Add(new YCodeColumnNodeViewModel<ColumnField>()
 			{
 				Id = "B",
 				Name = "BBB",
-				X = 300,
+				Columns = [
+					new ColumnField() { Id = "Column1", Name = "Column1", Description = "This is Column1" },
+					new ColumnField() { Id = "Column2", Name = "Column2", Description = "This is Column2" },
+				],
+				X = 400,
 				Y = 200,
 			});
 

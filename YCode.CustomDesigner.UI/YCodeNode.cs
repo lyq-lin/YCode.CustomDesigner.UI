@@ -20,7 +20,9 @@ namespace YCode.CustomDesigner.UI
 
 		public YCodeNode()
 		{
-			this.Lines = new();
+			this.Lines = [];
+
+			YCodeCanvas.SetZIndex(this, 15);
 
 			LayoutUpdated += this.OnLayoutUpdated;
 

@@ -24,6 +24,8 @@ namespace YCode.CustomDesigner.UI
 
 			this.Stroke = Brushes.Gray;
 
+			YCodeCanvas.SetZIndex(this, 10);
+
 			Loaded += this.OnLoaded;
 		}
 

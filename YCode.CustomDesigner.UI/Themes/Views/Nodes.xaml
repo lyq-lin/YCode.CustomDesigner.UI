@@ -34,7 +34,7 @@
 
     <Style TargetType="{x:Type local:YCodeNode}">
         <Setter Property="MinHeight" Value="30" />
-        <Setter Property="Width" Value="130" />
+        <Setter Property="MinWidth" Value="130" />
         <Setter Property="Background" Value="CadetBlue" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="1" />
@@ -42,11 +42,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:YCodeNode}">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.8*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
                         <Border x:Name="edge"
                                 Grid.ColumnSpan="2"
                                 Background="{TemplateBinding Background}"
@@ -56,9 +51,9 @@
 
                         <ContentPresenter />
 
-                        <StackPanel Grid.Column="1"
-                                    Margin="0,2,2,0">
-
+                        <StackPanel Margin="0,2,2,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top">
                             <Button x:Name="deleted"
                                     Background="Transparent"
                                     BorderBrush="Gray"
@@ -81,10 +76,35 @@
                                           Y2="6" />
                                 </Grid>
                             </Button>
-
                         </StackPanel>
                     </Grid>
                 </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource {x:Type local:YCodeNode}}"
+           TargetType="{x:Type local:YCodeColumnNode}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate DataType="{x:Type local:YCodeColumnNodeViewModel`1}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Margin="8"
+                                   FontSize="18"
+                                   Text="{Binding Name}"
+                                   TextTrimming="CharacterEllipsis"
+                                   ToolTip="{Binding Name}" />
+
+                        <local:YCodeColumnPanel x:Name="PART_ColumnPanel"
+                                                Grid.Row="1"
+                                                ItemsSource="{Binding Columns}" />
+                    </Grid>
+                </DataTemplate>
             </Setter.Value>
         </Setter>
     </Style>

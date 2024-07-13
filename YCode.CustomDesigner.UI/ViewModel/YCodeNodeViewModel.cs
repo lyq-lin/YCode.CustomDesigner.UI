@@ -31,4 +31,15 @@
 			set { this.OnPropertyChanged(ref _id, value); }
 		}
 	}
+
+	public class YCodeColumnNodeViewModel<TColumn> : YCodeNodeViewModel where TColumn : IYCodeColumn
+	{
+		private ICollection<TColumn> _columns = default!;
+
+		public ICollection<TColumn> Columns
+		{
+			get { return _columns; }
+			set { this.OnPropertyChanged(ref _columns, value); }
+		}
+	}
 }

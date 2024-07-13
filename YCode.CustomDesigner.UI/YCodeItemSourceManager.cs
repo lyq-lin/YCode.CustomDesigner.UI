@@ -1,4 +1,6 @@
-﻿namespace YCode.CustomDesigner.UI
+﻿using System.Collections.Specialized;
+
+namespace YCode.CustomDesigner.UI
 {
 	internal class YCodeItemSourceManager(YCodeCanvas canvas)
 	{
@@ -24,11 +26,11 @@
 			}
 		}
 
-		private void OnLinesCollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+		private void OnLinesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
 		{
 			switch (e.Action)
 			{
-				case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+				case NotifyCollectionChangedAction.Add:
 					{
 						if (e.NewItems != null)
 						{
@@ -42,7 +44,7 @@
 						}
 					}
 					break;
-				case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+				case NotifyCollectionChangedAction.Remove:
 					{
 						if (e.OldItems != null)
 						{
@@ -64,18 +66,18 @@
 						}
 					}
 					break;
-				case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
+				case NotifyCollectionChangedAction.Reset:
 					{
 					}
 					break;
 			}
 		}
 
-		private void OnNodesCollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+		private void OnNodesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
 		{
 			switch (e.Action)
 			{
-				case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+				case NotifyCollectionChangedAction.Add:
 					{
 						if (e.NewItems != null)
 						{
@@ -89,7 +91,7 @@
 						}
 					}
 					break;
-				case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+				case NotifyCollectionChangedAction.Remove:
 					{
 						if (e.OldItems != null)
 						{
@@ -109,7 +111,7 @@
 						}
 					}
 					break;
-				case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
+				case NotifyCollectionChangedAction.Reset:
 					{
 					}
 					break;
@@ -124,7 +126,22 @@
 				DataContext = node
 			};
 
-			yNode.SetBinding(YCodeNode.ContentProperty, nameof(node.Name));
+			if (node.GetType() is Type type &&
+				type.IsGenericType &&
+				type.GetGenericTypeDefinition() == typeof(YCodeColumnNodeViewModel<>))
+			{
+				yNode = new YCodeColumnNode
+				{
+					NodeId = node.Id,
+					DataContext = node,
+					Content = node
+				};
+			}
+			else
+			{
+				yNode.SetBinding(YCodeNode.ContentProperty, nameof(node.Name));
+			}
+
 			yNode.SetBinding(YCodeCanvas.LeftProperty, nameof(node.X));
 			yNode.SetBinding(YCodeCanvas.TopProperty, nameof(node.Y));
 
