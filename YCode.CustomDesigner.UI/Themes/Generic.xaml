@@ -5,13 +5,15 @@
     <Style x:Key="YCodeNodeButton"
            TargetType="{x:Type Button}">
         <Setter Property="Margin" Value="2" />
-        <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border Name="border"
                             Width="14"
                             Height="14"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="10">
 
                         <ContentPresenter HorizontalAlignment="Center"
@@ -58,6 +60,9 @@
                                     Margin="0,2,2,0">
 
                             <Button x:Name="deleted"
+                                    Background="Transparent"
+                                    BorderBrush="Gray"
+                                    BorderThickness="1"
                                     Command="{x:Static local:YCodeNode.DeletedCommand}"
                                     Style="{StaticResource YCodeNodeButton}">
                                 <Grid>

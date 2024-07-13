@@ -32,6 +32,13 @@
                     VerticalAlignment="Center"
                     Click="OnProcessClick"
                     Content="运行流程" />
+
+            <Button Margin="8,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Click="OnPerformanceTestClick"
+                    Content="性能测试" />
+
         </StackPanel>
 
         <ycode:YCodeCanvas x:Name="flow"

@@ -44,5 +44,31 @@ namespace YCode.CustomDesigner.Demo
 
 			node?.Process();
 		}
+
+		private void OnPerformanceTestClick(object sender, RoutedEventArgs e)
+		{
+			if (this.DataContext is MainViewModel main)
+			{
+				for (int i = 1; i <= 1000; i++)
+				{
+					main.Source.Nodes.Add(new()
+					{
+						Id = $"Node{i}",
+						Name = $"TestNode{i}",
+						X = Random.Shared.Next(0, 2000),
+						Y = Random.Shared.Next(0, 1500)
+					});
+
+					if (i > 1)
+					{
+						main.Source.Lines.Add(new()
+						{
+							SourceId = $"Node{i - 1}",
+							TargetId = $"Node{Random.Shared.Next(1, i)}"
+						});
+					}
+				}
+			}
+		}
 	}
 }
