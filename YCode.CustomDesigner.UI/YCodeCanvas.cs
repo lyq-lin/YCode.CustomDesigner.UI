@@ -12,8 +12,6 @@ namespace YCode.CustomDesigner.UI
 
 		public YCodeCanvas()
 		{
-			//_sortManager = new YCodeSortManager(this);
-
 			_itemSourceManager = new YCodeItemSourceManager(this);
 		}
 
@@ -27,14 +25,14 @@ namespace YCode.CustomDesigner.UI
 			set { SetValue(IsSortProperty, value); }
 		}
 
-		public YCodeSource Source
+		public YCodeSourceViewModel Source
 		{
-			get { return (YCodeSource)GetValue(SourceProperty); }
+			get { return (YCodeSourceViewModel)GetValue(SourceProperty); }
 			set { SetValue(SourceProperty, value); }
 		}
 
 		public static readonly DependencyProperty SourceProperty =
-			DependencyProperty.Register("Source", typeof(YCodeSource), typeof(YCodeCanvas), new PropertyMetadata(0));
+			DependencyProperty.Register("Source", typeof(YCodeSourceViewModel), typeof(YCodeCanvas));
 
 		public static readonly DependencyProperty IsSortProperty =
 			DependencyProperty.Register("IsSort", typeof(bool), typeof(YCodeCanvas), new PropertyMetadata(false));

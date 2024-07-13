@@ -22,7 +22,7 @@ namespace YCode.CustomDesigner.UI
 
 			this.StrokeThickness = 2;
 
-			this.Stroke = Brushes.Purple;
+			this.Stroke = Brushes.Gray;
 
 			Loaded += this.OnLoaded;
 		}

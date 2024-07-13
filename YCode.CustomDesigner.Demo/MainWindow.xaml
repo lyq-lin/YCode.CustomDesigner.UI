@@ -9,10 +9,15 @@
         Width="800"
         Height="450"
         mc:Ignorable="d">
+
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal">
@@ -31,79 +36,8 @@
 
         <ycode:YCodeCanvas x:Name="flow"
                            Grid.Row="1"
-                           Background="Transparent"
                            ElementDeleted="OnElementDeleted"
-                           ElementDeleting="OnElementDeleting">
-            <ycode:YCodeNode x:Name="A"
-                             Canvas.Left="100"
-                             Canvas.Top="100">
-                <TextBlock Text="AAA" />
-            </ycode:YCodeNode>
-
-            <ycode:YCodeNode x:Name="B"
-                             Canvas.Left="300"
-                             Canvas.Top="200">
-                <TextBlock Text="BBB" />
-            </ycode:YCodeNode>
-
-            <ycode:YCodeNode x:Name="D"
-                             Canvas.Left="100"
-                             Canvas.Top="200">
-                <TextBlock Text="DDD" />
-            </ycode:YCodeNode>
-
-            <ycode:YCodeNode x:Name="C"
-                             Canvas.Left="300"
-                             Canvas.Top="100">
-                <TextBlock Text="CCC" />
-            </ycode:YCodeNode>
-
-            <ycode:YCodeLogicNode x:Name="E"
-                                  Canvas.Left="100"
-                                  Canvas.Top="300">
-                <TextBlock Text="EEE" />
-            </ycode:YCodeLogicNode>
-
-            <ycode:YCodeLogicNode x:Name="F"
-                                  Canvas.Left="300"
-                                  Canvas.Top="300">
-                <TextBlock Text="FFF" />
-            </ycode:YCodeLogicNode>
-
-            <ycode:YCodeNode x:Name="G"
-                             Canvas.Left="500"
-                             Canvas.Top="100">
-                <ItemsControl x:Name="source">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <TextBlock HorizontalAlignment="Center"
-                                           Text="{Binding .}" />
-
-                                <Border Width="5"
-                                        Height="5"
-                                        Margin="-1,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        Background="CadetBlue"
-                                        CornerRadius="10" />
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ycode:YCodeNode>
-
-            <ycode:YCodeLine SourceId="A"
-                             TargetId="B" />
-
-            <ycode:YCodeLine SourceId="E"
-                             TargetId="F" />
-
-            <ycode:YCodeLine SourceId="A"
-                             TargetId="C" />
-
-            <ycode:YCodeLine SourceId="B"
-                             TargetId="D" />
-
-        </ycode:YCodeCanvas>
+                           ElementDeleting="OnElementDeleting"
+                           Source="{Binding Source}" />
     </Grid>
 </Window>

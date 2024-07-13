@@ -3,7 +3,7 @@ using YCode.CustomDesigner.UI.ViewModel;
 
 namespace YCode.CustomDesigner.UI
 {
-	public class YCodeSource : YCodeNotifyPropertyChanged
+	public class YCodeSourceViewModel : YCodeNotifyPropertyChanged
 	{
 		private ObservableCollection<YCodeNodeViewModel> _nodes = [];
 

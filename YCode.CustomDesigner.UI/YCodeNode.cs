@@ -24,8 +24,6 @@ namespace YCode.CustomDesigner.UI
 
 			LayoutUpdated += this.OnLayoutUpdated;
 
-			Console.WriteLine("Test1");
-
 			Loaded += this.OnLoaded;
 		}
 
