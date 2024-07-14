@@ -43,6 +43,7 @@
 
         <ycode:YCodeCanvas x:Name="flow"
                            Grid.Row="1"
+                           ElementChanged="OnElementChanged"
                            ElementDeleted="OnElementDeleted"
                            ElementDeleting="OnElementDeleting"
                            Source="{Binding Source}" />

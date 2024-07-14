@@ -40,6 +40,7 @@ namespace YCode.CustomDesigner.UI
 
 		public event EventHandler<YCodeNodeDeletedEventArgs>? ElementDeleted;
 		public event EventHandler<YCodeNodeDeletingEventArgs>? ElementDeleting;
+		public event EventHandler? ElementChanged;
 
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
@@ -56,6 +57,13 @@ namespace YCode.CustomDesigner.UI
 			{
 				_itemSourceManager.OnChanged();
 			}
+		}
+
+		protected override void OnVisualChildrenChanged(DependencyObject visualAdded, DependencyObject visualRemoved)
+		{
+			base.OnVisualChildrenChanged(visualAdded, visualRemoved);
+
+			this.ElementChanged?.Invoke(this, EventArgs.Empty);
 		}
 
 		protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -112,6 +120,11 @@ namespace YCode.CustomDesigner.UI
 					this.ElementDeleted?.Invoke(this, new YCodeNodeDeletedEventArgs(removeItem));
 				}
 			}
+		}
+
+		public IReadOnlyCollection<YCodeNode> GetNodes()
+		{
+			return this.Children.OfType<YCodeNode>().ToList();
 		}
 	}
 }

@@ -51,12 +51,16 @@ namespace YCode.CustomDesigner.Demo
 			{
 				for (int i = 1; i <= 1000; i++)
 				{
-					main.Source.Nodes.Add(new()
+					main.Source.Nodes.Add(new YCodeColumnNodeViewModel<ColumnField>()
 					{
 						Id = $"Node{i}",
 						Name = $"TestNode{i}",
-						X = Random.Shared.Next(0, 2000),
-						Y = Random.Shared.Next(0, 1500)
+						Columns = [
+							new ColumnField() { Id = $"Column{i}", Name = $"Column{i}", Description = $"This is Column{i}" },
+							new ColumnField() { Id = $"Column{i + Random.Shared.Next(9999)}", Name = $"Column{i + Random.Shared.Next(9999)}", Description = $"This is Column{i + Random.Shared.Next(9999)}" },
+						],
+						X = Random.Shared.Next(0, 5000),
+						Y = Random.Shared.Next(0, 4500)
 					});
 
 					if (i > 1)
@@ -69,6 +73,11 @@ namespace YCode.CustomDesigner.Demo
 					}
 				}
 			}
+		}
+
+		private void OnElementChanged(object sender, EventArgs e)
+		{
+
 		}
 	}
 }
