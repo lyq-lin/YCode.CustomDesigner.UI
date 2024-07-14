@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace YCode.CustomDesigner.UI
+﻿namespace YCode.CustomDesigner.UI
 {
 	public class YCodeColumnNode : YCodeNode
 	{

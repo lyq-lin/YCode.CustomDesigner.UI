@@ -1,8 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-
+﻿
 namespace YCode.CustomDesigner.UI
 {
 	public class YCodeNode : ContentControl

@@ -1,8 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Media;
-using System.Windows.Shapes;
-
-namespace YCode.CustomDesigner.UI
+﻿namespace YCode.CustomDesigner.UI
 {
 	public class YCodeLine : Shape
 	{

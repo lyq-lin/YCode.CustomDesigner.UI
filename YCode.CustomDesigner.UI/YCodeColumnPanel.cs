@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-
-namespace YCode.CustomDesigner.UI
+﻿namespace YCode.CustomDesigner.UI
 {
 	public class YCodeColumnPanel : ItemsControl
 	{

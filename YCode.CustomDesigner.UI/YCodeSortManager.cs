@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-
-namespace YCode.CustomDesigner.UI
+﻿namespace YCode.CustomDesigner.UI
 {
 	internal class YCodeSortManager(YCodeCanvas canvas)
 	{
