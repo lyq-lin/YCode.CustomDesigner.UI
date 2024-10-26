@@ -1,6 +1,3 @@
-using System.Windows;
-using System.Windows.Controls;
-
 namespace YCode.CustomDesigner.UI;
 
 internal class YCodeCanvas:Panel

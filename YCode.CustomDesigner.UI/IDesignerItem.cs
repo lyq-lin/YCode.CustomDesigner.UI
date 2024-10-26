@@ -1,5 +1,3 @@
-using System.Windows;
-
 namespace YCode.CustomDesigner.UI;
 
 public interface IDesignerItem
