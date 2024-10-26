@@ -1,125 +1,84 @@
-﻿namespace YCode.CustomDesigner.UI;
+using System.Windows;
+using System.Windows.Controls;
 
-public class YCodeCanvas : Canvas
+namespace YCode.CustomDesigner.UI;
+
+internal class YCodeCanvas:Panel
 {
-	private Point? _elementPoint;
-	private YCodeItemSourceManager _itemSourceManager;
+    #region Dependency properties
+    
+    public static readonly DependencyProperty ExtentProperty = DependencyProperty.Register(
+        nameof(Extent), typeof(Rect), typeof(YCodeCanvas), new PropertyMetadata(default(Rect)));
 
-	public YCodeCanvas()
-	{
-		_itemSourceManager = new YCodeItemSourceManager(this);
-	}
+    public Rect Extent
+    {
+        get => (Rect)GetValue(ExtentProperty);
+        set => SetValue(ExtentProperty, value);
+    }
+    
+    #endregion
 
-	internal UIElement? CurrentElement { get; set; }
+    protected override Size ArrangeOverride(Size finalSize)
+    {
+        var minX = Double.MaxValue;
+        var minY = Double.MaxValue;
 
-	#region Dependency Property
+        var maxX = Double.MinValue;
+        var maxY = Double.MinValue;
 
-	public bool IsSort
-	{
-		get { return (bool)GetValue(IsSortProperty); }
-		set { SetValue(IsSortProperty, value); }
-	}
+        var children = InternalChildren;
+        for (var i = 0; i < children.Count; i++)
+        {
+            var item = children[i] as IDesignerItem;
 
-	public YCodeSourceViewModel Source
-	{
-		get { return (YCodeSourceViewModel)GetValue(SourceProperty); }
-		set { SetValue(SourceProperty, value); }
-	}
+            if (item is not null)
+            {
+                item.Arrange(new Rect(item.Location,item.DesiredSize));
 
-	public static readonly DependencyProperty SourceProperty =
-		DependencyProperty.Register("Source", typeof(YCodeSourceViewModel), typeof(YCodeCanvas));
+                var size = children[i].RenderSize;
 
-	public static readonly DependencyProperty IsSortProperty =
-		DependencyProperty.Register("IsSort", typeof(bool), typeof(YCodeCanvas), new PropertyMetadata(false));
+                if (item.Location.X < minX)
+                {
+                    minX = item.Location.X;
+                }
 
-	#endregion
+                if (item.Location.Y < minY)
+                {
+                    minY = item.Location.Y;
+                }
 
-	public event EventHandler<YCodeNodeDeletedEventArgs>? ElementDeleted;
-	public event EventHandler<YCodeNodeDeletingEventArgs>? ElementDeleting;
-	public event EventHandler? ElementChanged;
+                var sizeX = item.Location.X + size.Width;
+                if (sizeX > maxX)
+                {
+                    maxX = sizeX;
+                }
 
-	protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-	{
-		base.OnPropertyChanged(e);
+                var sizeY = item.Location.Y + size.Height;
+                if (sizeY > maxY)
+                {
+                    maxY = sizeY;
+                }
+            }
+        }
 
-		if (IsSortProperty == e.Property && e.NewValue is bool flag)
-		{
-			if (flag)
-			{
-				this.IsSort = false;
-			}
-		}
-		else if (SourceProperty == e.Property && e.NewValue is not null)
-		{
-			_itemSourceManager.OnChanged();
-		}
-	}
+        Extent = minX == Double.MaxValue
+            ? new Rect(0, 0, 0, 0)
+            : new Rect(minX, minY, maxX - minX, maxY - minY);
 
-	protected override void OnVisualChildrenChanged(DependencyObject visualAdded, DependencyObject visualRemoved)
-	{
-		base.OnVisualChildrenChanged(visualAdded, visualRemoved);
+        return finalSize;
+    }
 
-		this.ElementChanged?.Invoke(this, EventArgs.Empty);
-	}
+    protected override Size MeasureOverride(Size availableSize)
+    {
+        var constraint = new Size(Double.PositiveInfinity, Double.PositiveInfinity);
+        
+        var children = InternalChildren;
 
-	protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
-	{
-		if (e.Source is UIElement element)
-		{
-			var node = element.FindParent<YCodeNode>();
+        for (var i = 0; i < children.Count; i++)
+        {
+            children[i].Measure(constraint);
+        }
 
-			if (node != null)
-			{
-				this.CurrentElement = node;
-
-				_elementPoint = e.GetPosition(node);
-
-				return;
-			}
-		}
-
-		this.CurrentElement = null;
-
-		_elementPoint = null;
-	}
-
-	protected override void OnPreviewMouseMove(MouseEventArgs e)
-	{
-		var mouse = e.GetPosition(this);
-
-		if (this.CurrentElement != null
-			&& _elementPoint != null
-			&& e.LeftButton == MouseButtonState.Pressed)
-		{
-			var left = mouse.X - _elementPoint.Value.X;
-
-			var top = mouse.Y - _elementPoint.Value.Y;
-
-			YCodeCanvas.SetLeft(this.CurrentElement, left);
-
-			YCodeCanvas.SetTop(this.CurrentElement, top);
-		}
-	}
-
-	internal void OnNodeDeleted(YCodeNode removeItem)
-	{
-		if (removeItem != null)
-		{
-			var deleting = new YCodeNodeDeletingEventArgs(removeItem);
-
-			this.ElementDeleting?.Invoke(this, deleting);
-
-			if (!deleting.Cancel)
-			{
-				this.Children.Remove(removeItem);
-
-				this.ElementDeleted?.Invoke(this, new YCodeNodeDeletedEventArgs(removeItem));
-			}
-		}
-	}
-
-	public IReadOnlyCollection<YCodeNode> GetNodes()
-	{
-		return this.Children.OfType<YCodeNode>().ToList();
-	}
+        return default;
+    }
 }
