@@ -1,4 +1,6 @@
-﻿namespace YCode.CustomDesigner.UI;
+﻿using System.Collections;
+
+namespace YCode.CustomDesigner.UI;
 
 public class YCodeDesigner : MultiSelector
 {
@@ -24,7 +26,7 @@ public class YCodeDesigner : MultiSelector
         this.SetValue(ViewportTransformPropertyKey, transform);
     }
 
-    protected internal Panel ItemsHost { get; set; } = default!;
+    protected internal Panel ItemsHost { get; private set; } = default!;
 
     #region Dependency Properties
 
@@ -42,6 +44,60 @@ public class YCodeDesigner : MultiSelector
     public static readonly DependencyProperty ItemsExtentProperty = DependencyProperty.Register(
         nameof(ItemsExtent), typeof(Rect), typeof(YCodeDesigner), new PropertyMetadata(default(Rect)));
 
+    public static readonly DependencyProperty ZoomProperty = DependencyProperty.Register(
+        nameof(Zoom), typeof(double), typeof(YCodeDesigner), new PropertyMetadata(1d));
+
+    public static readonly DependencyProperty MaxZoomProperty = DependencyProperty.Register(
+        nameof(MaxZoom), typeof(double), typeof(YCodeDesigner), new PropertyMetadata(2d));
+
+    public static readonly DependencyProperty MinZoomProperty = DependencyProperty.Register(
+        nameof(MinZoom), typeof(double), typeof(YCodeDesigner), new PropertyMetadata(0.5d));
+
+    public static readonly DependencyProperty ViewportLocationProperty = DependencyProperty.Register(
+        nameof(ViewportLocation), typeof(Point), typeof(YCodeDesigner), new PropertyMetadata(default(Point)));
+
+    public static readonly DependencyProperty ViewportSizeProperty = DependencyProperty.Register(
+        nameof(ViewportSize), typeof(Size), typeof(YCodeDesigner), new PropertyMetadata(default(Size)));
+
+    public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register(
+        nameof(SelectedItems), typeof(IList), typeof(YCodeDesigner), new PropertyMetadata(default(IList)));
+
+    public IList SelectedItems
+    {
+        get => (IList)GetValue(SelectedItemsProperty);
+        set => SetValue(SelectedItemsProperty, value);
+    }
+
+    public Size ViewportSize
+    {
+        get => (Size)GetValue(ViewportSizeProperty);
+        set => SetValue(ViewportSizeProperty, value);
+    }
+
+    public Point ViewportLocation
+    {
+        get => (Point)GetValue(ViewportLocationProperty);
+        set => SetValue(ViewportLocationProperty, value);
+    }
+
+    public double MinZoom
+    {
+        get => (double)GetValue(MinZoomProperty);
+        set => SetValue(MinZoomProperty, value);
+    }
+
+    public double MaxZoom
+    {
+        get => (double)GetValue(MaxZoomProperty);
+        set => SetValue(MaxZoomProperty, value);
+    }
+
+    public double Zoom
+    {
+        get => (double)GetValue(ZoomProperty);
+        set => SetValue(ZoomProperty, value);
+    }
+
     public Rect ItemsExtent
     {
         get => (Rect)GetValue(ItemsExtentProperty);
@@ -52,11 +108,38 @@ public class YCodeDesigner : MultiSelector
 
     #endregion
 
+    #region Routed Event
+
+    public static readonly RoutedEvent ViewportUpdatedEvent = EventManager.RegisterRoutedEvent(
+        nameof(ViewportUpdated),
+        RoutingStrategy.Bubble,
+        typeof(RoutedEventHandler),
+        typeof(YCodeDesigner)
+    );
+
+    public event RoutedEventHandler ViewportUpdated
+    {
+        add => AddHandler(ViewportUpdatedEvent, value);
+        remove => RemoveHandler(ViewportUpdatedEvent, value);
+    }
+
+    #endregion
+
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
 
         this.ItemsHost = this.GetTemplateChild("PART_ItemsHost") as Panel ??
                          throw new InvalidOperationException("PART_ItemsHost is missing or is not of type Panel.");
+    }
+
+    protected override DependencyObject GetContainerForItemOverride()
+    {
+        return new YCodeNode();
+    }
+
+    protected override bool IsItemItsOwnContainerOverride(object item)
+    {
+        return item is YCodeNode;
     }
 }

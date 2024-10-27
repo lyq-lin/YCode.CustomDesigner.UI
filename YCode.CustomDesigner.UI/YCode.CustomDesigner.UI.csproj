@@ -7,4 +7,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Themes\Views\Styles.xaml~" />
+  </ItemGroup>
+
 </Project>
