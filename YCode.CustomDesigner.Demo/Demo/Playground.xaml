@@ -4,10 +4,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ycode="http://www.ycode.dev.com/coding"
-             d:DesignHeight="300"
-             d:DesignWidth="300"
+             xmlns:demo="clr-namespace:YCode.CustomDesigner.Demo"
+             d:DesignHeight="500"
+             d:DesignWidth="1300"
              mc:Ignorable="d">
+    <UserControl.DataContext>
+        <demo:MainViewModel />
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <Style x:Key="YCodeNodeStyle"
+               d:DataContext="{d:DesignInstance ycode:YCodeNodeViewModel}"
+               TargetType="{x:Type ycode:YCodeNode}">
+            <Setter Property="Content" Value="{Binding Name}" />
+            <Setter Property="ToolTip" Value="{Binding Description}" />
+            <Setter Property="Height" Value="28" />
+            <Setter Property="Width" Value="160" />
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
-        <ycode:YCodeDesigner x:Name="Designer" />
+        <ycode:YCodeDesigner x:Name="Designer"
+                             ItemContainerStyle="{StaticResource YCodeNodeStyle}"
+                             Source="{Binding Source}" />
     </Grid>
 </UserControl>

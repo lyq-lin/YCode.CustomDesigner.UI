@@ -7,7 +7,10 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type local:YCodeNode}">
+        <Setter Property="NodeId" Value="{Binding Id}" />
+        <Setter Property="Location" Value="{Binding Location}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="CadetBlue" />
         <Setter Property="BorderBrush" Value="DodgerBlue" />
         <Setter Property="Template">
             <Setter.Value>

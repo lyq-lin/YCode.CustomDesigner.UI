@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace YCode.CustomDesigner.UI;
 
@@ -62,9 +64,18 @@ public class YCodeDesigner : MultiSelector
     public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register(
         nameof(SelectedItems), typeof(IList), typeof(YCodeDesigner), new PropertyMetadata(default(IList)));
 
-    public IList SelectedItems
+    public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
+        nameof(Source), typeof(YCodeSource), typeof(YCodeDesigner));
+
+    public YCodeSource Source
     {
-        get => (IList)GetValue(SelectedItemsProperty);
+        get => (YCodeSource)GetValue(SourceProperty);
+        set => SetValue(SourceProperty, value);
+    }
+
+    public new IList? SelectedItems
+    {
+        get => (IList?)GetValue(SelectedItemsProperty);
         set => SetValue(SelectedItemsProperty, value);
     }
 
@@ -133,9 +144,26 @@ public class YCodeDesigner : MultiSelector
                          throw new InvalidOperationException("PART_ItemsHost is missing or is not of type Panel.");
     }
 
+    protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+    {
+        if (e.Property == SourceProperty)
+        {
+            if (e.NewValue is YCodeSource source)
+            {
+                this.ItemsSource = source.Nodes;
+
+                //TODO: Lines Adapter
+
+                return;
+            }
+        }
+
+        base.OnPropertyChanged(e);
+    }
+
     protected override DependencyObject GetContainerForItemOverride()
     {
-        return new YCodeNode();
+        return new YCodeNode(this);
     }
 
     protected override bool IsItemItsOwnContainerOverride(object item)
