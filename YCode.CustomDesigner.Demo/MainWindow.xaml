@@ -7,7 +7,9 @@
         xmlns:ycode="clr-namespace:YCode.CustomDesigner.UI;assembly=YCode.CustomDesigner.UI"
         Title="MainWindow"
         Width="800"
-        Height="450"
+        Height="550"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
         mc:Ignorable="d">
     <TabControl>
         <TabItem Header="Playground">
