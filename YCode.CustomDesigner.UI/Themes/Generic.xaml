@@ -6,30 +6,4 @@
         <ResourceDictionary Source="/YCode.CustomDesigner.UI;component/Themes/Views/Nodes.xaml" />
         <ResourceDictionary Source="/YCode.CustomDesigner.UI;component/Themes/Views/Columns.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
-    <Style TargetType="{x:Type local:YCodeEditor}">
-        <Setter Property="ClipToBounds" Value="True" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="Background" Value="#1E1E1E" />
-        <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:YCodeEditor}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                        <Canvas>
-                            <ItemsControl IsTabStop="False">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <local:YCodeCanvas />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                        </Canvas>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 </ResourceDictionary>

@@ -33,11 +33,11 @@
     </Style>
 
     <Style TargetType="{x:Type local:YCodeNode}">
-        <Setter Property="MinHeight" Value="30" />
-        <Setter Property="MinWidth" Value="130" />
         <Setter Property="Background" Value="CadetBlue" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="MinWidth" Value="130" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:YCodeNode}">
