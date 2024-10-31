@@ -13,7 +13,7 @@ public class YCodeDesigner : MultiSelector
             new FrameworkPropertyMetadata(typeof(YCodeDesigner))
         );
 
-        FocusableProperty.OverrideMetadata(typeof(YCodeDesigner), new FrameworkPropertyMetadata(true));
+        FocusableProperty.OverrideMetadata(typeof(YCodeDesigner), new FrameworkPropertyMetadata(false));
     }
 
     private readonly TranslateTransform _translateTransform = new();
@@ -66,6 +66,15 @@ public class YCodeDesigner : MultiSelector
 
     public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
         nameof(Source), typeof(YCodeSource), typeof(YCodeDesigner));
+
+    public static readonly DependencyProperty LinesProperty = DependencyProperty.Register(
+        nameof(Lines), typeof(IEnumerable), typeof(YCodeDesigner));
+
+    public IEnumerable Lines
+    {
+        get => (IEnumerable)GetValue(LinesProperty);
+        set => SetValue(LinesProperty, value);
+    }
 
     public YCodeSource Source
     {
@@ -151,8 +160,7 @@ public class YCodeDesigner : MultiSelector
             if (e.NewValue is YCodeSource source)
             {
                 this.ItemsSource = source.Nodes;
-
-                //TODO: Lines Adapter
+                this.Lines = source.Lines;
 
                 return;
             }
@@ -169,5 +177,15 @@ public class YCodeDesigner : MultiSelector
     protected override bool IsItemItsOwnContainerOverride(object item)
     {
         return item is YCodeNode;
+    }
+
+    public DependencyObject GetContainerForLineOverride(YCodeLineContainer container)
+    {
+        return new YCodeLine(this, container);
+    }
+
+    public bool IsLineItsOwnContainerOverride(YCodeLineContainer container, object item)
+    {
+        return item is YCodeLine;
     }
 }

@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Themes\Views\Styles.xaml~" />
+    <None Remove="Themes\Views\Lines.xaml~" />
   </ItemGroup>
 
 </Project>

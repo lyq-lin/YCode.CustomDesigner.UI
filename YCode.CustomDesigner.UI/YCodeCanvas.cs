@@ -26,9 +26,7 @@ internal class YCodeCanvas:Panel
         var children = InternalChildren;
         for (var i = 0; i < children.Count; i++)
         {
-            var item = children[i] as IDesignerItem;
-
-            if (item is not null)
+            if (children[i] is IDesignerItem item)
             {
                 item.Arrange(new Rect(item.Location,item.DesiredSize));
 

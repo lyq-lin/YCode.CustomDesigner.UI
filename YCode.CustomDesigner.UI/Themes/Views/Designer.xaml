@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:YCode.CustomDesigner.UI">
 
+
     <Style TargetType="{x:Type local:YCodeDesigner}">
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Foreground" Value="White" />
@@ -17,6 +18,16 @@
                             <local:YCodeCanvas x:Name="PART_ItemsHost"
                                                IsItemsHost="True"
                                                Extent="{Binding ItemsExtent, Mode=OneWayToSource, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                            <local:YCodeLineContainer Panel.ZIndex="-1"
+                                                      ItemsSource="{TemplateBinding Lines}"
+                                                      IsTabStop="False">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </local:YCodeLineContainer>
                         </Canvas>
                     </Border>
                 </ControlTemplate>

@@ -2,7 +2,5 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=System.Xaml">
 
-    <CornerRadius x:Key="Radius">
-        3
-    </CornerRadius>
+    <CornerRadius x:Key="Radius">3</CornerRadius>
 </ResourceDictionary>

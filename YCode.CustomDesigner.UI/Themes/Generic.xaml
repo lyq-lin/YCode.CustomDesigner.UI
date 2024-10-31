@@ -3,7 +3,8 @@
                     xmlns:local="clr-namespace:YCode.CustomDesigner.UI">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/YCode.CustomDesigner.UI;component/Themes/Views/Designer.xaml" />
         <ResourceDictionary Source="/YCode.CustomDesigner.UI;component/Themes/Views/Nodes.xaml" />
+        <ResourceDictionary Source="/YCode.CustomDesigner.UI;component/Themes/Views/Lines.xaml" />
+        <ResourceDictionary Source="/YCode.CustomDesigner.UI;component/Themes/Views/Designer.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
