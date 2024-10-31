@@ -1,9 +1,9 @@
+using System.Runtime.CompilerServices;
+
 namespace YCode.CustomDesigner.UI;
 
 public class YCodeNode : ContentControl, IDesignerItem
 {
-    private readonly YCodeDesigner _designer;
-
     static YCodeNode()
     {
         DefaultStyleKeyProperty.OverrideMetadata(
@@ -11,6 +11,9 @@ public class YCodeNode : ContentControl, IDesignerItem
             new FrameworkPropertyMetadata(typeof(YCodeNode))
         );
     }
+
+    private readonly YCodeDesigner _designer;
+    private Point? _point;
 
     public YCodeNode(YCodeDesigner designer)
     {
@@ -23,6 +26,7 @@ public class YCodeNode : ContentControl, IDesignerItem
 
     internal event EventHandler? Changed;
 
+    public YCodeDesigner Designer => _designer;
     internal Point Left { get; private set; }
     internal Point Right { get; private set; }
     internal Point Top { get; private set; }
@@ -30,13 +34,43 @@ public class YCodeNode : ContentControl, IDesignerItem
 
     internal List<YCodeLine> Lines { get; private set; }
 
+    public Thickness SelectedBorderThickness => new Thickness(2);
+
+    public Thickness SelectedMargin => new Thickness(
+        BorderThickness.Left - SelectedBorderThickness.Left,
+        BorderThickness.Top - SelectedBorderThickness.Top,
+        BorderThickness.Right - SelectedBorderThickness.Right,
+        BorderThickness.Bottom - SelectedBorderThickness.Bottom);
+
     #region Dependency Properties
 
     public static readonly DependencyProperty LocationProperty = DependencyProperty.Register(
-        nameof(Location), typeof(Point), typeof(YCodeNode), new PropertyMetadata(default(Point)));
+        nameof(Location), typeof(Point), typeof(YCodeNode),
+        new FrameworkPropertyMetadata(default(Point), FrameworkPropertyMetadataOptions.AffectsArrange,
+            OnLocationChanged));
 
     public static readonly DependencyProperty NodeIdProperty = DependencyProperty.Register(
         nameof(NodeId), typeof(string), typeof(YCodeNode), new PropertyMetadata(String.Empty));
+
+    public static readonly DependencyProperty IsSelectableProperty = DependencyProperty.Register(nameof(IsSelectable),
+        typeof(bool), typeof(YCodeNode), new FrameworkPropertyMetadata(true));
+
+    public static readonly DependencyProperty IsSelectedProperty =
+        Selector.IsSelectedProperty.AddOwner(typeof(YCodeNode),
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                OnIsSelectedChanged));
+
+    public bool IsSelected
+    {
+        get => (bool)GetValue(IsSelectedProperty);
+        set => SetValue(IsSelectedProperty, value);
+    }
+
+    public bool IsSelectable
+    {
+        get => (bool)GetValue(IsSelectableProperty);
+        set => SetValue(IsSelectableProperty, value);
+    }
 
     public string NodeId
     {
@@ -52,9 +86,126 @@ public class YCodeNode : ContentControl, IDesignerItem
 
     #endregion
 
-    public override void OnApplyTemplate()
+    #region Routed Event
+
+    public static readonly RoutedEvent DragStartedEvent = EventManager.RegisterRoutedEvent(nameof(DragStarted),
+        RoutingStrategy.Bubble, typeof(DragStartedEventHandler), typeof(YCodeNode));
+
+    public static readonly RoutedEvent DragCompletedEvent = EventManager.RegisterRoutedEvent(nameof(DragCompleted),
+        RoutingStrategy.Bubble, typeof(DragCompletedEventHandler), typeof(YCodeNode));
+
+    public static readonly RoutedEvent DragDeltaEvent = EventManager.RegisterRoutedEvent(nameof(DragDelta),
+        RoutingStrategy.Bubble, typeof(DragDeltaEventHandler), typeof(YCodeNode));
+
+    public static readonly RoutedEvent SelectedEvent = Selector.SelectedEvent.AddOwner(typeof(YCodeNode));
+    public static readonly RoutedEvent UnselectedEvent = Selector.UnselectedEvent.AddOwner(typeof(YCodeNode));
+
+    public static readonly RoutedEvent LocationChangedEvent = EventManager.RegisterRoutedEvent(nameof(LocationChanged),
+        RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(YCodeNode));
+
+    public event RoutedEventHandler LocationChanged
     {
-        base.OnApplyTemplate();
+        add => AddHandler(LocationChangedEvent, value);
+        remove => RemoveHandler(LocationChangedEvent, value);
+    }
+
+    public event DragStartedEventHandler DragStarted
+    {
+        add => AddHandler(DragStartedEvent, value);
+        remove => RemoveHandler(DragStartedEvent, value);
+    }
+
+    public event DragDeltaEventHandler DragDelta
+    {
+        add => AddHandler(DragDeltaEvent, value);
+        remove => RemoveHandler(DragDeltaEvent, value);
+    }
+
+    public event DragCompletedEventHandler DragCompleted
+    {
+        add => AddHandler(DragCompletedEvent, value);
+        remove => RemoveHandler(DragCompletedEvent, value);
+    }
+
+    public event RoutedEventHandler Selected
+    {
+        add => AddHandler(SelectedEvent, value);
+        remove => RemoveHandler(SelectedEvent, value);
+    }
+
+    public event RoutedEventHandler Unselected
+    {
+        add => AddHandler(UnselectedEvent, value);
+        remove => RemoveHandler(UnselectedEvent, value);
+    }
+
+    #endregion
+
+    protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
+    {
+        this.Focus();
+
+        this.IsSelectable = true;
+    }
+
+    protected override void OnMouseDown(MouseButtonEventArgs e)
+    {
+        if (!this.IsMouseCaptured)
+        {
+            this.CaptureMouse();
+        }
+
+        _point = e.GetPosition(this);
+
+        this.RaiseEvent(new DragStartedEventArgs(_point.Value.X, _point.Value.Y)
+        {
+            RoutedEvent = DragStartedEvent
+        });
+    }
+
+    protected override void OnMouseMove(MouseEventArgs e)
+    {
+        if (e.LeftButton != MouseButtonState.Pressed && e.RightButton != MouseButtonState.Pressed)
+        {
+            if (this.IsMouseCaptured)
+            {
+                this.ReleaseMouseCapture();
+            }
+
+            return;
+        }
+
+        var mouse = e.GetPosition(_designer.ItemsHost);
+
+        if (_point.HasValue)
+        {
+            this.InvalidateVisual();
+
+            var delta = mouse - _point.Value;
+
+            this.RaiseEvent(new DragDeltaEventArgs(delta.X, delta.Y)
+            {
+                RoutedEvent = DragDeltaEvent
+            });
+        }
+    }
+
+    protected override void OnMouseUp(MouseButtonEventArgs e)
+    {
+        if (this.IsMouseCaptured)
+        {
+            if (_point.HasValue)
+            {
+                this.RaiseEvent(new DragCompletedEventArgs(this.Location.X, this.Location.Y, false)
+                {
+                    RoutedEvent = DragCompletedEvent
+                });
+
+                _point = null;
+            }
+
+            this.ReleaseAllTouchCaptures();
+        }
     }
 
     private void OnLayoutUpdateChanged(object? sender, EventArgs e)
@@ -105,6 +256,28 @@ public class YCodeNode : ContentControl, IDesignerItem
         if (isChanged)
         {
             this.Changed?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    private static void OnIsSelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is YCodeNode node && e.NewValue is bool isSelected)
+        {
+            var canSelected = node.IsSelectable && isSelected;
+
+            node.IsSelected = canSelected;
+
+            node.RaiseEvent(new RoutedEventArgs(canSelected ? SelectedEvent : UnselectedEvent, node));
+        }
+    }
+
+    private static void OnLocationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is YCodeNode node)
+        {
+            node.Designer.ItemsHost.InvalidateArrange();
+
+            node.RaiseEvent(new RoutedEventArgs(LocationChangedEvent, node));
         }
     }
 }

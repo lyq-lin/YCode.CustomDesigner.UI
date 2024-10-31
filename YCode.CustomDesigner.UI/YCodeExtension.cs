@@ -20,4 +20,14 @@ public static class YCodeExtension
 
         return default;
     }
+    
+    public static bool CaptureMouseSafe(this UIElement elem)
+    {
+        if (Mouse.Captured == null || elem.IsMouseCaptured)
+        {
+            return elem.CaptureMouse();
+        }
+
+        return false;
+    }
 }

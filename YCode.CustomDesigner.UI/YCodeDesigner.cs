@@ -21,6 +21,8 @@ public class YCodeDesigner : MultiSelector
 
     public YCodeDesigner()
     {
+        this.AddHandler(YCodeNode.DragDeltaEvent, new DragDeltaEventHandler(this.OnNodeDragDelta));
+
         var transform = new TransformGroup();
         transform.Children.Add(_scaleTransform);
         transform.Children.Add(_translateTransform);
@@ -187,5 +189,19 @@ public class YCodeDesigner : MultiSelector
     public bool IsLineItsOwnContainerOverride(YCodeLineContainer container, object item)
     {
         return item is YCodeLine;
+    }
+
+    private void OnNodeDragDelta(object sender, DragDeltaEventArgs e)
+    {
+        if (e.OriginalSource is YCodeNode node)
+        {
+            var left = e.HorizontalChange;
+
+            var top = e.VerticalChange;
+
+            //TODO: MoveRange
+
+            node.Location = new Point(left, top);
+        }
     }
 }
