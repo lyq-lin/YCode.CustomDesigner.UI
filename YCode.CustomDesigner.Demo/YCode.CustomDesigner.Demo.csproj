@@ -12,4 +12,8 @@
     <ProjectReference Include="..\YCode.CustomDesigner.UI\YCode.CustomDesigner.UI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="YCode.CustomDesigner.Demo.csproj.DotSettings" />
+  </ItemGroup>
+
 </Project>

@@ -15,5 +15,9 @@
         <TabItem Header="Playground">
             <local:Playground />
         </TabItem>
+
+        <TabItem Header="Performance">
+            <local:Performance />
+        </TabItem>
     </TabControl>
 </Window>
