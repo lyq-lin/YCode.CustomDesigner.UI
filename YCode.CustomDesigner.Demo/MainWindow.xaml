@@ -12,12 +12,11 @@
         ResizeMode="CanResize"
         mc:Ignorable="d">
     <TabControl>
-        <TabItem Header="Playground">
-            <local:Playground />
-        </TabItem>
-
         <TabItem Header="Performance">
             <local:Performance />
+        </TabItem>
+        <TabItem Header="Playground">
+            <local:Playground />
         </TabItem>
     </TabControl>
 </Window>

@@ -10,7 +10,7 @@ public class YCodeDataAdapter : IYCodeAdapter
     {
         var viewModel = new YCodeSource();
 
-        var count = 300;
+        var count = 1000;
 
         var xDistance = 220;
 
@@ -26,7 +26,7 @@ public class YCodeDataAdapter : IYCodeAdapter
             {
                 var context = new YCodeContext()
                 {
-                    IsExpand = false
+                    IsExpand = true
                 };
 
                 for (var i = 0; i < 30; i++)

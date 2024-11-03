@@ -202,20 +202,15 @@ public partial class YCodeDesigner : MultiSelector
                 {
                     var source = await this.ItemAdapter.ImportAsync(mounting.Value);
 
-                    if (this.Source == null)
-                    {
-                        this.Source = source;
-                    }
-                    else
-                    {
-                        this.Source.Nodes.Clear();
+                    this.Source ??= new YCodeSource();
+                    
+                    this.Source.Nodes.Clear();
 
-                        this.Source.Lines.Clear();
+                    this.Source.Lines.Clear();
 
-                        await this.CopyAsync(source.Nodes, this.Source.Nodes);
+                    await this.CopyAsync(source.Nodes, this.Source.Nodes);
 
-                        await this.CopyAsync(source.Lines, this.Source.Lines);
-                    }
+                    await this.CopyAsync(source.Lines, this.Source.Lines);
                 }
 
                 this.RaiseEvent<MountedEventArgs>(nameof(Mounted), new MountedEventArgs(this.Source));
