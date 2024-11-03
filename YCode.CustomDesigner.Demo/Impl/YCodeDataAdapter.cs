@@ -10,10 +10,10 @@ public class YCodeDataAdapter : IYCodeAdapter
     {
         var viewModel = new YCodeSource();
 
-        var count = 800;
+        var count = 300;
 
         var xDistance = 220;
-        
+
         var yDistance = 420;
 
         var size = (int)count / (int)Math.Sqrt(count);
@@ -24,18 +24,21 @@ public class YCodeDataAdapter : IYCodeAdapter
             (i, maxCount) => new Point(i % size * xDistance, i / size * yDistance),
             () =>
             {
-                var list = new List<object>();
+                var context = new YCodeContext()
+                {
+                    IsExpand = false
+                };
 
                 for (var i = 0; i < 30; i++)
                 {
-                    list.Add(new
+                    context.Children.Add(new
                     {
                         Id = $"{i}",
                         Name = $"Column {i}",
                     });
                 }
 
-                return new { Children = list };
+                return context;
             });
 
         viewModel.Nodes.AddRanage(nodes);

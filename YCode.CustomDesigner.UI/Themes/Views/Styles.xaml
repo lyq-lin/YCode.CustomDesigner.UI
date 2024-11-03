@@ -4,6 +4,42 @@
 
     <CornerRadius x:Key="Radius">3</CornerRadius>
 
+    <Geometry x:Key="Expander">
+        M509.347 702.054c-10.304-0.33-20.393-5.06-27.236-13.82L285.099 436.072c-12.24-15.667-9.463-38.291 6.205-50.532 15.667-12.24 38.291-9.463 50.532 6.205l170.001 217.592 169.869-217.422c12.24-15.667 34.865-18.445 50.532-6.204 15.667 12.24 18.445 34.865 6.205 50.532L541.43 688.405c-7.916 10.132-20.173 14.873-32.084 13.65zM512 996C244.694 996 28 779.306 28 512 28 244.694 244.694 28 512 28c267.306 0 484 216.694 484 484 0 267.306-216.694 484-484 484z m0-72c227.541 0 412-184.459 412-412S739.541 100 512 100 100 284.459 100 512s184.459 412 412 412z
+    </Geometry>
+
+    <Geometry x:Key="Folder">
+        M511.837 418.037L341.836 635.63c-12.24 15.667-34.865 18.445-50.532 6.204-15.668-12.24-18.446-34.865-6.205-50.532l197.012-252.164c6.843-8.759 16.932-13.49 27.236-13.819 11.91-1.224 24.168 3.517 32.084 13.649L738.443 591.13c12.24 15.668 9.462 38.292-6.205 50.533-15.667 12.24-38.291 9.462-50.532-6.205L511.837 418.037zM512 996C244.694 996 28 779.306 28 512 28 244.694 244.694 28 512 28c267.306 0 484 216.694 484 484 0 267.306-216.694 484-484 484z m0-72c227.541 0 412-184.459 412-412S739.541 100 512 100 100 284.459 100 512s184.459 412 412 412z
+    </Geometry>
+
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+    <Style x:Key="SwitchToogleButtonStyle"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Margin" Value="2,0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding IsKeyboardFocusWithin}"
+                            BorderBrush="{TemplateBinding BorderBrush}">
+                        <ContentPresenter x:Name="ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ScrollBarThumbVertical"
            TargetType="{x:Type Thumb}">
         <Setter Property="OverridesDefaultStyle" Value="true" />

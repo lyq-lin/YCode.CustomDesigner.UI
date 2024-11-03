@@ -9,6 +9,7 @@
     <Style TargetType="{x:Type local:YCodeExpandPanel}">
         <Setter Property="HeaderBrush" Value="CadetBlue" />
         <Setter Property="Background" Value="#1E1E1E" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:YCodeExpandPanel}">
@@ -26,17 +27,51 @@
                             <Border x:Name="PART_Header"
                                     Background="{TemplateBinding HeaderBrush}"
                                     CornerRadius="3 3 0 0">
-                                <ContentPresenter Margin="{TemplateBinding Padding}"
-                                                  ContentSource="Header" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                      ContentSource="Header" />
+
+                                    <StackPanel x:Name="PART_Tool"
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                Orientation="Horizontal">
+                                        <ToggleButton x:Name="Expander"
+                                                      BorderThickness="0"
+                                                      IsChecked="{Binding IsExpand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                      Style="{StaticResource SwitchToogleButtonStyle}">
+                                            <Path x:Name="SwitchData"
+                                                  Width="16"
+                                                  Height="16"
+                                                  Fill="{TemplateBinding Foreground}"
+                                                  Stroke="{TemplateBinding Foreground}"
+                                                  Data="{StaticResource Expander}"
+                                                  Stretch="Uniform" />
+                                        </ToggleButton>
+                                    </StackPanel>
+                                </Grid>
                             </Border>
 
                             <Grid Grid.Row="1"
-                                  Background="{TemplateBinding Background}">
+                                  Background="{TemplateBinding Background}"
+                                  Visibility="{Binding IsExpand, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <ContentPresenter x:Name="PART_Content"
                                                   ContentSource="Content" />
                             </Grid>
                         </Grid>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter TargetName="PART_Tool" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger SourceName="Expander" Property="IsChecked" Value="False">
+                            <Setter TargetName="SwitchData" Property="Data" Value="{StaticResource Folder}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

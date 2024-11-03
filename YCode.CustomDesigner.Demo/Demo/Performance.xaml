@@ -36,7 +36,8 @@
                     </Setter>
                 </Style>
             </DataTemplate.Resources>
-            <ycode:YCodeExpandPanel Header="{Binding Name}">
+            <ycode:YCodeExpandPanel Header="{Binding Name}"
+                                    IsExpand="{Binding Context.IsExpand}">
                 <ycode:YCodeExpandPanel.HeaderTemplate>
                     <DataTemplate>
                         <TextBlock Margin="8,8,0,0"
