@@ -12,14 +12,52 @@
 
         <demo:YCodeDataAdapter x:Key="YCodeDataAdapter" />
 
+        <DataTemplate x:Key="YCodeNodeItemTemplate">
+            <DataTemplate.Resources>
+                <Style TargetType="{x:Type ycode:YCodeDataPanelItem}">
+                    <Setter Property="Height" Value="24" />
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <Grid x:Name="grid"
+                                      VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="7*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Margin="8,0,0,0"
+                                               Text="{Binding Id}" />
+
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding Name}" />
+                                </Grid>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataTemplate.Resources>
+            <ycode:YCodeExpandPanel Header="{Binding Name}">
+                <ycode:YCodeExpandPanel.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock Margin="8,8,0,0"
+                                   Text="{Binding .}" />
+                    </DataTemplate>
+                </ycode:YCodeExpandPanel.HeaderTemplate>
+
+                <ycode:YCodeDataPanel ItemsSource="{Binding Context.Children}" />
+            </ycode:YCodeExpandPanel>
+        </DataTemplate>
+
         <Style x:Key="YCodeNodeStyle"
                d:DataContext="{d:DesignInstance ycode:YCodeNodeViewModel}"
                TargetType="{x:Type ycode:YCodeNode}">
-            <Setter Property="Content" Value="{Binding Name}" />
             <Setter Property="ToolTip" Value="{Binding Description}" />
-            <Setter Property="Height" Value="28" />
+            <Setter Property="MinHeight" Value="28" />
+            <Setter Property="MaxHeight" Value="400" />
             <Setter Property="Width" Value="160" />
+            <Setter Property="ContentTemplate" Value="{StaticResource YCodeNodeItemTemplate}" />
         </Style>
+
     </UserControl.Resources>
 
     <Grid>

@@ -3,4 +3,102 @@
                     xmlns:system="clr-namespace:System;assembly=System.Xaml">
 
     <CornerRadius x:Key="Radius">3</CornerRadius>
+
+    <Style x:Key="ScrollBarThumbVertical"
+           TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="IsTabStop" Value="false" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Rectangle x:Name="rectangle"
+                               Width="{TemplateBinding Width}"
+                               Height="{TemplateBinding Height}"
+                               Fill="#4c4f56"
+                               RadiusX="3.0"
+                               RadiusY="3.0"
+                               SnapsToDevicePixels="True" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="rectangle" Property="Fill" Value="#575a61" />
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="true">
+                            <Setter TargetName="rectangle" Property="Fill" Value="#61646b" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ScrollBarStyle"
+           TargetType="{x:Type ScrollBar}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
+        <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+        <Setter Property="Cursor" Value="Arrow" />
+        <Setter Property="Background" Value="#4c4f56" />
+        <Setter Property="BorderBrush" Value="#4c4f56" />
+        <Setter Property="AutomationProperties.AutomationId" Value="VerticalScrollBar" />
+        <Setter Property="BorderThickness" Value="1,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Grid x:Name="Bg"
+                          Width="6"
+                          HorizontalAlignment="Right"
+                          SnapsToDevicePixels="true">
+
+                        <Border Opacity="0.3"
+                                CornerRadius="{StaticResource Radius}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" />
+
+                        <Track x:Name="PART_Track"
+                               IsDirectionReversed="true"
+                               IsEnabled="{TemplateBinding IsMouseOver}">
+                            <Track.Thumb>
+                                <Thumb Style="{StaticResource ScrollBarThumbVertical}" />
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="ScrollViewTemplate"
+                     TargetType="{x:Type ScrollViewer}">
+        <Grid x:Name="Grid"
+              Margin="{TemplateBinding Padding}"
+              Background="{TemplateBinding Background}">
+            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
+                                    Margin="{TemplateBinding Padding}"
+                                    CanContentScroll="{TemplateBinding CanContentScroll}"
+                                    CanHorizontallyScroll="False"
+                                    CanVerticallyScroll="False"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+            <ScrollBar x:Name="PART_VerticalScrollBar"
+                       HorizontalAlignment="Right"
+                       Maximum="{TemplateBinding ScrollableHeight}"
+                       Minimum="0"
+                       Style="{StaticResource ScrollBarStyle}"
+                       ViewportSize="{TemplateBinding ViewportHeight}"
+                       Visibility="Collapsed"
+                       Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition SourceName="Grid" Property="IsMouseOver" Value="True" />
+                    <Condition Property="ComputedVerticalScrollBarVisibility" Value="Visible" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter TargetName="PART_VerticalScrollBar" Property="Visibility" Value="Visible" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 </ResourceDictionary>
