@@ -9,13 +9,13 @@ public class YCodeLine : Shape
             new FrameworkPropertyMetadata(typeof(YCodeLine))
         );
     }
-    
+
     private bool _isLoaded;
     private readonly YCodeDesigner _designer;
     private readonly YCodeLineContainer _container;
     private readonly StreamGeometry _geometry;
+    private readonly YCodeLineFactory _factory;
 
-    /// <inheritdoc />
     public YCodeLine(YCodeDesigner designer, YCodeLineContainer container)
     {
         _designer = designer;
@@ -27,6 +27,8 @@ public class YCodeLine : Shape
             FillRule = FillRule.EvenOdd
         };
 
+        _factory = new YCodeLineFactory(_designer);
+
         this.Loaded += OnLoaded;
     }
 
@@ -35,7 +37,7 @@ public class YCodeLine : Shape
         if (!_isLoaded)
         {
             this.OnChanged(null, EventArgs.Empty);
-            
+
             _isLoaded = true;
         }
     }
@@ -65,37 +67,15 @@ public class YCodeLine : Shape
 
     private (Point, Point) DrawLine(StreamGeometryContext context, YCodeNode source, YCodeNode target)
     {
-        var start = source.Left;
+        var line = _factory.GetLine(_designer.LineType);
 
-        var end = target.Left;
+        var @params = new YCodeLineParameter(
+            (source.Left, source.Right, source.Top, source.Bottom),
+            (target.Left, target.Right, target.Top, target.Bottom));
 
-        var p1 = new Point(start.X - 50, start.Y);
+        line?.DrawLine(@params, context);
 
-        var p2 = new Point(end.X - 50, end.Y);
-
-        if (source.Right.X < target.Left.X)
-        {
-            start = source.Right;
-
-            p1.X = start.X + 50;
-
-            p2.X -= 30;
-        }
-        else if (target.Right.X < source.Left.X)
-        {
-            end = target.Right;
-
-            p2.X = end.X + 50;
-
-            p1.X -= 30;
-        }
-
-        context.BeginFigure(start, false, false);
-        context.LineTo(start, true, true);
-        context.BezierTo(p1, p2, end, true, true);
-        context.LineTo(end, true, true);
-
-        return (start, end);
+        return (@params.Start, @params.End);
     }
 
     #region Dependency Properties

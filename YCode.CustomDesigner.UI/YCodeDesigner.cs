@@ -79,6 +79,15 @@ public partial class YCodeDesigner : MultiSelector
     public static readonly DependencyProperty ItemAdapterProperty = DependencyProperty.Register(
         nameof(ItemAdapter), typeof(IYCodeAdapter), typeof(YCodeDesigner));
 
+    public static readonly DependencyProperty LineTypeProperty = DependencyProperty.Register(
+        nameof(LineType), typeof(LineType), typeof(YCodeDesigner), new PropertyMetadata(LineType.Bezier));
+
+    public LineType LineType
+    {
+        get => (LineType)GetValue(LineTypeProperty);
+        set => SetValue(LineTypeProperty, value);
+    }
+
     public IYCodeAdapter? ItemAdapter
     {
         get => (IYCodeAdapter?)GetValue(ItemAdapterProperty);
