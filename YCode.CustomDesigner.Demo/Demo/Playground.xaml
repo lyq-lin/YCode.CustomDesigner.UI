@@ -25,6 +25,9 @@
 
     <Grid>
         <ycode:YCodeDesigner x:Name="Designer"
+                             DragDelta="OnNodeDragDelta"
+                             DragStared="OnNodeDragStared"
+                             DragCompleted="OnNodeDragCompleted"
                              ItemContainerStyle="{StaticResource YCodeNodeStyle}"
                              Source="{Binding Source}" />
     </Grid>

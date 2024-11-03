@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace YCode.CustomDesigner.UI;
 
-public class YCodeDesigner : MultiSelector
+public partial class YCodeDesigner : MultiSelector
 {
     static YCodeDesigner()
     {
@@ -21,7 +19,9 @@ public class YCodeDesigner : MultiSelector
 
     public YCodeDesigner()
     {
+        this.AddHandler(YCodeNode.DragStartedEvent, new DragStartedEventHandler(this.OnNodeDragStarted));
         this.AddHandler(YCodeNode.DragDeltaEvent, new DragDeltaEventHandler(this.OnNodeDragDelta));
+        this.AddHandler(YCodeNode.DragCompletedEvent, new DragCompletedEventHandler(this.OnNodeDragCompleted));
 
         var transform = new TransformGroup();
         transform.Children.Add(_scaleTransform);
@@ -130,23 +130,6 @@ public class YCodeDesigner : MultiSelector
 
     #endregion
 
-    #region Routed Event
-
-    public static readonly RoutedEvent ViewportUpdatedEvent = EventManager.RegisterRoutedEvent(
-        nameof(ViewportUpdated),
-        RoutingStrategy.Bubble,
-        typeof(RoutedEventHandler),
-        typeof(YCodeDesigner)
-    );
-
-    public event RoutedEventHandler ViewportUpdated
-    {
-        add => AddHandler(ViewportUpdatedEvent, value);
-        remove => RemoveHandler(ViewportUpdatedEvent, value);
-    }
-
-    #endregion
-
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
@@ -191,6 +174,22 @@ public class YCodeDesigner : MultiSelector
         return item is YCodeLine;
     }
 
+    private void OnNodeDragStarted(object sender, DragStartedEventArgs e)
+    {
+        if (e.OriginalSource is YCodeNode node)
+        {
+            this.RaiseEvent<NodeDragStartedEventArgs>(nameof(DragStared), new NodeDragStartedEventArgs(node));
+        }
+    }
+
+    private void OnNodeDragCompleted(object sender, DragCompletedEventArgs e)
+    {
+        if (e.OriginalSource is YCodeNode node)
+        {
+            this.RaiseEvent<NodeDragCompletedEventArgs>(nameof(DragCompleted), new NodeDragCompletedEventArgs(node));
+        }
+    }
+
     private void OnNodeDragDelta(object sender, DragDeltaEventArgs e)
     {
         if (e.OriginalSource is YCodeNode node)
@@ -202,6 +201,8 @@ public class YCodeDesigner : MultiSelector
             //TODO: MoveRange
 
             node.Location = new Point(left, top);
+
+            this.RaiseEvent<NodeDragDeltaEventArgs>(nameof(DragDelta), new NodeDragDeltaEventArgs(node));
         }
     }
 }

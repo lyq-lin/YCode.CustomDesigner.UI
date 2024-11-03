@@ -183,7 +183,7 @@ public class YCodeNode : ContentControl, IDesignerItem
 
             var delta = mouse - _point.Value;
 
-            this.RaiseEvent(new DragDeltaEventArgs(delta.X, delta.Y)
+            this.RaiseEvent(new System.Windows.Controls.Primitives.DragDeltaEventArgs(delta.X, delta.Y)
             {
                 RoutedEvent = DragDeltaEvent
             });

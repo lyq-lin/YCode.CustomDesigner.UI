@@ -5,3 +5,5 @@ global using System.Windows.Input;
 global using System.Windows.Media;
 global using System.Windows.Shapes;
 global using System.Windows.Controls.Primitives;
+global using System.Collections;
+global using System.ComponentModel;
