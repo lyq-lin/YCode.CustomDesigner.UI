@@ -14,6 +14,18 @@ public partial class YCodeDesigner
         remove => this.Events.AddHandler(nameof(ViewportUpdated), value);
     }
 
+    public event EventHandler<MountingEventArgs> Mounting
+    {
+        add => this.Events.AddHandler(nameof(Mounting), value);
+        remove => this.Events.AddHandler(nameof(Mounting), value);
+    }
+
+    public event EventHandler<MountedEventArgs> Mounted
+    {
+        add => this.Events.AddHandler(nameof(Mounted), value);
+        remove => this.Events.AddHandler(nameof(Mounted), value);
+    }
+
     public event EventHandler<NodeDragStartedEventArgs> DragStared
     {
         add => this.Events.AddHandler(nameof(DragStared), value);

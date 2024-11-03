@@ -7,3 +7,4 @@ global using System.Windows.Shapes;
 global using System.Windows.Controls.Primitives;
 global using System.Collections;
 global using System.ComponentModel;
+global using System.Windows.Data;

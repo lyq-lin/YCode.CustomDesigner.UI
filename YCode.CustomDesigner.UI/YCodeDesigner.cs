@@ -14,6 +14,8 @@ public partial class YCodeDesigner : MultiSelector
         FocusableProperty.OverrideMetadata(typeof(YCodeDesigner), new FrameworkPropertyMetadata(false));
     }
 
+    private bool _isLoaded = false;
+
     private readonly TranslateTransform _translateTransform = new();
     private readonly ScaleTransform _scaleTransform = new();
 
@@ -28,6 +30,8 @@ public partial class YCodeDesigner : MultiSelector
         transform.Children.Add(_translateTransform);
 
         this.SetValue(ViewportTransformPropertyKey, transform);
+
+        this.Loaded += OnLoaded;
     }
 
     protected internal Panel ItemsHost { get; private set; } = default!;
@@ -72,15 +76,24 @@ public partial class YCodeDesigner : MultiSelector
     public static readonly DependencyProperty LinesProperty = DependencyProperty.Register(
         nameof(Lines), typeof(IEnumerable), typeof(YCodeDesigner));
 
+    public static readonly DependencyProperty ItemAdapterProperty = DependencyProperty.Register(
+        nameof(ItemAdapter), typeof(IYCodeAdapter), typeof(YCodeDesigner));
+
+    public IYCodeAdapter? ItemAdapter
+    {
+        get => (IYCodeAdapter?)GetValue(ItemAdapterProperty);
+        set => SetValue(ItemAdapterProperty, value);
+    }
+
     public IEnumerable Lines
     {
         get => (IEnumerable)GetValue(LinesProperty);
         set => SetValue(LinesProperty, value);
     }
 
-    public YCodeSource Source
+    public YCodeSource? Source
     {
-        get => (YCodeSource)GetValue(SourceProperty);
+        get => (YCodeSource?)GetValue(SourceProperty);
         set => SetValue(SourceProperty, value);
     }
 
@@ -162,6 +175,54 @@ public partial class YCodeDesigner : MultiSelector
     protected override bool IsItemItsOwnContainerOverride(object item)
     {
         return item is YCodeNode;
+    }
+
+    private async void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        if (!_isLoaded)
+        {
+            _isLoaded = true;
+
+            var mounting = new MountingEventArgs();
+
+            this.RaiseEvent<MountingEventArgs>(nameof(Mounting), mounting);
+
+            if (!mounting.Cancel)
+            {
+                if (this.ItemAdapter != null)
+                {
+                    var source = await this.ItemAdapter.ImportAsync(mounting.Value);
+
+                    if (this.Source == null)
+                    {
+                        this.Source = source;
+                    }
+                    else
+                    {
+                        this.Source.Nodes.Clear();
+
+                        this.Source.Lines.Clear();
+
+                        await this.CopyAsync(source.Nodes, this.Source.Nodes);
+
+                        await this.CopyAsync(source.Lines, this.Source.Lines);
+                    }
+                }
+
+                this.RaiseEvent<MountedEventArgs>(nameof(Mounted), new MountedEventArgs(this.Source));
+            }
+        }
+    }
+
+    private async Task CopyAsync(IList source, IList destination)
+    {
+        await Task.Run(() =>
+        {
+            for (int i = 0; i < source.Count; i++)
+            {
+                destination.Add(source[i]);
+            }
+        });
     }
 
     public DependencyObject GetContainerForLineOverride(YCodeLineContainer container)

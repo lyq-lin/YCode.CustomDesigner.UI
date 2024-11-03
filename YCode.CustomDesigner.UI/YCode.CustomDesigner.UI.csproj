@@ -10,6 +10,11 @@
   <ItemGroup>
     <None Remove="Themes\Views\Styles.xaml~" />
     <None Remove="Themes\Views\Lines.xaml~" />
+    <None Remove="YCode.CustomDesigner.UI.csproj.DotSettings" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\YCode.CustomDesigner.Abstract\YCode.CustomDesigner.Abstract.csproj" />
   </ItemGroup>
 
 </Project>

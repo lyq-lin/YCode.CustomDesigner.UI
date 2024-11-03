@@ -28,6 +28,8 @@
                              DragDelta="OnNodeDragDelta"
                              DragStared="OnNodeDragStared"
                              DragCompleted="OnNodeDragCompleted"
+                             Mounting="OnMounting"
+                             Mounted="OnMounted"
                              ItemContainerStyle="{StaticResource YCodeNodeStyle}"
                              Source="{Binding Source}" />
     </Grid>

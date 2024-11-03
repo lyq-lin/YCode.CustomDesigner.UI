@@ -26,4 +26,14 @@ public partial class Playground : UserControl
     {
         Debug.WriteLine($"{nameof(OnNodeDragCompleted)} Trigger...");
     }
+
+    private void OnMounting(object? sender, MountingEventArgs e)
+    {
+        Debug.WriteLine($"{nameof(OnMounting)} Trigger...");
+    }
+
+    private void OnMounted(object? sender, MountedEventArgs e)
+    {
+        Debug.WriteLine($"{nameof(OnMounted)} Trigger...");
+    }
 }
