@@ -157,7 +157,10 @@ public partial class YCodeDesigner : MultiSelector
         base.OnApplyTemplate();
 
         this.ItemsHost = this.GetTemplateChild("PART_ItemsHost") as Panel ??
-                         throw new InvalidOperationException("PART_ItemsHost is missing or is not of type Panel.");
+                         throw new InvalidOperationException(
+                             $"PART_ItemsHost is missing or is not of type {nameof(Panel)}.");
+
+        this.ApplyRenderingOptimizations();
     }
 
     protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
@@ -203,7 +206,7 @@ public partial class YCodeDesigner : MultiSelector
                     var source = await this.ItemAdapter.ImportAsync(mounting.Value);
 
                     this.Source ??= new YCodeSource();
-                    
+
                     this.Source.Nodes.Clear();
 
                     this.Source.Lines.Clear();
@@ -216,6 +219,11 @@ public partial class YCodeDesigner : MultiSelector
                 this.RaiseEvent<MountedEventArgs>(nameof(Mounted), new MountedEventArgs(this.Source));
             }
         }
+    }
+
+    private void ApplyRenderingOptimizations()
+    {
+        ItemsHost.CacheMode = new BitmapCache(1.0 / 1.0);
     }
 
     private async Task CopyAsync(IList source, IList destination)

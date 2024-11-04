@@ -13,9 +13,6 @@
     </UserControl.DataContext>
 
     <UserControl.Resources>
-
-        <demo:YCodeDataAdapter x:Key="YCodeDataAdapter" />
-
         <Style x:Key="YCodeNodeStyle"
                d:DataContext="{d:DesignInstance ycode:YCodeNodeViewModel}"
                TargetType="{x:Type ycode:YCodeNode}">

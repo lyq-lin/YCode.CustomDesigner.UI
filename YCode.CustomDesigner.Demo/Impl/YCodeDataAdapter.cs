@@ -10,7 +10,7 @@ public class YCodeDataAdapter : IYCodeAdapter
     {
         var viewModel = new YCodeSource();
 
-        var count = 1000;
+        var count = 100;
 
         var xDistance = 220;
 

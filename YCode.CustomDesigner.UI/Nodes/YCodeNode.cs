@@ -34,7 +34,7 @@ public class YCodeNode : ContentControl, IDesignerItem
 
     internal List<YCodeLine> Lines { get; private set; }
 
-    public Thickness SelectedBorderThickness => new Thickness(2);
+    public Thickness SelectedBorderThickness => new Thickness(2.5);
 
     public Thickness SelectedMargin => new Thickness(
         BorderThickness.Left - SelectedBorderThickness.Left,
@@ -59,6 +59,15 @@ public class YCodeNode : ContentControl, IDesignerItem
         Selector.IsSelectedProperty.AddOwner(typeof(YCodeNode),
             new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 OnIsSelectedChanged));
+
+    public static readonly DependencyProperty SelectedBrushProperty = DependencyProperty.Register(
+        nameof(SelectedBrush), typeof(Brush), typeof(YCodeNode), new PropertyMetadata(Brushes.Orange));
+
+    public Brush SelectedBrush
+    {
+        get => (Brush)GetValue(SelectedBrushProperty);
+        set => SetValue(SelectedBrushProperty, value);
+    }
 
     public bool IsSelected
     {
@@ -145,7 +154,9 @@ public class YCodeNode : ContentControl, IDesignerItem
     {
         this.Focus();
 
-        this.IsSelectable = true;
+        this.Designer.UnselectAll();
+
+        this.IsSelected = true;
     }
 
     protected override void OnMouseDown(MouseButtonEventArgs e)
