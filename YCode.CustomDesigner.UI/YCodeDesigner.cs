@@ -211,9 +211,9 @@ public partial class YCodeDesigner : MultiSelector
 
                     this.Source.Lines.Clear();
 
-                    await this.CopyAsync(source.Nodes, this.Source.Nodes);
+                    await this.CopyToAsync(source.Nodes, this.Source.Nodes);
 
-                    await this.CopyAsync(source.Lines, this.Source.Lines);
+                    await this.CopyToAsync(source.Lines, this.Source.Lines);
                 }
 
                 this.RaiseEvent<MountedEventArgs>(nameof(Mounted), new MountedEventArgs(this.Source));
@@ -226,13 +226,13 @@ public partial class YCodeDesigner : MultiSelector
         ItemsHost.CacheMode = new BitmapCache(1.0 / 1.0);
     }
 
-    private async Task CopyAsync(IList source, IList destination)
+    private async Task CopyToAsync(IList source, IList destination)
     {
         await Task.Run(() =>
         {
-            for (int i = 0; i < source.Count; i++)
+            foreach (var item in source)
             {
-                destination.Add(source[i]);
+                destination.Add(item);
             }
         });
     }
