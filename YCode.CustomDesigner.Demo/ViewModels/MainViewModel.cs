@@ -1,39 +1,45 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 using YCode.CustomDesigner.UI;
 
 namespace YCode.CustomDesigner.Demo;
 
 internal class MainViewModel : YCodeNotifyPropertyChanged
 {
-    public YCodeSource Source { get; set; }
+    private ObservableCollection<UIElement> _uis;
+
+    private UIElement? _view;
+
+    private bool _isChanged;
 
     public MainViewModel()
     {
-        this.Source = new YCodeSource();
+        _uis = [new Playground(), new Performance()];
 
-        var sourceId = DateTime.Now.Ticks.ToString("X");
-        var targetId = DateTime.Now.Ticks.ToString("X");
+        _view = _uis[0];
+    }
 
-        this.Source.Nodes.Add(new YCodeNodeViewModel()
+    public bool IsChanged
+    {
+        get => _isChanged;
+        set
         {
-            Id = sourceId,
-            Name = "Node A",
-            Description = "This is a node A.",
-            Location = new Point(100, 180)
-        });
+            if (this.OnPropertyChanged(ref _isChanged, value))
+            {
+                this.View = _isChanged ? _uis[1] : _uis[0];
+            }
+        }
+    }
 
-        this.Source.Lines.Add(new YCodeLineViewModel()
-        {
-            PrevId = sourceId,
-            NextId = targetId
-        });
+    public UIElement? View
+    {
+        get => _view;
+        set => this.OnPropertyChanged(ref _view, value);
+    }
 
-        this.Source.Nodes.Add(new YCodeNodeViewModel()
-        {
-            Id = targetId,
-            Name = "Node B",
-            Description = "This is a node B.",
-            Location = new Point(400, 300)
-        });
+    public ObservableCollection<UIElement> Uis
+    {
+        get => _uis;
+        set => this.OnPropertyChanged(ref _uis, value);
     }
 }

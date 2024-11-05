@@ -181,7 +181,10 @@ public partial class YCodeDesigner : MultiSelector
 
     protected override DependencyObject GetContainerForItemOverride()
     {
-        return new YCodeNode(this);
+        return new YCodeNode(this)
+        {
+            RenderTransform = new TranslateTransform()
+        };
     }
 
     protected override bool IsItemItsOwnContainerOverride(object item)

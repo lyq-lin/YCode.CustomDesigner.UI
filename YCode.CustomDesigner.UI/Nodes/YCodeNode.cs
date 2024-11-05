@@ -34,14 +34,6 @@ public class YCodeNode : ContentControl, IDesignerItem
 
     internal List<YCodeLine> Lines { get; private set; }
 
-    public Thickness SelectedBorderThickness => new Thickness(2.5);
-
-    public Thickness SelectedMargin => new Thickness(
-        BorderThickness.Left - SelectedBorderThickness.Left,
-        BorderThickness.Top - SelectedBorderThickness.Top,
-        BorderThickness.Right - SelectedBorderThickness.Right,
-        BorderThickness.Bottom - SelectedBorderThickness.Bottom);
-
     #region Dependency Properties
 
     public static readonly DependencyProperty LocationProperty = DependencyProperty.Register(

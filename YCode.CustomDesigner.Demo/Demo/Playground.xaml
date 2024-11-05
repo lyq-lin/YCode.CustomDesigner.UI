@@ -9,7 +9,7 @@
              d:DesignWidth="1300"
              mc:Ignorable="d">
     <UserControl.DataContext>
-        <demo:MainViewModel />
+        <demo:PlaygroundViewModel />
     </UserControl.DataContext>
 
     <UserControl.Resources>

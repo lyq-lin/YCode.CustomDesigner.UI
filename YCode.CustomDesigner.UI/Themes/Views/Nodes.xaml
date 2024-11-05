@@ -131,9 +131,15 @@
     <Style TargetType="{x:Type local:YCodeNode}">
         <Setter Property="NodeId" Value="{Binding Id}" />
         <Setter Property="Location" Value="{Binding Location}" />
-        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderThickness" Value="1.8" />
         <Setter Property="Background" Value="CadetBlue" />
         <Setter Property="BorderBrush" Value="DodgerBlue" />
+        <Setter Property="CacheMode">
+            <Setter.Value>
+                <BitmapCache RenderAtScale="2.0"
+                             EnableClearType="True" />
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:YCodeNode}">
@@ -151,8 +157,6 @@
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="BorderBrush" Value="{Binding SelectedBrush, RelativeSource={RelativeSource Self}}" />
-                <Setter Property="Margin" Value="{Binding SelectedMargin, RelativeSource={RelativeSource Self}}" />
-                <Setter Property="BorderThickness" Value="{Binding SelectedBorderThickness, RelativeSource={RelativeSource Self}}" />
             </Trigger>
         </Style.Triggers>
     </Style>
