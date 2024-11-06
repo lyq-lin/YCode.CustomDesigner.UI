@@ -14,7 +14,7 @@ public partial class YCodeDesigner : MultiSelector
         FocusableProperty.OverrideMetadata(typeof(YCodeDesigner), new FrameworkPropertyMetadata(false));
     }
 
-    private bool? _isLoaded = false;
+    private bool? _isLoaded;
 
     private readonly TranslateTransform _translateTransform = new();
     private readonly ScaleTransform _scaleTransform = new();

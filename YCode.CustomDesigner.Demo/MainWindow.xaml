@@ -11,12 +11,19 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize"
         mc:Ignorable="d">
-    <TabControl>
-        <TabItem Header="Playground">
-            <local:Playground />
+
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+
+    <TabControl SelectionChanged="OnSelectionChanged">
+        <TabItem Header="Playground"
+                 Tag="0">
+            <!-- <local:Playground /> -->
         </TabItem>
-        <TabItem Header="Performance">
-            <local:Performance />
+        <TabItem Header="Performance"
+                 Tag="1">
+            <!-- <local:Performance /> -->
         </TabItem>
     </TabControl>
 </Window>
