@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Windows.Threading;
 
 namespace YCode.CustomDesigner.UI;
 
@@ -15,6 +16,7 @@ public partial class YCodeDesigner : MultiSelector
     }
 
     private bool? _isLoaded;
+    private DispatcherTimer? _autoPanningTimer;
 
     private readonly TranslateTransform _translateTransform = new();
     private readonly ScaleTransform _scaleTransform = new();
@@ -100,6 +102,16 @@ public partial class YCodeDesigner : MultiSelector
     public static readonly DependencyProperty LineTypeProperty = DependencyProperty.Register(
         nameof(LineType), typeof(LineType), typeof(YCodeDesigner), new PropertyMetadata(LineType.Bezier));
 
+    public static readonly DependencyProperty CanAutoPanningProperty = DependencyProperty.Register(
+        nameof(CanAutoPanning), typeof(bool), typeof(YCodeDesigner),
+        new PropertyMetadata(true, OnCanAutoPanningChanged));
+
+    public bool CanAutoPanning
+    {
+        get => (bool)GetValue(CanAutoPanningProperty);
+        set => SetValue(CanAutoPanningProperty, value);
+    }
+
     public LineType LineType
     {
         get => (LineType)GetValue(LineTypeProperty);
@@ -177,6 +189,8 @@ public partial class YCodeDesigner : MultiSelector
         this.ItemsHost = this.GetTemplateChild("PART_ItemsHost") as Panel ??
                          throw new InvalidOperationException(
                              $"PART_ItemsHost is missing or is not of type {nameof(Panel)}.");
+
+        this.OnAutoPanningChanged(this.CanAutoPanning);
 
         this.ApplyRenderingOptimizations();
     }
@@ -317,6 +331,67 @@ public partial class YCodeDesigner : MultiSelector
         ItemsHost.CacheMode = new BitmapCache(1.0 / 1.0);
     }
 
+    private void OnAutoPanningChanged(bool canAutoPanning)
+    {
+        if (!canAutoPanning)
+        {
+            _autoPanningTimer?.Stop();
+        }
+        else if (_autoPanningTimer == null)
+        {
+            _autoPanningTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(1d), DispatcherPriority.Background,
+                HandleAutoPanning, Dispatcher);
+        }
+        else
+        {
+            _autoPanningTimer.Interval = TimeSpan.FromMilliseconds(1d);
+
+            _autoPanningTimer.Start();
+        }
+
+        return;
+
+        void HandleAutoPanning(object? sender, EventArgs e)
+        {
+            if (!IsPanning && IsMouseCaptureWithin)
+            {
+                var mouse = Mouse.GetPosition(this);
+
+                var rate = 1d;
+
+                var edgeDistance = 15d;
+
+                var autoPanSpeed = Math.Min(15d, 15d * rate) / (this.Zoom * 2);
+
+                var x = ViewportLocation.X;
+
+                var y = ViewportLocation.Y;
+
+                if (mouse.X <= edgeDistance)
+                {
+                    x -= autoPanSpeed;
+                }
+                else if (mouse.X >= ActualWidth - edgeDistance)
+                {
+                    x += autoPanSpeed;
+                }
+
+                if (mouse.Y <= edgeDistance)
+                {
+                    y -= autoPanSpeed;
+                }
+                else if (mouse.Y >= ActualHeight - edgeDistance)
+                {
+                    y += autoPanSpeed;
+                }
+
+                this.ViewportLocation = new Point(x, y);
+
+                this.Point = Mouse.GetPosition(ItemsHost);
+            }
+        }
+    }
+
     private async Task CopyToAsync(IList source, IList destination)
     {
         await Task.Run(() =>
@@ -367,6 +442,14 @@ public partial class YCodeDesigner : MultiSelector
             node.Location = new Point(left, top);
 
             this.RaiseEvent<NodeDragDeltaEventArgs>(nameof(DragDelta), new NodeDragDeltaEventArgs(node));
+        }
+    }
+
+    private static void OnCanAutoPanningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is YCodeDesigner designer && e.NewValue is bool canAutoPanning)
+        {
+            designer.OnAutoPanningChanged(canAutoPanning);
         }
     }
 }
