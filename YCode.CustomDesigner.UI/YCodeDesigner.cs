@@ -363,15 +363,15 @@ public partial class YCodeDesigner : MultiSelector
 
                 var autoPanSpeed = Math.Min(15d, 15d * rate) / (this.Zoom * 2);
 
-                var x = ViewportLocation.X;
+                var x = this.ViewportLocation.X;
 
-                var y = ViewportLocation.Y;
+                var y = this.ViewportLocation.Y;
 
                 if (mouse.X <= edgeDistance)
                 {
                     x -= autoPanSpeed;
                 }
-                else if (mouse.X >= ActualWidth - edgeDistance)
+                else if (mouse.X >= this.ActualWidth - edgeDistance)
                 {
                     x += autoPanSpeed;
                 }
@@ -380,14 +380,14 @@ public partial class YCodeDesigner : MultiSelector
                 {
                     y -= autoPanSpeed;
                 }
-                else if (mouse.Y >= ActualHeight - edgeDistance)
+                else if (mouse.Y >= this.ActualHeight - edgeDistance)
                 {
                     y += autoPanSpeed;
                 }
 
                 this.ViewportLocation = new Point(x, y);
 
-                this.Point = Mouse.GetPosition(ItemsHost);
+                this.Point = Mouse.GetPosition(this.ItemsHost);
             }
         }
     }
