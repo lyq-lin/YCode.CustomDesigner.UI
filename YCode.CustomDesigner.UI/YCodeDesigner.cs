@@ -14,7 +14,7 @@ public partial class YCodeDesigner : MultiSelector
         FocusableProperty.OverrideMetadata(typeof(YCodeDesigner), new FrameworkPropertyMetadata(false));
     }
 
-    private bool _isLoaded = false;
+    private bool? _isLoaded = false;
 
     private readonly TranslateTransform _translateTransform = new();
     private readonly ScaleTransform _scaleTransform = new();
@@ -35,6 +35,10 @@ public partial class YCodeDesigner : MultiSelector
     }
 
     protected internal Panel ItemsHost { get; private set; } = default!;
+
+    internal bool IsPanning { get; set; }
+
+    internal Point? Point { get; set; }
 
     #region Dependency Properties
 
@@ -62,7 +66,21 @@ public partial class YCodeDesigner : MultiSelector
         nameof(MinZoom), typeof(double), typeof(YCodeDesigner), new PropertyMetadata(0.5d));
 
     public static readonly DependencyProperty ViewportLocationProperty = DependencyProperty.Register(
-        nameof(ViewportLocation), typeof(Point), typeof(YCodeDesigner), new PropertyMetadata(default(Point)));
+        nameof(ViewportLocation), typeof(Point), typeof(YCodeDesigner),
+        new FrameworkPropertyMetadata(default(Point), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+            OnViewportLocationChanged));
+
+    private static void OnViewportLocationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is YCodeDesigner designer && e.NewValue is Point translate)
+        {
+            designer._translateTransform.X = -translate.X * designer.Zoom;
+
+            designer._translateTransform.Y = -translate.Y * designer.Zoom;
+
+            designer.RaiseEvent(nameof(designer.ViewportUpdated), new RoutedEventArgs());
+        }
+    }
 
     public static readonly DependencyProperty ViewportSizeProperty = DependencyProperty.Register(
         nameof(ViewportSize), typeof(Size), typeof(YCodeDesigner), new PropertyMetadata(default(Size)));
@@ -192,11 +210,79 @@ public partial class YCodeDesigner : MultiSelector
         return item is YCodeNode;
     }
 
+    protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+    {
+        if (Mouse.Captured == null || this.IsMouseCaptured)
+        {
+            this.Focus();
+
+            this.CaptureMouseSafe();
+
+            this.IsPanning = true;
+
+            this.Cursor = Cursors.SizeAll;
+
+            this.Point = Mouse.GetPosition(this);
+
+            e.Handled = true;
+        }
+    }
+
+    protected override void OnMouseMove(MouseEventArgs e)
+    {
+        var mouse = e.GetPosition(this);
+
+        if (this.IsPanning && this.IsMouseCaptureWithin)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed)
+            {
+                this.IsPanning = false;
+
+                this.Cursor = Cursors.Arrow;
+
+                this.Point = null;
+
+                if (this.IsMouseCaptured)
+                {
+                    this.ReleaseMouseCapture();
+                }
+
+                return;
+            }
+
+            if (this.Point.HasValue)
+            {
+                var value = mouse - this.Point.Value;
+
+                this.ViewportLocation -= value / this.Zoom;
+
+                this.Point = mouse;
+            }
+        }
+    }
+
+    protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+    {
+        if (this.IsMouseCaptured)
+        {
+            this.ReleaseMouseCapture();
+        }
+
+        if (this.IsPanning)
+        {
+            this.IsPanning = false;
+
+            this.Cursor = Cursors.Arrow;
+
+            this.Point = null;
+        }
+    }
+
     private async void OnLoaded(object sender, RoutedEventArgs e)
     {
-        if (!_isLoaded)
+        if (!_isLoaded.HasValue || !_isLoaded.Value)
         {
-            _isLoaded = true;
+            _isLoaded = false;
 
             var mounting = new MountingEventArgs();
 
@@ -221,6 +307,8 @@ public partial class YCodeDesigner : MultiSelector
 
                 this.RaiseEvent<MountedEventArgs>(nameof(Mounted), new MountedEventArgs(this.Source));
             }
+
+            _isLoaded = true;
         }
     }
 

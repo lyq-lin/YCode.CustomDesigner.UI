@@ -14,9 +14,10 @@
                     <Border BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}">
-                        <Canvas>
+                        <Canvas RenderTransform="{TemplateBinding ViewportTransform}">
                             <local:YCodeCanvas x:Name="PART_ItemsHost"
                                                IsItemsHost="True"
+                                               Background="Transparent"
                                                Extent="{Binding ItemsExtent, Mode=OneWayToSource, RelativeSource={RelativeSource TemplatedParent}}" />
 
                             <local:YCodeLineContainer Panel.ZIndex="-1"

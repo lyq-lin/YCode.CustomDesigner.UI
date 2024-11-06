@@ -46,24 +46,24 @@ public partial class YCodeDesigner
 
     #endregion
 
-    private void RaiseEvent(string eventName, EventArgs args)
+    private void RaiseEvent(string eventName, RoutedEventArgs args)
     {
         if (_event[eventName] is RoutedEventHandler routed)
         {
             routed.Invoke(this, args as RoutedEventArgs);
         }
-
-        if (_event[eventName] is EventHandler @event)
-        {
-            @event.Invoke(this, args);
-        }
     }
 
-    private void RaiseEvent<T>(string eventName, T args)
+    private void RaiseEvent<T>(string eventName, T args) where T : EventArgs
     {
         if (_event[eventName] is EventHandler<T> @event)
         {
             @event.Invoke(this, args);
+        }
+
+        if (_event[eventName] is EventHandler @event1)
+        {
+            @event1.Invoke(this, args);
         }
     }
 }
