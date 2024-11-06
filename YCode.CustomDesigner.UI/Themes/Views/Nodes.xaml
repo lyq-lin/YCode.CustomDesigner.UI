@@ -156,6 +156,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Panel.ZIndex" Value="1" />
                 <Setter Property="BorderBrush" Value="{Binding SelectedBrush, RelativeSource={RelativeSource Self}}" />
             </Trigger>
         </Style.Triggers>
