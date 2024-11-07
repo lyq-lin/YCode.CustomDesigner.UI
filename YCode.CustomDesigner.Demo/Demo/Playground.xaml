@@ -29,6 +29,18 @@
                              Mounted="OnMounted"
                              GridType="Dot"
                              ItemContainerStyle="{StaticResource YCodeNodeStyle}"
-                             Source="{Binding Source}" />
+                             Source="{Binding Source}">
+            <ycode:YCodeDesigner.Tool>
+                <Grid>
+                    <Border Background="White"
+                            CornerRadius="5"
+                            Opacity="0.5" />
+
+                    <TextBlock Margin="8"
+                               Text="There is ToolBar!"
+                               FontSize="24" />
+                </Grid>
+            </ycode:YCodeDesigner.Tool>
+        </ycode:YCodeDesigner>
     </Grid>
 </UserControl>

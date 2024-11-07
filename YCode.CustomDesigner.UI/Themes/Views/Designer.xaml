@@ -14,22 +14,30 @@
                     <Border BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}">
-                        <Canvas RenderTransform="{TemplateBinding ViewportTransform}">
-                            <local:YCodePanel x:Name="PART_ItemsHost"
-                                              IsItemsHost="True"
-                                              Background="Transparent"
-                                              Extent="{Binding ItemsExtent, Mode=OneWayToSource, RelativeSource={RelativeSource TemplatedParent}}" />
+                        <Grid>
+                            <ContentPresenter Margin="{TemplateBinding ToolPadding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalToolAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalToolAlignment}"
+                                              Panel.ZIndex="2"
+                                              ContentSource="Tool" />
 
-                            <local:YCodeLineContainer Panel.ZIndex="-1"
-                                                      ItemsSource="{TemplateBinding Lines}"
-                                                      IsTabStop="False">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <Canvas />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </local:YCodeLineContainer>
-                        </Canvas>
+                            <Canvas RenderTransform="{TemplateBinding ViewportTransform}">
+                                <local:YCodePanel x:Name="PART_ItemsHost"
+                                                  IsItemsHost="True"
+                                                  Background="Transparent"
+                                                  Extent="{Binding ItemsExtent, Mode=OneWayToSource, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                                <local:YCodeLineContainer Panel.ZIndex="-1"
+                                                          ItemsSource="{TemplateBinding Lines}"
+                                                          IsTabStop="False">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <Canvas />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </local:YCodeLineContainer>
+                            </Canvas>
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

@@ -98,6 +98,54 @@ public partial class YCodeDesigner : MultiSelector
         nameof(GridType), typeof(GridType), typeof(YCodeDesigner),
         new FrameworkPropertyMetadata(GridType.Grid, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
+    public static readonly DependencyProperty ToolProperty = DependencyProperty.Register(
+        nameof(Tool), typeof(object), typeof(YCodeDesigner));
+
+    public static readonly DependencyProperty ToolTemplateProperty = DependencyProperty.Register(
+        nameof(ToolTemplate), typeof(DataTemplate), typeof(YCodeDesigner));
+
+    public static readonly DependencyProperty HorizontalToolAlignmentProperty = DependencyProperty.Register(
+        nameof(HorizontalToolAlignment), typeof(HorizontalAlignment), typeof(YCodeDesigner),
+        new PropertyMetadata(HorizontalAlignment.Center));
+
+    public static readonly DependencyProperty VerticalToolAlignmentProperty = DependencyProperty.Register(
+        nameof(VerticalToolAlignment), typeof(VerticalAlignment), typeof(YCodeDesigner),
+        new PropertyMetadata(VerticalAlignment.Bottom));
+
+    public static readonly DependencyProperty ToolPaddingProperty = DependencyProperty.Register(
+        nameof(ToolPadding), typeof(Thickness), typeof(YCodeDesigner),
+        new PropertyMetadata(new Thickness(0, 0, 0, 50)));
+
+    public Thickness ToolPadding
+    {
+        get => (Thickness)GetValue(ToolPaddingProperty);
+        set => SetValue(ToolPaddingProperty, value);
+    }
+
+    public VerticalAlignment VerticalToolAlignment
+    {
+        get => (VerticalAlignment)GetValue(VerticalToolAlignmentProperty);
+        set => SetValue(VerticalToolAlignmentProperty, value);
+    }
+
+    public HorizontalAlignment HorizontalToolAlignment
+    {
+        get => (HorizontalAlignment)GetValue(HorizontalToolAlignmentProperty);
+        set => SetValue(HorizontalToolAlignmentProperty, value);
+    }
+
+    public DataTemplate ToolTemplate
+    {
+        get => (DataTemplate)GetValue(ToolTemplateProperty);
+        set => SetValue(ToolTemplateProperty, value);
+    }
+
+    public object Tool
+    {
+        get => (object)GetValue(ToolProperty);
+        set => SetValue(ToolProperty, value);
+    }
+
     public GridType GridType
     {
         get => (GridType)GetValue(GridTypeProperty);
