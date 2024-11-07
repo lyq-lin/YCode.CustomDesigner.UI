@@ -72,18 +72,6 @@ public partial class YCodeDesigner : MultiSelector
         new FrameworkPropertyMetadata(default(Point), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
             OnViewportLocationChanged));
 
-    private static void OnViewportLocationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        if (d is YCodeDesigner designer && e.NewValue is Point translate)
-        {
-            designer._translateTransform.X = -translate.X * designer.Zoom;
-
-            designer._translateTransform.Y = -translate.Y * designer.Zoom;
-
-            designer.RaiseEvent(nameof(designer.ViewportUpdated), new RoutedEventArgs());
-        }
-    }
-
     public static readonly DependencyProperty ViewportSizeProperty = DependencyProperty.Register(
         nameof(ViewportSize), typeof(Size), typeof(YCodeDesigner), new PropertyMetadata(default(Size)));
 
@@ -105,6 +93,16 @@ public partial class YCodeDesigner : MultiSelector
     public static readonly DependencyProperty CanAutoPanningProperty = DependencyProperty.Register(
         nameof(CanAutoPanning), typeof(bool), typeof(YCodeDesigner),
         new PropertyMetadata(true, OnCanAutoPanningChanged));
+
+    public static readonly DependencyProperty GridTypeProperty = DependencyProperty.Register(
+        nameof(GridType), typeof(GridType), typeof(YCodeDesigner),
+        new FrameworkPropertyMetadata(GridType.Grid, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+    public GridType GridType
+    {
+        get => (GridType)GetValue(GridTypeProperty);
+        set => SetValue(GridTypeProperty, value);
+    }
 
     public bool CanAutoPanning
     {
@@ -223,6 +221,25 @@ public partial class YCodeDesigner : MultiSelector
     protected override bool IsItemItsOwnContainerOverride(object item)
     {
         return item is YCodeNode;
+    }
+
+    protected override void OnRender(DrawingContext dc)
+    {
+        base.OnRender(dc);
+
+        switch (this.GridType)
+        {
+            case GridType.Dot:
+            {
+                this.OnRenderDot(dc);
+            }
+                break;
+            case GridType.Grid:
+            {
+                this.OnRenderGrid(dc);
+            }
+                break;
+        }
     }
 
     protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -446,11 +463,64 @@ public partial class YCodeDesigner : MultiSelector
         }
     }
 
+    private void OnRenderDot(DrawingContext dc)
+    {
+        var size = 22d;
+
+        var column = this.ActualWidth / size;
+
+        var row = this.ActualHeight / size;
+
+        for (var i = 1; i < row; i++)
+        {
+            for (var j = 1; j < column; j++)
+            {
+                dc.DrawEllipse(Brushes.Gray, null, new Point(j * size, i * size), 1.5, 1.5);
+            }
+        }
+    }
+
+    private void OnRenderGrid(DrawingContext dc)
+    {
+        var size = 16d;
+
+        var column = this.ActualWidth / size;
+        var row = this.ActualHeight / size;
+
+        var pen = new Pen(Brushes.Gray, 0.1);
+
+        for (var i = 0; i < row; i++)
+        {
+            var y = i * size;
+
+            dc.DrawLine(pen, new Point(0, y), new Point(this.ActualWidth, y));
+        }
+
+        for (var i = 0; i < column; i++)
+        {
+            var x = i * size;
+
+            dc.DrawLine(pen, new Point(x, 0), new Point(x, this.ActualHeight));
+        }
+    }
+
     private static void OnCanAutoPanningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is YCodeDesigner designer && e.NewValue is bool canAutoPanning)
         {
             designer.OnAutoPanningChanged(canAutoPanning);
+        }
+    }
+
+    private static void OnViewportLocationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is YCodeDesigner designer && e.NewValue is Point translate)
+        {
+            designer._translateTransform.X = -translate.X * designer.Zoom;
+
+            designer._translateTransform.Y = -translate.Y * designer.Zoom;
+
+            designer.RaiseEvent(nameof(designer.ViewportUpdated), new RoutedEventArgs());
         }
     }
 }

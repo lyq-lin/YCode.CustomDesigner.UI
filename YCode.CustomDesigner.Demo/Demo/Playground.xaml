@@ -23,10 +23,11 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid Background="#1E1E1E">
         <ycode:YCodeDesigner x:Name="Designer"
                              Mounting="OnMounting"
                              Mounted="OnMounted"
+                             GridType="Dot"
                              ItemContainerStyle="{StaticResource YCodeNodeStyle}"
                              Source="{Binding Source}" />
     </Grid>

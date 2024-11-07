@@ -1,18 +1,18 @@
 namespace YCode.CustomDesigner.UI;
 
-internal class YCodeCanvas:Panel
+internal class YCodePanel : Panel
 {
     #region Dependency properties
-    
+
     public static readonly DependencyProperty ExtentProperty = DependencyProperty.Register(
-        nameof(Extent), typeof(Rect), typeof(YCodeCanvas), new PropertyMetadata(default(Rect)));
+        nameof(Extent), typeof(Rect), typeof(YCodePanel), new PropertyMetadata(default(Rect)));
 
     public Rect Extent
     {
         get => (Rect)GetValue(ExtentProperty);
         set => SetValue(ExtentProperty, value);
     }
-    
+
     #endregion
 
     protected override Size ArrangeOverride(Size finalSize)
@@ -28,7 +28,7 @@ internal class YCodeCanvas:Panel
         {
             if (children[i] is IDesignerItem item)
             {
-                item.Arrange(new Rect(item.Location,item.DesiredSize));
+                item.Arrange(new Rect(item.Location, item.DesiredSize));
 
                 var size = children[i].RenderSize;
 
@@ -66,7 +66,7 @@ internal class YCodeCanvas:Panel
     protected override Size MeasureOverride(Size availableSize)
     {
         var constraint = new Size(Double.PositiveInfinity, Double.PositiveInfinity);
-        
+
         var children = InternalChildren;
 
         for (var i = 0; i < children.Count; i++)

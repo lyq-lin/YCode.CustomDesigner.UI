@@ -6,7 +6,7 @@
     <Style TargetType="{x:Type local:YCodeDesigner}">
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Foreground" Value="White" />
-        <Setter Property="Background" Value="#1E1E1E" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
@@ -15,10 +15,10 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}">
                         <Canvas RenderTransform="{TemplateBinding ViewportTransform}">
-                            <local:YCodeCanvas x:Name="PART_ItemsHost"
-                                               IsItemsHost="True"
-                                               Background="Transparent"
-                                               Extent="{Binding ItemsExtent, Mode=OneWayToSource, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <local:YCodePanel x:Name="PART_ItemsHost"
+                                              IsItemsHost="True"
+                                              Background="Transparent"
+                                              Extent="{Binding ItemsExtent, Mode=OneWayToSource, RelativeSource={RelativeSource TemplatedParent}}" />
 
                             <local:YCodeLineContainer Panel.ZIndex="-1"
                                                       ItemsSource="{TemplateBinding Lines}"
