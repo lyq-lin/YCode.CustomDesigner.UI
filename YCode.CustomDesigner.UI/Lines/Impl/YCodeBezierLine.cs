@@ -16,7 +16,7 @@ internal class YCodeBezierLine(YCodeDesigner designer) : YCodeBaseLine(LineType.
         context.LineTo(end, true, true);
     }
 
-    protected internal override void OnHorizontal()
+    protected override void OnHorizontal()
     {
         this.Parameter.Start = this.Parameter.Source.Left;
 
@@ -46,12 +46,12 @@ internal class YCodeBezierLine(YCodeDesigner designer) : YCodeBaseLine(LineType.
         this.Points.AddRanage([this.Parameter.Start, p1, p2, this.Parameter.End]);
     }
 
-    protected internal override void OnVertical()
+    protected override void OnVertical()
     {
         throw new NotImplementedException();
     }
 
-    protected internal override void OnQuartet()
+    protected override void OnQuartet()
     {
         throw new NotImplementedException();
     }

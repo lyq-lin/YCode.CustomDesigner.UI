@@ -19,11 +19,11 @@ internal abstract class YCodeBaseLine(LineType type, YCodeDesigner designer) : I
         this.OnHorizontal();
     }
 
-    protected internal abstract void OnHorizontal();
+    protected abstract void OnHorizontal();
 
-    protected internal abstract void OnVertical();
+    protected abstract void OnVertical();
 
-    protected internal abstract void OnQuartet();
+    protected abstract void OnQuartet();
 
     public abstract Point GetPoint(double target);
 

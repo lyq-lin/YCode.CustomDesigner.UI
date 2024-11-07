@@ -108,6 +108,8 @@ public class YCodeLine : Shape
         {
             if (this.Source != null && this.Source.NodeId != sourceId)
             {
+                this.Source.Lines.Remove(this);
+
                 this.Source = null;
             }
 
@@ -120,6 +122,8 @@ public class YCodeLine : Shape
         {
             if (this.Target != null && this.Target.NodeId != targetId)
             {
+                this.Target.Lines.Remove(this);
+
                 this.Target = null;
             }
 

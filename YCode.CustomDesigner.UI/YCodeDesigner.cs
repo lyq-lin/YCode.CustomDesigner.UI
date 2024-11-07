@@ -38,9 +38,9 @@ public partial class YCodeDesigner : MultiSelector
 
     protected internal Panel ItemsHost { get; private set; } = default!;
 
-    internal bool IsPanning { get; set; }
+    internal bool IsPanning { get; private set; }
 
-    internal Point? Point { get; set; }
+    internal Point? Point { get; private set; }
 
     #region Dependency Properties
 
@@ -202,6 +202,7 @@ public partial class YCodeDesigner : MultiSelector
             if (e.NewValue is YCodeSource source)
             {
                 this.ItemsSource = source.Nodes;
+
                 this.Lines = source.Lines;
 
                 return;
@@ -328,7 +329,7 @@ public partial class YCodeDesigner : MultiSelector
 
     private void ApplyRenderingOptimizations()
     {
-        ItemsHost.CacheMode = new BitmapCache(1.0 / 1.0);
+        this.ItemsHost.CacheMode = new BitmapCache(1.0 / 1.0);
     }
 
     private void OnAutoPanningChanged(bool canAutoPanning)

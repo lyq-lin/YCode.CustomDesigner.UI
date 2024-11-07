@@ -26,7 +26,7 @@ public class YCodeNode : ContentControl, IDesignerItem
 
     internal event EventHandler? Changed;
 
-    public YCodeDesigner Designer => _designer;
+    internal YCodeDesigner Designer => _designer;
     internal Point Left { get; private set; }
     internal Point Right { get; private set; }
     internal Point Top { get; private set; }
