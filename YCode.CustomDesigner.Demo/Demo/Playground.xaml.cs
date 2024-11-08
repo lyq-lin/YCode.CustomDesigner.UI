@@ -1,6 +1,6 @@
 using System.Diagnostics;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using YCode.CustomDesigner.UI;
 
 namespace YCode.CustomDesigner.Demo;
@@ -35,5 +35,7 @@ public partial class Playground : UserControl
     private void OnMounted(object? sender, MountedEventArgs e)
     {
         Debug.WriteLine($"{nameof(OnMounted)} Trigger...");
+
+        Bar.SelectedIndex = 0;
     }
 }

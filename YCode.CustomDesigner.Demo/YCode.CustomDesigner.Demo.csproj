@@ -16,4 +16,8 @@
     <None Remove="YCode.CustomDesigner.Demo.csproj.DotSettings" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="YCode.NavigationBar.UI" Version="2.0.0" />
+  </ItemGroup>
+
 </Project>

@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ycode="http://www.ycode.dev.com/coding"
              xmlns:demo="clr-namespace:YCode.CustomDesigner.Demo"
+             xmlns:james="https://jamesnet.dev/xaml/presentation"
+             xmlns:navigation="http://www.ycode.dev.com/coding/navigation"
              d:DesignHeight="500"
              d:DesignWidth="1300"
              mc:Ignorable="d">
@@ -31,15 +33,19 @@
                              ItemContainerStyle="{StaticResource YCodeNodeStyle}"
                              Source="{Binding Source}">
             <ycode:YCodeDesigner.Tool>
-                <Grid>
-                    <Border Background="White"
-                            CornerRadius="5"
-                            Opacity="0.5" />
-
-                    <TextBlock Margin="8"
-                               Text="There is ToolBar!"
-                               FontSize="24" />
-                </Grid>
+                <navigation:MagicBar x:Name="Bar"
+                                     Background="Transparent">
+                    <ListBoxItem Content="MicroSoft"
+                                 Tag="{x:Static james:IconType.Microsoft}" />
+                    <ListBoxItem Content="Apple"
+                                 Tag="{x:Static james:IconType.Apple}" />
+                    <ListBoxItem Content="Google"
+                                 Tag="{x:Static james:IconType.Google}" />
+                    <ListBoxItem Content="Facebook"
+                                 Tag="{x:Static james:IconType.Facebook}" />
+                    <ListBoxItem Content="Twitter"
+                                 Tag="{x:Static james:IconType.Twitter}" />
+                </navigation:MagicBar>
             </ycode:YCodeDesigner.Tool>
         </ycode:YCodeDesigner>
     </Grid>
