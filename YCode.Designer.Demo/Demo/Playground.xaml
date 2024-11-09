@@ -5,8 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ycode="http://www.ycode.dev.com/coding/fluxo"
              xmlns:demo="clr-namespace:YCode.Designer.Demo"
-             xmlns:james="https://jamesnet.dev/xaml/presentation"
-             xmlns:navigation="http://www.ycode.dev.com/coding/navigation"
              d:DesignHeight="500"
              d:DesignWidth="1300"
              mc:Ignorable="d">
@@ -15,6 +13,16 @@
     </UserControl.DataContext>
 
     <UserControl.Resources>
+        <DataTemplate x:Key="ToolDataTemplate">
+            <Grid>
+                <Border Background="White"
+                        CornerRadius="5"
+                        Opacity="0.5" />
+                <AccessText Margin="8"
+                            Text="You can fill ToolBar in there." />
+            </Grid>
+        </DataTemplate>
+
         <Style x:Key="YCodeNodeStyle"
                d:DataContext="{d:DesignInstance ycode:YCodeNodeViewModel}"
                TargetType="{x:Type ycode:YCodeNode}">
@@ -30,23 +38,8 @@
                              Mounting="OnMounting"
                              Mounted="OnMounted"
                              GridType="Dot"
+                             ToolTemplate="{StaticResource ToolDataTemplate}"
                              ItemContainerStyle="{StaticResource YCodeNodeStyle}"
-                             Source="{Binding Source}">
-            <ycode:YCodeDesigner.Tool>
-                <navigation:MagicBar x:Name="Bar"
-                                     Background="Transparent">
-                    <ListBoxItem Content="MicroSoft"
-                                 Tag="{x:Static james:IconType.Microsoft}" />
-                    <ListBoxItem Content="Apple"
-                                 Tag="{x:Static james:IconType.Apple}" />
-                    <ListBoxItem Content="Google"
-                                 Tag="{x:Static james:IconType.Google}" />
-                    <ListBoxItem Content="Facebook"
-                                 Tag="{x:Static james:IconType.Facebook}" />
-                    <ListBoxItem Content="Twitter"
-                                 Tag="{x:Static james:IconType.Twitter}" />
-                </navigation:MagicBar>
-            </ycode:YCodeDesigner.Tool>
-        </ycode:YCodeDesigner>
+                             Source="{Binding Source}" />
     </Grid>
 </UserControl>

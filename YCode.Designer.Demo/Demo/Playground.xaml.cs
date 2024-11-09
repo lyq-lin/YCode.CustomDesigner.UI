@@ -35,7 +35,5 @@ public partial class Playground : UserControl
     private void OnMounted(object? sender, MountedEventArgs e)
     {
         Debug.WriteLine($"{nameof(OnMounted)} Trigger...");
-
-        Bar.SelectedIndex = 0;
     }
 }
