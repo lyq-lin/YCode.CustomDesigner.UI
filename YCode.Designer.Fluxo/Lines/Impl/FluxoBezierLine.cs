@@ -58,11 +58,41 @@ internal class FluxoBezierLine(FluxoDesigner designer) : FluxoBaseLine(LineType.
 
     public override Point GetPoint(double target)
     {
-        throw new NotImplementedException();
+        var start = this.Points[0];
+        var p1 = this.Points[1];
+        var p2 = this.Points[2];
+        var end = this.Points[3];
+
+        var x = Math.Pow(1 - target, 3) * start.X
+                + 3 * Math.Pow(1 - target, 2) * target * p1.X
+                + 3 * (1 - target) * Math.Pow(target, 2) * p2.X
+                + Math.Pow(target, 3) * end.X;
+
+        var y = Math.Pow(1 - target, 3) * start.Y
+                + 3 * Math.Pow(1 - target, 2) * target * p1.Y
+                + 3 * (1 - target) * Math.Pow(target, 2) * p2.Y
+                + Math.Pow(target, 3) * end.Y;
+
+        return new Point(x, y);
     }
 
     public override double GetLength()
     {
-        throw new NotImplementedException();
+        var pointCount = 30;
+
+        var length = 0d;
+
+        var lastPoint = this.GetPoint(0d / Convert.ToDouble(pointCount));
+
+        for (var i = 1; i < pointCount; i++)
+        {
+            var point = this.GetPoint(Convert.ToDouble(i) / Convert.ToDouble(pointCount));
+
+            length += Point.Subtract(point, lastPoint).Length;
+
+            lastPoint = point;
+        }
+
+        return length;
     }
 }

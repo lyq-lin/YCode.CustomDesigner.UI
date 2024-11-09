@@ -6,12 +6,32 @@
         <ResourceDictionary Source="/YCode.Designer.Fluxo;component/Themes/Views/Styles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <Storyboard x:Key="HighlightConnection">
+        <DoubleAnimation AutoReverse="True"
+                         RepeatBehavior="Forever"
+                         Storyboard.TargetProperty="StrokeThickness"
+                         From="3"
+                         To="6"
+                         Duration="0:0:1" />
+    </Storyboard>
+
     <Style TargetType="{x:Type local:FluxoLine}">
         <Setter Property="SourceId" Value="{Binding PrevId}" />
         <Setter Property="TargetId" Value="{Binding NextId}" />
         <Setter Property="StrokeThickness" Value="3" />
         <Setter Property="Stroke" Value="DodgerBlue" />
         <Setter Property="Fill" Value="DodgerBlue" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseDirectlyOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Name="HighlightConnection"
+                                     Storyboard="{StaticResource HighlightConnection}" />
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <RemoveStoryboard BeginStoryboardName="HighlightConnection" />
+                </Trigger.ExitActions>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="{x:Type local:FluxoLineContainer}">

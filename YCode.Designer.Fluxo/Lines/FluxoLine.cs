@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace YCode.Designer.Fluxo;
 
 public class FluxoLine : Shape

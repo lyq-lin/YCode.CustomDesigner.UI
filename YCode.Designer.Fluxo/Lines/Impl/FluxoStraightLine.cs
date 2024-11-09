@@ -45,11 +45,32 @@ public class FluxoStraightLine(FluxoDesigner designer) : FluxoBaseLine(LineType.
 
     public override Point GetPoint(double target)
     {
-        throw new NotImplementedException();
+        var start = this.Points.FirstOrDefault();
+        var end = this.Points.LastOrDefault();
+
+        var currentLength = this.GetLength();
+
+        var targetLength = currentLength * target;
+
+        var distance = Point.Subtract(end, start).Length;
+
+        if (currentLength + distance >= targetLength)
+        {
+            var extra = targetLength - currentLength;
+
+            var factor = extra / distance;
+
+            return new Point(start.X + factor * (end.X - start.X), start.Y + factor * (end.Y - start.Y));
+        }
+
+        return default;
     }
 
     public override double GetLength()
     {
-        throw new NotImplementedException();
+        var start = this.Points.FirstOrDefault();
+        var end = this.Points.LastOrDefault();
+
+        return Math.Sqrt(Math.Pow(start.X - end.X, 2) + Math.Pow(start.Y - end.Y, 2));
     }
 }
