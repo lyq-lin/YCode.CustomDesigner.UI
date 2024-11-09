@@ -29,11 +29,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Fluxo.png" />
-    <Resource Include="Fluxo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-
 </Project>
