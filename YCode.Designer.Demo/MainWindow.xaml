@@ -1,0 +1,29 @@
+﻿<Window x:Class="YCode.Designer.Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:YCode.Designer.Demo"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ycode="clr-namespace:YCode.Designer.Fluxo;assembly=YCode.Designer.Fluxo"
+        Title="MainWindow"
+        Width="800"
+        Height="550"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        mc:Ignorable="d">
+
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+
+    <TabControl SelectionChanged="OnSelectionChanged">
+        <TabItem Header="Playground"
+                 Tag="0">
+            <!-- <local:Playground /> -->
+        </TabItem>
+        <TabItem Header="Performance"
+                 Tag="1">
+            <!-- <local:Performance /> -->
+        </TabItem>
+    </TabControl>
+</Window>

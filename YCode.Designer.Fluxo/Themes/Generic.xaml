@@ -1,0 +1,10 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:YCode.Designer.Fluxo">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/YCode.Designer.Fluxo;component/Themes/Views/Nodes.xaml" />
+        <ResourceDictionary Source="/YCode.Designer.Fluxo;component/Themes/Views/Lines.xaml" />
+        <ResourceDictionary Source="/YCode.Designer.Fluxo;component/Themes/Views/Designer.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
