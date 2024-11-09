@@ -5,12 +5,28 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Title>YCode.Designer.Fluxo</Title>
+    <Authors>YCode</Authors>
+    <Description>YCode.Designer.Fluxo aims to explore graphical visual development in WPF, providing WPF developers with insights into implementing features like node dragging, flow editing, and other visual software development concepts.</Description>
+    <Copyright>Copyright (c) 2024 YCode</Copyright>
+    <PackageProjectUrl>https://github.com/lyq-lin/YCode.Designer.Fluxo</PackageProjectUrl>
+    <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
+    <PackageIcon>Fluxo.png</PackageIcon>
+    <RepositoryUrl>https://github.com/lyq-lin/YCode.Designer.Fluxo.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>WPF;MVVM;Controls;</PackageTags>
+    <PackageReleaseNotes>This version 1.0.0 is the initial release.</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Themes\Views\Styles.xaml~" />
     <None Remove="Themes\Views\Lines.xaml~" />
     <None Remove="YCode.Designer.Fluxo.csproj.DotSettings" />
+    <None Update="hk_flow.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
