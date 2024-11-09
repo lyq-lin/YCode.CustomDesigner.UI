@@ -10,12 +10,6 @@ public class FluxoDataPanel : ItemsControl
         );
     }
 
-    public override void OnApplyTemplate()
-    {
-        base.OnApplyTemplate();
-        
-    }
-
     protected override DependencyObject GetContainerForItemOverride()
     {
         return new FluxoDataPanelItem(this);

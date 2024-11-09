@@ -1,6 +1,6 @@
 namespace YCode.Designer.Fluxo;
 
-internal abstract class FluxoBaseLine(LineType type, FluxoDesigner designer) : IFluxoLineGeometry
+public abstract class FluxoBaseLine(LineType type, FluxoDesigner designer) : IFluxoLineGeometry
 {
     protected readonly FluxoDesigner _designer = designer;
     public LineType Type { get; } = type;
