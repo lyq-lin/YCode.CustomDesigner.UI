@@ -10,4 +10,4 @@ using System.Windows.Markup;
 )]
 
 [assembly: XmlnsPrefix("http://www.ycode.dev.com/coding", "YCode")]
-[assembly: XmlnsDefinition("http://www.ycode.dev.com/coding", "YCode.Designer.Fluxo")]
+[assembly: XmlnsDefinition("http://www.ycode.dev.com/coding/fluxo", "YCode.Designer.Fluxo")]
