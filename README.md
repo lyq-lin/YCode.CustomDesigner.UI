@@ -1,10 +1,10 @@
-# About YCode.CustomDesigner.UI
+# About YCode.Designer.Fluxo
 
-🎨 **YCode.CustomDesigner.UI** aims to explore graphical visual development in WPF, providing WPF developers with insights into implementing features like node dragging, flow editing, and other visual software development concepts.
+🎨 **YCode.Designer.Fluxo** aims to explore graphical visual development in WPF, providing WPF developers with insights into implementing features like node dragging, flow editing, and other visual software development concepts.
 
 ---
 
-# Refactoring YCodeFlowUI on Main Branch
+# Refactoring YCode.Designer.Fluxo on Main Branch
 
 🔧 The current task on the `Main` branch involves refactoring `YCodeFlowUI`, primarily transitioning from a Canvas-based design to a pure MVVM-driven control approach. This refactoring effort is not intended to assert superiority over the old method but rather aims to learn how to utilize the `Notify` control. I express deep gratitude to individuals with an open-source spirit, similar to the authors of `Notify`.
 
