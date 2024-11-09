@@ -14,9 +14,10 @@
     <PackageIcon>Fluxo.png</PackageIcon>
     <RepositoryUrl>https://github.com/lyq-lin/YCode.Designer.Fluxo.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>WPF;MVVM;Controls;</PackageTags>
-    <PackageReleaseNotes>This version 1.0.0 is the initial release.</PackageReleaseNotes>
+    <PackageTags>WPF;MVVM;Controls;Node Editor;</PackageTags>
+    <PackageReleaseNotes>This version is the Preview version.</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Version>1.1.1047</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +27,11 @@
     <None Update="hk_flow.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+    <None Include="..\Fluxo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+      <Link>Fluxo.png</Link>
     </None>
   </ItemGroup>
 
