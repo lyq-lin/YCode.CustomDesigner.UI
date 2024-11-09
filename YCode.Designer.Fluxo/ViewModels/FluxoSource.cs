@@ -2,25 +2,25 @@ using System.Collections.ObjectModel;
 
 namespace YCode.Designer.Fluxo;
 
-public class YCodeSource : YCodeNotifyPropertyChanged
+public class FluxoSource : FluxoNotifyPropertyChanged
 {
-    private ObservableCollection<YCodeNodeViewModel> _nodes = [];
-    private ObservableCollection<YCodeLineViewModel> _lines = [];
+    private ObservableCollection<FluxoNodeViewModel> _nodes = [];
+    private ObservableCollection<FluxoLineViewModel> _lines = [];
 
-    public YCodeSource()
+    public FluxoSource()
     {
         BindingOperations.EnableCollectionSynchronization(this.Nodes, this.Nodes);
         
         BindingOperations.EnableCollectionSynchronization(this.Lines, this.Lines);
     }
 
-    public ObservableCollection<YCodeNodeViewModel> Nodes
+    public ObservableCollection<FluxoNodeViewModel> Nodes
     {
         get => _nodes;
         set => this.OnPropertyChanged(ref _nodes, value);
     }
 
-    public ObservableCollection<YCodeLineViewModel> Lines
+    public ObservableCollection<FluxoLineViewModel> Lines
     {
         get => _lines;
         set => this.OnPropertyChanged(ref _lines, value);

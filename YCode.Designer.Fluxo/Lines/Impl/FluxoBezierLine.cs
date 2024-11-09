@@ -1,8 +1,8 @@
 namespace YCode.Designer.Fluxo;
 
-internal class YCodeBezierLine(YCodeDesigner designer) : YCodeBaseLine(LineType.Bezier, designer)
+internal class FluxoBezierLine(FluxoDesigner designer) : FluxoBaseLine(LineType.Bezier, designer)
 {
-    public override void DrawLine(YCodeLineParameter @params, StreamGeometryContext context)
+    public override void DrawLine(FluxoLineParameter @params, StreamGeometryContext context)
     {
         base.DrawLine(@params, context);
 

@@ -1,12 +1,12 @@
 namespace YCode.Designer.Fluxo;
 
-public class YCodeDataPanel : ItemsControl
+public class FluxoDataPanel : ItemsControl
 {
-    static YCodeDataPanel()
+    static FluxoDataPanel()
     {
         DefaultStyleKeyProperty.OverrideMetadata(
-            typeof(YCodeDataPanel),
-            new FrameworkPropertyMetadata(typeof(YCodeDataPanel))
+            typeof(FluxoDataPanel),
+            new FrameworkPropertyMetadata(typeof(FluxoDataPanel))
         );
     }
 
@@ -18,11 +18,11 @@ public class YCodeDataPanel : ItemsControl
 
     protected override DependencyObject GetContainerForItemOverride()
     {
-        return new YCodeDataPanelItem(this);
+        return new FluxoDataPanelItem(this);
     }
 
     protected override bool IsItemItsOwnContainerOverride(object item)
     {
-        return item is YCodeDataPanelItem;
+        return item is FluxoDataPanelItem;
     }
 }

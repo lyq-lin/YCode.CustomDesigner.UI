@@ -1,19 +1,19 @@
 namespace YCode.Designer.Fluxo;
 
-public class YCodeDataPanelItem : ContentControl
+public class FluxoDataPanelItem : ContentControl
 {
 
-    static YCodeDataPanelItem()
+    static FluxoDataPanelItem()
     {
         DefaultStyleKeyProperty.OverrideMetadata(
-            typeof(YCodeDataPanelItem),
-            new FrameworkPropertyMetadata(typeof(YCodeDataPanelItem))
+            typeof(FluxoDataPanelItem),
+            new FrameworkPropertyMetadata(typeof(FluxoDataPanelItem))
         );
     }
 
-    private readonly YCodeDataPanel _panel;
+    private readonly FluxoDataPanel _panel;
     
-    public YCodeDataPanelItem(YCodeDataPanel panel)
+    public FluxoDataPanelItem(FluxoDataPanel panel)
     {
         _panel = panel;
     }
@@ -21,7 +21,7 @@ public class YCodeDataPanelItem : ContentControl
     #region Dependency Properties
 
     public static readonly DependencyProperty ColumnIdProperty = DependencyProperty.Register(
-        nameof(ColumnId), typeof(string), typeof(YCodeDataPanelItem),
+        nameof(ColumnId), typeof(string), typeof(FluxoDataPanelItem),
         new FrameworkPropertyMetadata(String.Empty));
 
     public string ColumnId

@@ -1,6 +1,6 @@
 namespace YCode.Designer.Fluxo;
 
-public class YCodeNodeViewModel : YCodeNotifyPropertyChanged
+public class FluxoNodeViewModel : FluxoNotifyPropertyChanged
 {
     private string _id = String.Empty;
     private string _name = String.Empty;

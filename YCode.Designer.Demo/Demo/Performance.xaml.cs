@@ -11,12 +11,12 @@ public partial class Performance : UserControl
         InitializeComponent();
     }
     
-    private void OnMounting(object? sender, MountingEventArgs e)
+    private void OnMounting(object? sender, FluxoMountingEventArgs e)
     {
         Debug.WriteLine($"{nameof(OnMounting)} Trigger...");
     }
 
-    private void OnMounted(object? sender, MountedEventArgs e)
+    private void OnMounted(object? sender, FluxoMountedEventArgs e)
     {
         Debug.WriteLine($"{nameof(OnMounted)} Trigger...");
     }

@@ -4,11 +4,11 @@ using YCode.Designer.Fluxo;
 
 namespace YCode.Designer.Demo;
 
-public class YCodeDataAdapter : IYCodeAdapter
+public class FluxoDataAdapter : IFluxoAdapter
 {
-    public Task<YCodeSource> ImportAsync(object? value)
+    public Task<FluxoSource> ImportAsync(object? value)
     {
-        var viewModel = new YCodeSource();
+        var viewModel = new FluxoSource();
 
         var count = 1000;
 
@@ -18,13 +18,13 @@ public class YCodeDataAdapter : IYCodeAdapter
 
         var size = (int)count / (int)Math.Sqrt(count);
 
-        var nodes = RandomNodesGenerator.GenerateNodes<YCodeNodeViewModel>(
+        var nodes = RandomNodesGenerator.GenerateNodes<FluxoNodeViewModel>(
             count,
             count,
             (i, maxCount) => new Point(i % size * xDistance, i / size * yDistance),
             () =>
             {
-                var context = new YCodeContext()
+                var context = new FluxoContext()
                 {
                     IsExpand = true
                 };

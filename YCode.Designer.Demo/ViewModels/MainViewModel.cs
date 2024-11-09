@@ -4,7 +4,7 @@ using YCode.Designer.Fluxo;
 
 namespace YCode.Designer.Demo;
 
-internal class MainViewModel : YCodeNotifyPropertyChanged
+internal class MainViewModel : FluxoNotifyPropertyChanged
 {
     private ObservableCollection<UIElement> _uis;
 

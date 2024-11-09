@@ -1,6 +1,6 @@
 namespace YCode.Designer.Fluxo;
 
-public partial class YCodeDesigner
+public partial class FluxoDesigner
 {
     private readonly EventHandlerList _event = new();
 
@@ -14,31 +14,31 @@ public partial class YCodeDesigner
         remove => this.Events.AddHandler(nameof(ViewportUpdated), value);
     }
 
-    public event EventHandler<MountingEventArgs> Mounting
+    public event EventHandler<FluxoMountingEventArgs> Mounting
     {
         add => this.Events.AddHandler(nameof(Mounting), value);
         remove => this.Events.AddHandler(nameof(Mounting), value);
     }
 
-    public event EventHandler<MountedEventArgs> Mounted
+    public event EventHandler<FluxoMountedEventArgs> Mounted
     {
         add => this.Events.AddHandler(nameof(Mounted), value);
         remove => this.Events.AddHandler(nameof(Mounted), value);
     }
 
-    public event EventHandler<NodeDragStartedEventArgs> DragStared
+    public event EventHandler<FluxoNodeDragStartedEventArgs> DragStared
     {
         add => this.Events.AddHandler(nameof(DragStared), value);
         remove => this.Events.AddHandler(nameof(DragStared), value);
     }
 
-    public event EventHandler<NodeDragDeltaEventArgs> DragDelta
+    public event EventHandler<FluxoNodeDragDeltaEventArgs> DragDelta
     {
         add => this.Events.AddHandler(nameof(DragDelta), value);
         remove => this.Events.AddHandler(nameof(DragDelta), value);
     }
 
-    public event EventHandler<NodeDragCompletedEventArgs> DragCompleted
+    public event EventHandler<FluxoNodeDragCompletedEventArgs> DragCompleted
     {
         add => this.Events.AddHandler(nameof(DragCompleted), value);
         remove => this.Events.AddHandler(nameof(DragCompleted), value);

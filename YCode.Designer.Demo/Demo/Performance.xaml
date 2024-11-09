@@ -10,11 +10,11 @@
              mc:Ignorable="d">
     <UserControl.Resources>
 
-        <demo:YCodeDataAdapter x:Key="YCodeDataAdapter" />
+        <demo:FluxoDataAdapter x:Key="YCodeDataAdapter" />
 
         <DataTemplate x:Key="YCodeNodeItemTemplate">
             <DataTemplate.Resources>
-                <Style TargetType="{x:Type ycode:YCodeDataPanelItem}">
+                <Style TargetType="{x:Type ycode:FluxoDataPanelItem}">
                     <Setter Property="Height" Value="24" />
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
@@ -36,22 +36,22 @@
                     </Setter>
                 </Style>
             </DataTemplate.Resources>
-            <ycode:YCodeExpandPanel Header="{Binding Name}"
+            <ycode:FluxoExpandPanel Header="{Binding Name}"
                                     IsExpand="{Binding Context.IsExpand}">
-                <ycode:YCodeExpandPanel.HeaderTemplate>
+                <ycode:FluxoExpandPanel.HeaderTemplate>
                     <DataTemplate>
                         <TextBlock Margin="8,8,0,0"
                                    Text="{Binding .}" />
                     </DataTemplate>
-                </ycode:YCodeExpandPanel.HeaderTemplate>
+                </ycode:FluxoExpandPanel.HeaderTemplate>
 
-                <ycode:YCodeDataPanel ItemsSource="{Binding Context.Children}" />
-            </ycode:YCodeExpandPanel>
+                <ycode:FluxoDataPanel ItemsSource="{Binding Context.Children}" />
+            </ycode:FluxoExpandPanel>
         </DataTemplate>
 
         <Style x:Key="YCodeNodeStyle"
-               d:DataContext="{d:DesignInstance ycode:YCodeNodeViewModel}"
-               TargetType="{x:Type ycode:YCodeNode}">
+               d:DataContext="{d:DesignInstance ycode:FluxoNodeViewModel}"
+               TargetType="{x:Type ycode:FluxoNode}">
             <Setter Property="ToolTip" Value="{Binding Description}" />
             <Setter Property="MinHeight" Value="28" />
             <Setter Property="MaxHeight" Value="400" />
@@ -62,7 +62,7 @@
     </UserControl.Resources>
 
     <Grid Background="#1E1E1E">
-        <ycode:YCodeDesigner x:Name="Designer"
+        <ycode:FluxoDesigner x:Name="Designer"
                              Mounting="OnMounting"
                              Mounted="OnMounted"
                              ItemAdapter="{StaticResource YCodeDataAdapter}"

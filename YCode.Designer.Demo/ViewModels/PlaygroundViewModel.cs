@@ -3,18 +3,18 @@ using YCode.Designer.Fluxo;
 
 namespace YCode.Designer.Demo;
 
-public class PlaygroundViewModel : YCodeNotifyPropertyChanged
+public class PlaygroundViewModel : FluxoNotifyPropertyChanged
 {
-    public YCodeSource Source { get; set; }
+    public FluxoSource Source { get; set; }
 
     public PlaygroundViewModel()
     {
-        this.Source = new YCodeSource();
+        this.Source = new FluxoSource();
 
         var sourceId = DateTime.Now.Ticks.ToString("X");
         var targetId = DateTime.Now.Ticks.ToString("X");
 
-        this.Source.Nodes.Add(new YCodeNodeViewModel()
+        this.Source.Nodes.Add(new FluxoNodeViewModel()
         {
             Id = sourceId,
             Name = "Node A",
@@ -22,13 +22,13 @@ public class PlaygroundViewModel : YCodeNotifyPropertyChanged
             Location = new Point(100, 180)
         });
 
-        this.Source.Lines.Add(new YCodeLineViewModel()
+        this.Source.Lines.Add(new FluxoLineViewModel()
         {
             PrevId = sourceId,
             NextId = targetId
         });
 
-        this.Source.Nodes.Add(new YCodeNodeViewModel()
+        this.Source.Nodes.Add(new FluxoNodeViewModel()
         {
             Id = targetId,
             Name = "Node B",

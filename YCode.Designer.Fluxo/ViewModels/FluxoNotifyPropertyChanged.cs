@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace YCode.Designer.Fluxo;
 
-public class YCodeNotifyPropertyChanged : INotifyPropertyChanged
+public class FluxoNotifyPropertyChanged : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 

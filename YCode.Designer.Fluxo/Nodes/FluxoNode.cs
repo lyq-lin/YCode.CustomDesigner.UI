@@ -2,20 +2,20 @@ using System.Runtime.CompilerServices;
 
 namespace YCode.Designer.Fluxo;
 
-public class YCodeNode : ContentControl, IDesignerItem
+public class FluxoNode : ContentControl, IFluxoItem
 {
-    static YCodeNode()
+    static FluxoNode()
     {
         DefaultStyleKeyProperty.OverrideMetadata(
-            typeof(YCodeNode),
-            new FrameworkPropertyMetadata(typeof(YCodeNode))
+            typeof(FluxoNode),
+            new FrameworkPropertyMetadata(typeof(FluxoNode))
         );
     }
 
-    private readonly YCodeDesigner _designer;
+    private readonly FluxoDesigner _designer;
     private Point? _point;
 
-    public YCodeNode(YCodeDesigner designer)
+    public FluxoNode(FluxoDesigner designer)
     {
         _designer = designer;
 
@@ -26,34 +26,34 @@ public class YCodeNode : ContentControl, IDesignerItem
 
     internal event EventHandler? Changed;
 
-    internal YCodeDesigner Designer => _designer;
+    internal FluxoDesigner Designer => _designer;
     internal Point Left { get; private set; }
     internal Point Right { get; private set; }
     internal Point Top { get; private set; }
     internal Point Bottom { get; private set; }
 
-    internal List<YCodeLine> Lines { get; private set; }
+    internal List<FluxoLine> Lines { get; private set; }
 
     #region Dependency Properties
 
     public static readonly DependencyProperty LocationProperty = DependencyProperty.Register(
-        nameof(Location), typeof(Point), typeof(YCodeNode),
+        nameof(Location), typeof(Point), typeof(FluxoNode),
         new FrameworkPropertyMetadata(default(Point), FrameworkPropertyMetadataOptions.AffectsArrange,
             OnLocationChanged));
 
     public static readonly DependencyProperty NodeIdProperty = DependencyProperty.Register(
-        nameof(NodeId), typeof(string), typeof(YCodeNode), new PropertyMetadata(String.Empty));
+        nameof(NodeId), typeof(string), typeof(FluxoNode), new PropertyMetadata(String.Empty));
 
     public static readonly DependencyProperty IsSelectableProperty = DependencyProperty.Register(nameof(IsSelectable),
-        typeof(bool), typeof(YCodeNode), new FrameworkPropertyMetadata(true));
+        typeof(bool), typeof(FluxoNode), new FrameworkPropertyMetadata(true));
 
     public static readonly DependencyProperty IsSelectedProperty =
-        Selector.IsSelectedProperty.AddOwner(typeof(YCodeNode),
+        Selector.IsSelectedProperty.AddOwner(typeof(FluxoNode),
             new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 OnIsSelectedChanged));
 
     public static readonly DependencyProperty SelectedBrushProperty = DependencyProperty.Register(
-        nameof(SelectedBrush), typeof(Brush), typeof(YCodeNode), new PropertyMetadata(Brushes.Orange));
+        nameof(SelectedBrush), typeof(Brush), typeof(FluxoNode), new PropertyMetadata(Brushes.Orange));
 
     public Brush SelectedBrush
     {
@@ -90,19 +90,19 @@ public class YCodeNode : ContentControl, IDesignerItem
     #region Routed Event
 
     public static readonly RoutedEvent DragStartedEvent = EventManager.RegisterRoutedEvent(nameof(DragStarted),
-        RoutingStrategy.Bubble, typeof(DragStartedEventHandler), typeof(YCodeNode));
+        RoutingStrategy.Bubble, typeof(DragStartedEventHandler), typeof(FluxoNode));
 
     public static readonly RoutedEvent DragCompletedEvent = EventManager.RegisterRoutedEvent(nameof(DragCompleted),
-        RoutingStrategy.Bubble, typeof(DragCompletedEventHandler), typeof(YCodeNode));
+        RoutingStrategy.Bubble, typeof(DragCompletedEventHandler), typeof(FluxoNode));
 
     public static readonly RoutedEvent DragDeltaEvent = EventManager.RegisterRoutedEvent(nameof(DragDelta),
-        RoutingStrategy.Bubble, typeof(DragDeltaEventHandler), typeof(YCodeNode));
+        RoutingStrategy.Bubble, typeof(DragDeltaEventHandler), typeof(FluxoNode));
 
-    public static readonly RoutedEvent SelectedEvent = Selector.SelectedEvent.AddOwner(typeof(YCodeNode));
-    public static readonly RoutedEvent UnselectedEvent = Selector.UnselectedEvent.AddOwner(typeof(YCodeNode));
+    public static readonly RoutedEvent SelectedEvent = Selector.SelectedEvent.AddOwner(typeof(FluxoNode));
+    public static readonly RoutedEvent UnselectedEvent = Selector.UnselectedEvent.AddOwner(typeof(FluxoNode));
 
     public static readonly RoutedEvent LocationChangedEvent = EventManager.RegisterRoutedEvent(nameof(LocationChanged),
-        RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(YCodeNode));
+        RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(FluxoNode));
 
     public event RoutedEventHandler LocationChanged
     {
@@ -264,7 +264,7 @@ public class YCodeNode : ContentControl, IDesignerItem
 
     private static void OnIsSelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is YCodeNode node && e.NewValue is bool isSelected)
+        if (d is FluxoNode node && e.NewValue is bool isSelected)
         {
             var canSelected = node.IsSelectable && isSelected;
 
@@ -276,7 +276,7 @@ public class YCodeNode : ContentControl, IDesignerItem
 
     private static void OnLocationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is YCodeNode node)
+        if (d is FluxoNode node)
         {
             node.Designer.ItemsHost.InvalidateArrange();
 

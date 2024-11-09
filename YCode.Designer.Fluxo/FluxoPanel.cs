@@ -1,11 +1,11 @@
 namespace YCode.Designer.Fluxo;
 
-internal class YCodePanel : Panel
+internal class FluxoPanel : Panel
 {
     #region Dependency properties
 
     public static readonly DependencyProperty ExtentProperty = DependencyProperty.Register(
-        nameof(Extent), typeof(Rect), typeof(YCodePanel), new PropertyMetadata(default(Rect)));
+        nameof(Extent), typeof(Rect), typeof(FluxoPanel), new PropertyMetadata(default(Rect)));
 
     public Rect Extent
     {
@@ -24,9 +24,10 @@ internal class YCodePanel : Panel
         var maxY = Double.MinValue;
 
         var children = InternalChildren;
+        
         for (var i = 0; i < children.Count; i++)
         {
-            if (children[i] is IDesignerItem item)
+            if (children[i] is IFluxoItem item)
             {
                 item.Arrange(new Rect(item.Location, item.DesiredSize));
 

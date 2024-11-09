@@ -11,7 +11,7 @@ public static class RandomNodesGenerator
         int minNodesCount,
         int maxNodesCount,
         Func<int, int, Point> func = default!,
-        Func<object> contextGenerator = default!) where T : YCodeNodeViewModel, new()
+        Func<object> contextGenerator = default!) where T : FluxoNodeViewModel, new()
     {
         func ??= NodeLocationGenerator;
 

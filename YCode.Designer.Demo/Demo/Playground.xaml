@@ -24,8 +24,8 @@
         </DataTemplate>
 
         <Style x:Key="YCodeNodeStyle"
-               d:DataContext="{d:DesignInstance ycode:YCodeNodeViewModel}"
-               TargetType="{x:Type ycode:YCodeNode}">
+               d:DataContext="{d:DesignInstance ycode:FluxoNodeViewModel}"
+               TargetType="{x:Type ycode:FluxoNode}">
             <Setter Property="Content" Value="{Binding Name}" />
             <Setter Property="ToolTip" Value="{Binding Description}" />
             <Setter Property="Height" Value="28" />
@@ -34,7 +34,7 @@
     </UserControl.Resources>
 
     <Grid Background="#1E1E1E">
-        <ycode:YCodeDesigner x:Name="Designer"
+        <ycode:FluxoDesigner x:Name="Designer"
                              Mounting="OnMounting"
                              Mounted="OnMounted"
                              GridType="Dot"

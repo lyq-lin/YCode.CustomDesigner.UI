@@ -1,22 +1,22 @@
 namespace YCode.Designer.Fluxo;
 
-public class YCodeLine : Shape
+public class FluxoLine : Shape
 {
-    static YCodeLine()
+    static FluxoLine()
     {
         DefaultStyleKeyProperty.OverrideMetadata(
-            typeof(YCodeLine),
-            new FrameworkPropertyMetadata(typeof(YCodeLine))
+            typeof(FluxoLine),
+            new FrameworkPropertyMetadata(typeof(FluxoLine))
         );
     }
 
     private bool _isLoaded;
-    private readonly YCodeDesigner _designer;
-    private readonly YCodeLineContainer _container;
+    private readonly FluxoDesigner _designer;
+    private readonly FluxoLineContainer _container;
     private readonly StreamGeometry _geometry;
-    private readonly YCodeLineFactory _factory;
+    private readonly FluxoLineFactory _factory;
 
-    public YCodeLine(YCodeDesigner designer, YCodeLineContainer container)
+    public FluxoLine(FluxoDesigner designer, FluxoLineContainer container)
     {
         _designer = designer;
 
@@ -27,7 +27,7 @@ public class YCodeLine : Shape
             FillRule = FillRule.EvenOdd
         };
 
-        _factory = new YCodeLineFactory(_designer);
+        _factory = new FluxoLineFactory(_designer);
 
         this.Loaded += OnLoaded;
     }
@@ -44,8 +44,8 @@ public class YCodeLine : Shape
 
     internal event EventHandler? Changed;
 
-    internal YCodeNode? Source { get; private set; }
-    internal YCodeNode? Target { get; private set; }
+    internal FluxoNode? Source { get; private set; }
+    internal FluxoNode? Target { get; private set; }
 
     protected override Geometry DefiningGeometry
     {
@@ -65,11 +65,11 @@ public class YCodeLine : Shape
         }
     }
 
-    private (Point, Point) DrawLine(StreamGeometryContext context, YCodeNode source, YCodeNode target)
+    private (Point, Point) DrawLine(StreamGeometryContext context, FluxoNode source, FluxoNode target)
     {
         var line = _factory.GetLine(_designer.LineType);
 
-        var @params = new YCodeLineParameter(
+        var @params = new FluxoLineParameter(
             (source.Left, source.Right, source.Top, source.Bottom),
             (target.Left, target.Right, target.Top, target.Bottom));
 
@@ -81,11 +81,11 @@ public class YCodeLine : Shape
     #region Dependency Properties
 
     public static readonly DependencyProperty SourceIdProperty = DependencyProperty.Register(
-        nameof(SourceId), typeof(string), typeof(YCodeLine),
+        nameof(SourceId), typeof(string), typeof(FluxoLine),
         new FrameworkPropertyMetadata(String.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
     public static readonly DependencyProperty TargetIdProperty = DependencyProperty.Register(
-        nameof(TargetId), typeof(string), typeof(YCodeLine),
+        nameof(TargetId), typeof(string), typeof(FluxoLine),
         new FrameworkPropertyMetadata(String.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
     public string TargetId
@@ -113,7 +113,7 @@ public class YCodeLine : Shape
                 this.Source = null;
             }
 
-            if (this.FindNode(sourceId) is YCodeNode node)
+            if (this.FindNode(sourceId) is FluxoNode node)
             {
                 this.Source = node;
             }
@@ -127,7 +127,7 @@ public class YCodeLine : Shape
                 this.Target = null;
             }
 
-            if (this.FindNode(targetId) is YCodeNode node)
+            if (this.FindNode(targetId) is FluxoNode node)
             {
                 this.Target = node;
             }
@@ -138,11 +138,11 @@ public class YCodeLine : Shape
 
     private DependencyObject? FindNode(string nodeId)
     {
-        var obj = _designer.ItemsSource.OfType<YCodeNodeViewModel>().FirstOrDefault(x => nodeId.Equals(x.Id));
+        var obj = _designer.ItemsSource.OfType<FluxoNodeViewModel>().FirstOrDefault(x => nodeId.Equals(x.Id));
 
         var element = _designer.ItemContainerGenerator.ContainerFromItem(obj);
 
-        if (element is YCodeNode node)
+        if (element is FluxoNode node)
         {
             node.Changed -= OnChanged;
 

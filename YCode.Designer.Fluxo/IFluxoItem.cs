@@ -1,6 +1,6 @@
 namespace YCode.Designer.Fluxo;
 
-public interface IDesignerItem
+public interface IFluxoItem
 {
     Point Location { get; }
 

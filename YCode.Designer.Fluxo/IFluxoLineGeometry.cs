@@ -1,10 +1,10 @@
 namespace YCode.Designer.Fluxo;
 
-public interface IYCodeLineGeometry
+public interface IFluxoLineGeometry
 {
     LineType Type { get; }
 
-    void DrawLine(YCodeLineParameter @params,StreamGeometryContext context);
+    void DrawLine(FluxoLineParameter @params,StreamGeometryContext context);
 
     Point GetPoint(double target);
 

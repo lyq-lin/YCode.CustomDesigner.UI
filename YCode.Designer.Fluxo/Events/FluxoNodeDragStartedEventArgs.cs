@@ -1,6 +1,6 @@
 namespace YCode.Designer.Fluxo;
 
-public class NodeDragCompletedEventArgs(YCodeNode node) : EventArgs
+public class FluxoNodeDragStartedEventArgs(FluxoNode node) : EventArgs
 {
     public UIElement Node { get; } = node;
 }

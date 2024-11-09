@@ -1,29 +1,24 @@
 namespace YCode.Designer.Fluxo;
 
-public class YCodeLineContainer : Selector
+public class FluxoLineContainer : Selector
 {
-    static YCodeLineContainer()
+    static FluxoLineContainer()
     {
         DefaultStyleKeyProperty.OverrideMetadata(
-            typeof(YCodeLineContainer),
-            new FrameworkPropertyMetadata(typeof(YCodeLineContainer))
+            typeof(FluxoLineContainer),
+            new FrameworkPropertyMetadata(typeof(FluxoLineContainer))
         );
 
-        FocusableProperty.OverrideMetadata(typeof(YCodeLineContainer), new FrameworkPropertyMetadata(false));
+        FocusableProperty.OverrideMetadata(typeof(FluxoLineContainer), new FrameworkPropertyMetadata(false));
     }
 
-    private YCodeDesigner? _designer;
-
-    public YCodeLineContainer()
-    {
-        
-    }
+    private FluxoDesigner? _designer;
 
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
 
-        if (this.FindParent<YCodeDesigner>() is { } designer)
+        if (this.FindParent<FluxoDesigner>() is { } designer)
         {
             _designer = designer;
         }

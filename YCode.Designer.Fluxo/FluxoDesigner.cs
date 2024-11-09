@@ -3,16 +3,16 @@ using System.Windows.Threading;
 
 namespace YCode.Designer.Fluxo;
 
-public partial class YCodeDesigner : MultiSelector
+public partial class FluxoDesigner : MultiSelector
 {
-    static YCodeDesigner()
+    static FluxoDesigner()
     {
         DefaultStyleKeyProperty.OverrideMetadata(
-            typeof(YCodeDesigner),
-            new FrameworkPropertyMetadata(typeof(YCodeDesigner))
+            typeof(FluxoDesigner),
+            new FrameworkPropertyMetadata(typeof(FluxoDesigner))
         );
 
-        FocusableProperty.OverrideMetadata(typeof(YCodeDesigner), new FrameworkPropertyMetadata(false));
+        FocusableProperty.OverrideMetadata(typeof(FluxoDesigner), new FrameworkPropertyMetadata(false));
     }
 
     private bool? _isLoaded;
@@ -21,11 +21,11 @@ public partial class YCodeDesigner : MultiSelector
     private readonly TranslateTransform _translateTransform = new();
     private readonly ScaleTransform _scaleTransform = new();
 
-    public YCodeDesigner()
+    public FluxoDesigner()
     {
-        this.AddHandler(YCodeNode.DragStartedEvent, new DragStartedEventHandler(this.OnNodeDragStarted));
-        this.AddHandler(YCodeNode.DragDeltaEvent, new DragDeltaEventHandler(this.OnNodeDragDelta));
-        this.AddHandler(YCodeNode.DragCompletedEvent, new DragCompletedEventHandler(this.OnNodeDragCompleted));
+        this.AddHandler(FluxoNode.DragStartedEvent, new DragStartedEventHandler(this.OnNodeDragStarted));
+        this.AddHandler(FluxoNode.DragDeltaEvent, new DragDeltaEventHandler(this.OnNodeDragDelta));
+        this.AddHandler(FluxoNode.DragCompletedEvent, new DragCompletedEventHandler(this.OnNodeDragCompleted));
 
         var transform = new TransformGroup();
         transform.Children.Add(_scaleTransform);
@@ -48,7 +48,7 @@ public partial class YCodeDesigner : MultiSelector
         DependencyProperty.RegisterReadOnly(
             nameof(ViewportTransform),
             typeof(Transform),
-            typeof(YCodeDesigner),
+            typeof(FluxoDesigner),
             new FrameworkPropertyMetadata(new TransformGroup())
         );
 
@@ -56,64 +56,64 @@ public partial class YCodeDesigner : MultiSelector
         ViewportTransformPropertyKey.DependencyProperty;
 
     public static readonly DependencyProperty ItemsExtentProperty = DependencyProperty.Register(
-        nameof(ItemsExtent), typeof(Rect), typeof(YCodeDesigner), new PropertyMetadata(default(Rect)));
+        nameof(ItemsExtent), typeof(Rect), typeof(FluxoDesigner), new PropertyMetadata(default(Rect)));
 
     public static readonly DependencyProperty ZoomProperty = DependencyProperty.Register(
-        nameof(Zoom), typeof(double), typeof(YCodeDesigner), new PropertyMetadata(1d));
+        nameof(Zoom), typeof(double), typeof(FluxoDesigner), new PropertyMetadata(1d));
 
     public static readonly DependencyProperty MaxZoomProperty = DependencyProperty.Register(
-        nameof(MaxZoom), typeof(double), typeof(YCodeDesigner), new PropertyMetadata(2d));
+        nameof(MaxZoom), typeof(double), typeof(FluxoDesigner), new PropertyMetadata(2d));
 
     public static readonly DependencyProperty MinZoomProperty = DependencyProperty.Register(
-        nameof(MinZoom), typeof(double), typeof(YCodeDesigner), new PropertyMetadata(0.5d));
+        nameof(MinZoom), typeof(double), typeof(FluxoDesigner), new PropertyMetadata(0.5d));
 
     public static readonly DependencyProperty ViewportLocationProperty = DependencyProperty.Register(
-        nameof(ViewportLocation), typeof(Point), typeof(YCodeDesigner),
+        nameof(ViewportLocation), typeof(Point), typeof(FluxoDesigner),
         new FrameworkPropertyMetadata(default(Point), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
             OnViewportLocationChanged));
 
     public static readonly DependencyProperty ViewportSizeProperty = DependencyProperty.Register(
-        nameof(ViewportSize), typeof(Size), typeof(YCodeDesigner), new PropertyMetadata(default(Size)));
+        nameof(ViewportSize), typeof(Size), typeof(FluxoDesigner), new PropertyMetadata(default(Size)));
 
     public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register(
-        nameof(SelectedItems), typeof(IList), typeof(YCodeDesigner), new PropertyMetadata(default(IList)));
+        nameof(SelectedItems), typeof(IList), typeof(FluxoDesigner), new PropertyMetadata(default(IList)));
 
     public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
-        nameof(Source), typeof(YCodeSource), typeof(YCodeDesigner));
+        nameof(Source), typeof(FluxoSource), typeof(FluxoDesigner));
 
     public static readonly DependencyProperty LinesProperty = DependencyProperty.Register(
-        nameof(Lines), typeof(IEnumerable), typeof(YCodeDesigner));
+        nameof(Lines), typeof(IEnumerable), typeof(FluxoDesigner));
 
     public static readonly DependencyProperty ItemAdapterProperty = DependencyProperty.Register(
-        nameof(ItemAdapter), typeof(IYCodeAdapter), typeof(YCodeDesigner));
+        nameof(ItemAdapter), typeof(IFluxoAdapter), typeof(FluxoDesigner));
 
     public static readonly DependencyProperty LineTypeProperty = DependencyProperty.Register(
-        nameof(LineType), typeof(LineType), typeof(YCodeDesigner), new PropertyMetadata(LineType.Bezier));
+        nameof(LineType), typeof(LineType), typeof(FluxoDesigner), new PropertyMetadata(LineType.Bezier));
 
     public static readonly DependencyProperty CanAutoPanningProperty = DependencyProperty.Register(
-        nameof(CanAutoPanning), typeof(bool), typeof(YCodeDesigner),
+        nameof(CanAutoPanning), typeof(bool), typeof(FluxoDesigner),
         new PropertyMetadata(true, OnCanAutoPanningChanged));
 
     public static readonly DependencyProperty GridTypeProperty = DependencyProperty.Register(
-        nameof(GridType), typeof(GridType), typeof(YCodeDesigner),
+        nameof(GridType), typeof(GridType), typeof(FluxoDesigner),
         new FrameworkPropertyMetadata(GridType.Grid, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
     public static readonly DependencyProperty ToolProperty = DependencyProperty.Register(
-        nameof(Tool), typeof(object), typeof(YCodeDesigner));
+        nameof(Tool), typeof(object), typeof(FluxoDesigner));
 
     public static readonly DependencyProperty ToolTemplateProperty = DependencyProperty.Register(
-        nameof(ToolTemplate), typeof(DataTemplate), typeof(YCodeDesigner));
+        nameof(ToolTemplate), typeof(DataTemplate), typeof(FluxoDesigner));
 
     public static readonly DependencyProperty HorizontalToolAlignmentProperty = DependencyProperty.Register(
-        nameof(HorizontalToolAlignment), typeof(HorizontalAlignment), typeof(YCodeDesigner),
+        nameof(HorizontalToolAlignment), typeof(HorizontalAlignment), typeof(FluxoDesigner),
         new PropertyMetadata(HorizontalAlignment.Center));
 
     public static readonly DependencyProperty VerticalToolAlignmentProperty = DependencyProperty.Register(
-        nameof(VerticalToolAlignment), typeof(VerticalAlignment), typeof(YCodeDesigner),
+        nameof(VerticalToolAlignment), typeof(VerticalAlignment), typeof(FluxoDesigner),
         new PropertyMetadata(VerticalAlignment.Bottom));
 
     public static readonly DependencyProperty ToolPaddingProperty = DependencyProperty.Register(
-        nameof(ToolPadding), typeof(Thickness), typeof(YCodeDesigner),
+        nameof(ToolPadding), typeof(Thickness), typeof(FluxoDesigner),
         new PropertyMetadata(new Thickness(0, 0, 0, 50)));
 
     public Thickness ToolPadding
@@ -164,9 +164,9 @@ public partial class YCodeDesigner : MultiSelector
         set => SetValue(LineTypeProperty, value);
     }
 
-    public IYCodeAdapter? ItemAdapter
+    public IFluxoAdapter? ItemAdapter
     {
-        get => (IYCodeAdapter?)GetValue(ItemAdapterProperty);
+        get => (IFluxoAdapter?)GetValue(ItemAdapterProperty);
         set => SetValue(ItemAdapterProperty, value);
     }
 
@@ -176,9 +176,9 @@ public partial class YCodeDesigner : MultiSelector
         set => SetValue(LinesProperty, value);
     }
 
-    public YCodeSource? Source
+    public FluxoSource? Source
     {
-        get => (YCodeSource?)GetValue(SourceProperty);
+        get => (FluxoSource?)GetValue(SourceProperty);
         set => SetValue(SourceProperty, value);
     }
 
@@ -245,7 +245,7 @@ public partial class YCodeDesigner : MultiSelector
     {
         if (e.Property == SourceProperty)
         {
-            if (e.NewValue is YCodeSource source)
+            if (e.NewValue is FluxoSource source)
             {
                 this.ItemsSource = source.Nodes;
 
@@ -260,7 +260,7 @@ public partial class YCodeDesigner : MultiSelector
 
     protected override DependencyObject GetContainerForItemOverride()
     {
-        return new YCodeNode(this)
+        return new FluxoNode(this)
         {
             RenderTransform = new TranslateTransform()
         };
@@ -268,7 +268,7 @@ public partial class YCodeDesigner : MultiSelector
 
     protected override bool IsItemItsOwnContainerOverride(object item)
     {
-        return item is YCodeNode;
+        return item is FluxoNode;
     }
 
     protected override void OnRender(DrawingContext dc)
@@ -364,9 +364,9 @@ public partial class YCodeDesigner : MultiSelector
         {
             _isLoaded = false;
 
-            var mounting = new MountingEventArgs();
+            var mounting = new FluxoMountingEventArgs();
 
-            this.RaiseEvent<MountingEventArgs>(nameof(Mounting), mounting);
+            this.RaiseEvent<FluxoMountingEventArgs>(nameof(Mounting), mounting);
 
             if (!mounting.Cancel)
             {
@@ -374,7 +374,7 @@ public partial class YCodeDesigner : MultiSelector
                 {
                     var source = await this.ItemAdapter.ImportAsync(mounting.Value);
 
-                    this.Source ??= new YCodeSource();
+                    this.Source ??= new FluxoSource();
 
                     this.Source.Nodes.Clear();
 
@@ -385,7 +385,7 @@ public partial class YCodeDesigner : MultiSelector
                     await this.CopyToAsync(source.Lines, this.Source.Lines);
                 }
 
-                this.RaiseEvent<MountedEventArgs>(nameof(Mounted), new MountedEventArgs(this.Source));
+                this.RaiseEvent<FluxoMountedEventArgs>(nameof(Mounted), new FluxoMountedEventArgs(this.Source));
             }
 
             _isLoaded = true;
@@ -469,35 +469,35 @@ public partial class YCodeDesigner : MultiSelector
         });
     }
 
-    public DependencyObject GetContainerForLineOverride(YCodeLineContainer container)
+    public DependencyObject GetContainerForLineOverride(FluxoLineContainer container)
     {
-        return new YCodeLine(this, container);
+        return new FluxoLine(this, container);
     }
 
-    public bool IsLineItsOwnContainerOverride(YCodeLineContainer container, object item)
+    public bool IsLineItsOwnContainerOverride(FluxoLineContainer container, object item)
     {
-        return item is YCodeLine;
+        return item is FluxoLine;
     }
 
     private void OnNodeDragStarted(object sender, DragStartedEventArgs e)
     {
-        if (e.OriginalSource is YCodeNode node)
+        if (e.OriginalSource is FluxoNode node)
         {
-            this.RaiseEvent<NodeDragStartedEventArgs>(nameof(DragStared), new NodeDragStartedEventArgs(node));
+            this.RaiseEvent<FluxoNodeDragStartedEventArgs>(nameof(DragStared), new FluxoNodeDragStartedEventArgs(node));
         }
     }
 
     private void OnNodeDragCompleted(object sender, DragCompletedEventArgs e)
     {
-        if (e.OriginalSource is YCodeNode node)
+        if (e.OriginalSource is FluxoNode node)
         {
-            this.RaiseEvent<NodeDragCompletedEventArgs>(nameof(DragCompleted), new NodeDragCompletedEventArgs(node));
+            this.RaiseEvent<FluxoNodeDragCompletedEventArgs>(nameof(DragCompleted), new FluxoNodeDragCompletedEventArgs(node));
         }
     }
 
     private void OnNodeDragDelta(object sender, DragDeltaEventArgs e)
     {
-        if (e.OriginalSource is YCodeNode node)
+        if (e.OriginalSource is FluxoNode node)
         {
             var left = e.HorizontalChange;
 
@@ -507,7 +507,7 @@ public partial class YCodeDesigner : MultiSelector
 
             node.Location = new Point(left, top);
 
-            this.RaiseEvent<NodeDragDeltaEventArgs>(nameof(DragDelta), new NodeDragDeltaEventArgs(node));
+            this.RaiseEvent<FluxoNodeDragDeltaEventArgs>(nameof(DragDelta), new FluxoNodeDragDeltaEventArgs(node));
         }
     }
 
@@ -554,7 +554,7 @@ public partial class YCodeDesigner : MultiSelector
 
     private static void OnCanAutoPanningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is YCodeDesigner designer && e.NewValue is bool canAutoPanning)
+        if (d is FluxoDesigner designer && e.NewValue is bool canAutoPanning)
         {
             designer.OnAutoPanningChanged(canAutoPanning);
         }
@@ -562,7 +562,7 @@ public partial class YCodeDesigner : MultiSelector
 
     private static void OnViewportLocationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is YCodeDesigner designer && e.NewValue is Point translate)
+        if (d is FluxoDesigner designer && e.NewValue is Point translate)
         {
             designer._translateTransform.X = -translate.X * designer.Zoom;
 

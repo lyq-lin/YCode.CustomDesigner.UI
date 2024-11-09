@@ -1,14 +1,14 @@
 namespace YCode.Designer.Fluxo;
 
-internal abstract class YCodeBaseLine(LineType type, YCodeDesigner designer) : IYCodeLineGeometry
+internal abstract class FluxoBaseLine(LineType type, FluxoDesigner designer) : IFluxoLineGeometry
 {
-    protected readonly YCodeDesigner _designer = designer;
+    protected readonly FluxoDesigner _designer = designer;
     public LineType Type { get; } = type;
 
-    public YCodeLineParameter Parameter { get; set; } = default!;
+    public FluxoLineParameter Parameter { get; set; } = default!;
     protected List<Point> Points { get; } = [];
 
-    public virtual void DrawLine(YCodeLineParameter @params, StreamGeometryContext context)
+    public virtual void DrawLine(FluxoLineParameter @params, StreamGeometryContext context)
     {
         //TODO: 算法策略
 

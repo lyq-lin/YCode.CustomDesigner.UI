@@ -1,22 +1,22 @@
 namespace YCode.Designer.Fluxo;
 
-public class YCodeExpandPanel : HeaderedContentControl
+public class FluxoExpandPanel : HeaderedContentControl
 {
-    static YCodeExpandPanel()
+    static FluxoExpandPanel()
     {
         DefaultStyleKeyProperty.OverrideMetadata(
-            typeof(YCodeExpandPanel),
-            new FrameworkPropertyMetadata(typeof(YCodeExpandPanel))
+            typeof(FluxoExpandPanel),
+            new FrameworkPropertyMetadata(typeof(FluxoExpandPanel))
         );
     }
 
     #region Dependency Properties
 
     public static readonly DependencyProperty HeaderBrushProperty = DependencyProperty.Register(
-        nameof(HeaderBrush), typeof(Brush), typeof(YCodeExpandPanel), new PropertyMetadata(Brushes.Transparent));
+        nameof(HeaderBrush), typeof(Brush), typeof(FluxoExpandPanel), new PropertyMetadata(Brushes.Transparent));
 
     public static readonly DependencyProperty IsExpandProperty = DependencyProperty.Register(
-        nameof(IsExpand), typeof(bool), typeof(YCodeExpandPanel), new PropertyMetadata(true));
+        nameof(IsExpand), typeof(bool), typeof(FluxoExpandPanel), new PropertyMetadata(true));
 
     public bool IsExpand
     {

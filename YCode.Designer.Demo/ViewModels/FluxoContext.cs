@@ -3,7 +3,7 @@ using YCode.Designer.Fluxo;
 
 namespace YCode.Designer.Demo;
 
-public class YCodeContext : YCodeNotifyPropertyChanged
+public class FluxoContext : FluxoNotifyPropertyChanged
 {
     private ObservableCollection<object> _children = [];
     private bool _isExpand;

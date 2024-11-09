@@ -1,6 +1,6 @@
 namespace YCode.Designer.Fluxo;
 
-public static class YCodeExtension
+public static class FluxoExtension
 {
     public static void AddRanage<T>(this IList list, IEnumerable<T> collection)
     {

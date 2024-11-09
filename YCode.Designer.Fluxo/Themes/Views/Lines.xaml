@@ -6,7 +6,7 @@
         <ResourceDictionary Source="/YCode.Designer.Fluxo;component/Themes/Views/Styles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type local:YCodeLine}">
+    <Style TargetType="{x:Type local:FluxoLine}">
         <Setter Property="SourceId" Value="{Binding PrevId}" />
         <Setter Property="TargetId" Value="{Binding NextId}" />
         <Setter Property="StrokeThickness" Value="3" />
@@ -14,7 +14,7 @@
         <Setter Property="Fill" Value="DodgerBlue" />
     </Style>
 
-    <Style TargetType="{x:Type local:YCodeLineContainer}">
+    <Style TargetType="{x:Type local:FluxoLineContainer}">
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -22,7 +22,7 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:YCodeLineContainer}">
+                <ControlTemplate TargetType="{x:Type local:FluxoLineContainer}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">

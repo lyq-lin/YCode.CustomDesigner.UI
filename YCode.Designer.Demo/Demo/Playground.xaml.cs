@@ -12,27 +12,27 @@ public partial class Playground : UserControl
         InitializeComponent();
     }
 
-    private void OnNodeDragDelta(object? sender, NodeDragDeltaEventArgs e)
+    private void OnNodeDragDelta(object? sender, FluxoNodeDragDeltaEventArgs e)
     {
         Debug.WriteLine($"{nameof(OnNodeDragDelta)} Trigger...");
     }
 
-    private void OnNodeDragStared(object? sender, NodeDragStartedEventArgs e)
+    private void OnNodeDragStared(object? sender, FluxoNodeDragStartedEventArgs e)
     {
         Debug.WriteLine($"{nameof(OnNodeDragStared)} Trigger...");
     }
 
-    private void OnNodeDragCompleted(object? sender, NodeDragCompletedEventArgs e)
+    private void OnNodeDragCompleted(object? sender, FluxoNodeDragCompletedEventArgs e)
     {
         Debug.WriteLine($"{nameof(OnNodeDragCompleted)} Trigger...");
     }
 
-    private void OnMounting(object? sender, MountingEventArgs e)
+    private void OnMounting(object? sender, FluxoMountingEventArgs e)
     {
         Debug.WriteLine($"{nameof(OnMounting)} Trigger...");
     }
 
-    private void OnMounted(object? sender, MountedEventArgs e)
+    private void OnMounted(object? sender, FluxoMountedEventArgs e)
     {
         Debug.WriteLine($"{nameof(OnMounted)} Trigger...");
     }
