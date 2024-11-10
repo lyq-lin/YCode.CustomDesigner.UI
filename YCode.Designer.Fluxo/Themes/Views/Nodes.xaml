@@ -123,11 +123,14 @@
     <Style TargetType="{x:Type local:FluxoDataPanelItem}">
         <Setter Property="ColumnId" Value="{Binding Id}" />
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="MinHeight" Value="24" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:FluxoDataPanelItem}">
-                    <Border Background="{TemplateBinding Background}"
+                    <Border Margin="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="{StaticResource Radius}"
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -136,13 +139,13 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <local:FluxoConnector x:Name="LeftConnector"
+                            <local:FluxoConnector x:Name="PART_LeftConnector"
                                                   Margin="4,0,0,0"
                                                   Visibility="Hidden" />
 
                             <ContentPresenter Grid.Column="1" />
 
-                            <local:FluxoConnector x:Name="RightConnector"
+                            <local:FluxoConnector x:Name="PART_RightConnector"
                                                   Grid.Column="2"
                                                   Margin="0,0,4,0"
                                                   Visibility="Hidden" />

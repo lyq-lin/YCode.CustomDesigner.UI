@@ -10,7 +10,7 @@ public class FluxoDataAdapter : IFluxoAdapter
     {
         var viewModel = new FluxoSource();
 
-        var count = 1000;
+        var count = 10;
 
         var xDistance = 220;
 
