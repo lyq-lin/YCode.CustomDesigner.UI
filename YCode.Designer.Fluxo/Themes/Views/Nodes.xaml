@@ -18,6 +18,7 @@
                          Duration="0:0:1" />
     </Storyboard>
 
+    <!--  FluxoConnector Style  -->
     <Style TargetType="{x:Type local:FluxoConnector}">
         <Setter Property="Width" Value="10" />
         <Setter Property="Height" Value="10" />
@@ -46,6 +47,7 @@
         </Style.Triggers>
     </Style>
 
+    <!--  FluxoExpandPanel Style  -->
     <Style TargetType="{x:Type local:FluxoExpandPanel}">
         <Setter Property="HeaderBrush" Value="CadetBlue" />
         <Setter Property="Background" Value="#1E1E1E" />
@@ -117,6 +119,7 @@
         </Setter>
     </Style>
 
+    <!--  FluxoDataPanelItem Style  -->
     <Style TargetType="{x:Type local:FluxoDataPanelItem}">
         <Setter Property="ColumnId" Value="{Binding Id}" />
         <Setter Property="Background" Value="Transparent" />
@@ -158,6 +161,7 @@
         </Setter>
     </Style>
 
+    <!--  FluxoDataPanel Style  -->
     <Style TargetType="{x:Type local:FluxoDataPanel}">
         <Setter Property="MaxHeight" Value="385" />
         <Setter Property="ItemsPanel">
@@ -188,6 +192,7 @@
         </Setter>
     </Style>
 
+    <!--  FluxoNode Style  -->
     <Style TargetType="{x:Type local:FluxoNode}">
         <Setter Property="NodeId" Value="{Binding Id}" />
         <Setter Property="Location" Value="{Binding Location}" />

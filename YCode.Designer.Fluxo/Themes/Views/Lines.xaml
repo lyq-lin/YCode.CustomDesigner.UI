@@ -15,6 +15,7 @@
                          Duration="0:0:1" />
     </Storyboard>
 
+    <!--  FluxoLine Style  -->
     <Style TargetType="{x:Type local:FluxoLine}">
         <Setter Property="SourceId" Value="{Binding PrevId}" />
         <Setter Property="TargetId" Value="{Binding NextId}" />
@@ -34,6 +35,7 @@
         </Style.Triggers>
     </Style>
 
+    <!--  FluxoLineContainer Style  -->
     <Style TargetType="{x:Type local:FluxoLineContainer}">
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Background" Value="Transparent" />

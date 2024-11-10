@@ -3,6 +3,7 @@
                     xmlns:local="clr-namespace:YCode.Designer.Fluxo">
 
 
+    <!--  FluxoDesigner Style  -->
     <Style TargetType="{x:Type local:FluxoDesigner}">
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Foreground" Value="White" />
