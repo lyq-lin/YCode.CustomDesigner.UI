@@ -6,6 +6,46 @@
         <ResourceDictionary Source="/YCode.Designer.Fluxo;component/Themes/Views/Styles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <Storyboard x:Key="HighlightConnector">
+        <DoubleAnimation Storyboard.TargetProperty="Width"
+                         From="10"
+                         To="15"
+                         Duration="0:0:1" />
+
+        <DoubleAnimation Storyboard.TargetProperty="Height"
+                         From="10"
+                         To="15"
+                         Duration="0:0:1" />
+    </Storyboard>
+
+    <Style TargetType="{x:Type local:FluxoConnector}">
+        <Setter Property="Width" Value="10" />
+        <Setter Property="Height" Value="10" />
+        <Setter Property="Background" Value="CadetBlue" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:FluxoConnector}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="10"
+                            BorderThickness="{TemplateBinding BorderThickness}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Name="HighlightConnector"
+                                     Storyboard="{StaticResource HighlightConnector}" />
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <RemoveStoryboard BeginStoryboardName="HighlightConnector" />
+                </Trigger.ExitActions>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="{x:Type local:FluxoExpandPanel}">
         <Setter Property="HeaderBrush" Value="CadetBlue" />
         <Setter Property="Background" Value="#1E1E1E" />
@@ -86,11 +126,31 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <ContentPresenter />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <local:FluxoConnector x:Name="LeftConnector"
+                                                  Margin="4,0,0,0"
+                                                  Visibility="Hidden" />
+
+                            <ContentPresenter Grid.Column="1" />
+
+                            <local:FluxoConnector x:Name="RightConnector"
+                                                  Grid.Column="2"
+                                                  Margin="0,0,4,0"
+                                                  Visibility="Hidden" />
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="SkyBlue" />
+                            <Setter TargetName="LeftConnector" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="RightConnector" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="RightConnector" Property="Margin" Value="0,0,8,0" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
