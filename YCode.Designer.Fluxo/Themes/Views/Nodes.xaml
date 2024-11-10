@@ -44,6 +44,15 @@
                     <RemoveStoryboard BeginStoryboardName="HighlightConnector" />
                 </Trigger.ExitActions>
             </Trigger>
+            <Trigger Property="local:FluxoPendingLine.IsOverElement" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Name="IsOverElementHighlightConnector"
+                                     Storyboard="{StaticResource HighlightConnector}" />
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <RemoveStoryboard BeginStoryboardName="IsOverElementHighlightConnector" />
+                </Trigger.ExitActions>
+            </Trigger>
         </Style.Triggers>
     </Style>
 
@@ -121,7 +130,7 @@
 
     <!--  FluxoDataPanelItem Style  -->
     <Style TargetType="{x:Type local:FluxoDataPanelItem}">
-        <Setter Property="ColumnId" Value="{Binding Id}" />
+        <Setter Property="ItemId" Value="{Binding Id}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="MinHeight" Value="24" />
         <Setter Property="Template">
@@ -154,9 +163,15 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="SkyBlue" />
-                            <Setter TargetName="LeftConnector" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="RightConnector" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="RightConnector" Property="Margin" Value="0,0,8,0" />
+                            <Setter TargetName="PART_LeftConnector" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_RightConnector" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_RightConnector" Property="Margin" Value="0,0,8,0" />
+                        </Trigger>
+                        <Trigger Property="local:FluxoPendingLine.IsOverElement" Value="True">
+                            <Setter Property="Background" Value="SkyBlue" />
+                            <Setter TargetName="PART_LeftConnector" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_RightConnector" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_RightConnector" Property="Margin" Value="0,0,8,0" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -20,8 +20,8 @@
         <Setter Property="SourceId" Value="{Binding PrevId}" />
         <Setter Property="TargetId" Value="{Binding NextId}" />
         <Setter Property="StrokeThickness" Value="3" />
-        <Setter Property="Stroke" Value="DodgerBlue" />
-        <Setter Property="Fill" Value="DodgerBlue" />
+        <Setter Property="Stroke" Value="{Binding LineBrush, RelativeSource={RelativeSource AncestorType=local:FluxoDesigner}}" />
+        <Setter Property="Fill" Value="{Binding LineBrush, RelativeSource={RelativeSource AncestorType=local:FluxoDesigner}}" />
         <Style.Triggers>
             <Trigger Property="IsMouseDirectlyOver" Value="True">
                 <Trigger.EnterActions>

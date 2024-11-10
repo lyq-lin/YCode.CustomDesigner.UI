@@ -10,6 +10,22 @@ public class FluxoDataPanel : ItemsControl
         );
     }
 
+    private FluxoNode? _node;
+
+    internal FluxoNode Node => _node ??
+                               throw new InvalidOperationException(
+                                   $"FluxoNode is missing or is not of type {nameof(FluxoNode)}.");
+
+    public override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+
+        if (this.FindParent<FluxoNode>() is { } node)
+        {
+            _node = node;
+        }
+    }
+
     protected override DependencyObject GetContainerForItemOverride()
     {
         return new FluxoDataPanelItem(this);

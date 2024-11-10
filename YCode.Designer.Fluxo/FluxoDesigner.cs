@@ -36,7 +36,7 @@ public partial class FluxoDesigner : MultiSelector
         this.Loaded += OnLoaded;
     }
 
-    protected internal Panel ItemsHost { get; private set; } = default!;
+    internal FluxoPanel ItemsHost { get; private set; } = default!;
 
     internal bool IsPanning { get; private set; }
 
@@ -115,6 +115,15 @@ public partial class FluxoDesigner : MultiSelector
     public static readonly DependencyProperty ToolPaddingProperty = DependencyProperty.Register(
         nameof(ToolPadding), typeof(Thickness), typeof(FluxoDesigner),
         new PropertyMetadata(new Thickness(0, 0, 0, 50)));
+
+    public static readonly DependencyProperty LineBrushProperty = DependencyProperty.Register(
+        nameof(LineBrush), typeof(Brush), typeof(FluxoDesigner), new PropertyMetadata(Brushes.DodgerBlue));
+
+    public Brush LineBrush
+    {
+        get => (Brush)GetValue(LineBrushProperty);
+        set => SetValue(LineBrushProperty, value);
+    }
 
     public Thickness ToolPadding
     {
@@ -232,9 +241,9 @@ public partial class FluxoDesigner : MultiSelector
     {
         base.OnApplyTemplate();
 
-        this.ItemsHost = this.GetTemplateChild("PART_ItemsHost") as Panel ??
+        this.ItemsHost = this.GetTemplateChild("PART_ItemsHost") as FluxoPanel ??
                          throw new InvalidOperationException(
-                             $"PART_ItemsHost is missing or is not of type {nameof(Panel)}.");
+                             $"PART_ItemsHost is missing or is not of type {nameof(FluxoPanel)}.");
 
         this.OnAutoPanningChanged(this.CanAutoPanning);
 
@@ -491,7 +500,8 @@ public partial class FluxoDesigner : MultiSelector
     {
         if (e.OriginalSource is FluxoNode node)
         {
-            this.RaiseEvent<FluxoNodeDragCompletedEventArgs>(nameof(DragCompleted), new FluxoNodeDragCompletedEventArgs(node));
+            this.RaiseEvent<FluxoNodeDragCompletedEventArgs>(nameof(DragCompleted),
+                new FluxoNodeDragCompletedEventArgs(node));
         }
     }
 

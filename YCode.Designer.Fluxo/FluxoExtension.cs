@@ -55,4 +55,48 @@ public static class FluxoExtension
 
         return false;
     }
+
+    internal static UIElement GetPotentialElement<T>(this FluxoDesigner designer) where T : UIElement
+    {
+        var element = designer.ItemsHost.GetElementUnderMouse<T>();
+
+        if (element != null)
+        {
+            return element;
+        }
+
+        return designer;
+    }
+
+    internal static T? GetElementUnderMouse<T>(this UIElement container)
+        where T : UIElement
+    {
+        T? result = default;
+        VisualTreeHelper.HitTest(container, depObj =>
+        {
+            if (depObj is UIElement elem && elem.IsHitTestVisible)
+            {
+                if (elem is T r)
+                {
+                    result = r;
+                    return HitTestFilterBehavior.Stop;
+                }
+
+                return HitTestFilterBehavior.Continue;
+            }
+
+            return HitTestFilterBehavior.ContinueSkipSelfAndChildren;
+        }, hitResult =>
+        {
+            if (hitResult.VisualHit is T r)
+            {
+                result = r;
+                return HitTestResultBehavior.Stop;
+            }
+
+            return HitTestResultBehavior.Continue;
+        }, new PointHitTestParameters(Mouse.GetPosition(container)));
+
+        return result;
+    }
 }
