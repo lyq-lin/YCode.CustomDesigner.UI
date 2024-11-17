@@ -1,0 +1,52 @@
+<UserControl x:Class="YCode.Designer.Demo.AutoLayout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:YCode.Designer.Demo"
+             xmlns:ycode="http://www.ycode.dev.com/coding/fluxo"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <local:AutoLayoutViewModel />
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+
+        <DataTemplate x:Key="NormalNodeTemplate"
+                      DataType="{x:Type ycode:FluxoNodeViewModel}">
+            <Grid Width="160"
+                  Height="28">
+                <TextBlock Text="{Binding Name}" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="EmptyNodeTemplate">
+            <Border Width="5"
+                    Height="5"
+                    Background="Gray"
+                    CornerRadius="3" />
+        </DataTemplate>
+
+        <local:NodeTemplateSelector x:Key="NodeTemplateSelector"
+                                    NormalTemplate="{StaticResource NormalNodeTemplate}"
+                                    EmptyTemplate="{StaticResource EmptyNodeTemplate}" />
+
+        <Style x:Key="FluxoNodeStyle"
+               d:DataContext="{d:DesignInstance ycode:FluxoNodeViewModel}"
+               TargetType="{x:Type ycode:FluxoNode}">
+
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="#1E1E1E">
+        <ycode:FluxoDesigner x:Name="Designer"
+                             Source="{Binding Source}"
+                             ItemTemplateSelector="{StaticResource NodeTemplateSelector}"
+                             ItemContainerStyle="{StaticResource FluxoNodeStyle}"
+                             EnableMove="False"
+                             GridType="Dot" />
+    </Grid>
+</UserControl>

@@ -119,6 +119,15 @@ public partial class FluxoDesigner : MultiSelector
     public static readonly DependencyProperty LineBrushProperty = DependencyProperty.Register(
         nameof(LineBrush), typeof(Brush), typeof(FluxoDesigner), new PropertyMetadata(Brushes.DodgerBlue));
 
+    public static readonly DependencyProperty EnableMoveProperty = DependencyProperty.Register(
+        nameof(EnableMove), typeof(bool), typeof(FluxoDesigner), new PropertyMetadata(true));
+
+    public bool EnableMove
+    {
+        get => (bool)GetValue(EnableMoveProperty);
+        set => SetValue(EnableMoveProperty, value);
+    }
+
     public Brush LineBrush
     {
         get => (Brush)GetValue(LineBrushProperty);

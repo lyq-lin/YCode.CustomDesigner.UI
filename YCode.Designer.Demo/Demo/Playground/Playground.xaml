@@ -23,7 +23,7 @@
             </Grid>
         </DataTemplate>
 
-        <Style x:Key="YCodeNodeStyle"
+        <Style x:Key="FluxoNodeStyle"
                d:DataContext="{d:DesignInstance ycode:FluxoNodeViewModel}"
                TargetType="{x:Type ycode:FluxoNode}">
             <Setter Property="Content" Value="{Binding Name}" />
@@ -39,7 +39,7 @@
                              Mounted="OnMounted"
                              GridType="Dot"
                              ToolTemplate="{StaticResource ToolDataTemplate}"
-                             ItemContainerStyle="{StaticResource YCodeNodeStyle}"
+                             ItemContainerStyle="{StaticResource FluxoNodeStyle}"
                              Source="{Binding Source}" />
     </Grid>
 </UserControl>

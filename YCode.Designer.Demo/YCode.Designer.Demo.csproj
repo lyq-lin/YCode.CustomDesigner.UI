@@ -17,4 +17,22 @@
     <None Remove="YCode.Designer.Demo.csproj.DotSettings" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Demo\AutoLayout\AutoLayout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Demo\Performance\Performance.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Demo\Playground\Playground.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>

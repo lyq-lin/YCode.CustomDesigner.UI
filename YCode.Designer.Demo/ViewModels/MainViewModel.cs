@@ -14,7 +14,7 @@ internal class MainViewModel : FluxoNotifyPropertyChanged
 
     public MainViewModel()
     {
-        _uis = [new Playground(), new Performance()];
+        _uis = [new Playground(), new Performance(), new AutoLayout()];
 
         _view = _uis[0];
     }

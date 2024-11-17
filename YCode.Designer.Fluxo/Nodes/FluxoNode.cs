@@ -185,7 +185,7 @@ public class FluxoNode : ContentControl, IFluxoItem
 
         var mouse = e.GetPosition(_designer.ItemsHost);
 
-        if (_point.HasValue)
+        if (_point.HasValue && this.Designer.EnableMove)
         {
             this.InvalidateVisual();
 
