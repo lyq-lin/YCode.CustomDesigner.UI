@@ -67,19 +67,6 @@ public class FluxoLine : Shape
         }
     }
 
-    private (Point, Point) DrawLine(StreamGeometryContext context, FluxoNode source, FluxoNode target)
-    {
-        var line = _factory.GetLine(_designer.LineType);
-
-        var @params = new FluxoLineParameter(
-            (source.Left, source.Right, source.Top, source.Bottom),
-            (target.Left, target.Right, target.Top, target.Bottom));
-
-        line?.DrawLine(@params, context);
-
-        return (@params.Start, @params.End);
-    }
-
     #region Dependency Properties
 
     public static readonly DependencyProperty SourceIdProperty = DependencyProperty.Register(
@@ -89,6 +76,26 @@ public class FluxoLine : Shape
     public static readonly DependencyProperty TargetIdProperty = DependencyProperty.Register(
         nameof(TargetId), typeof(string), typeof(FluxoLine),
         new FrameworkPropertyMetadata(String.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+    public static readonly DependencyProperty SourcePortProperty = DependencyProperty.Register(
+        nameof(SourcePort), typeof(string), typeof(FluxoLine),
+        new FrameworkPropertyMetadata(String.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+    public static readonly DependencyProperty TargetPortProperty = DependencyProperty.Register(
+        nameof(TargetPort), typeof(string), typeof(FluxoLine),
+        new FrameworkPropertyMetadata(String.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+    public string TargetPort
+    {
+        get => (string)GetValue(TargetPortProperty);
+        set => SetValue(TargetPortProperty, value);
+    }
+
+    public string SourcePort
+    {
+        get => (string)GetValue(SourcePortProperty);
+        set => SetValue(SourcePortProperty, value);
+    }
 
     public string TargetId
     {
@@ -134,8 +141,60 @@ public class FluxoLine : Shape
                 this.Target = node;
             }
         }
+        else if (e.Property == SourcePortProperty || e.Property == TargetPortProperty)
+        {
+            this.InvalidateVisual();
+        }
 
         base.OnPropertyChanged(e);
+    }
+
+    private (Point, Point) DrawLine(StreamGeometryContext context, FluxoNode source, FluxoNode target)
+    {
+        var line = _factory.GetLine(_designer.LineType);
+
+        var @params = this.GetParameter(source, target);
+
+        line?.DrawLine(@params, context);
+
+        return (@params.Start, @params.End);
+    }
+
+    private FluxoLineParameter GetParameter(FluxoNode source, FluxoNode target)
+    {
+        var sp = new FluxoPoint
+        {
+            Left = source.Left,
+            Right = source.Right,
+            Top = source.Top,
+            Bottom = source.Bottom
+        };
+
+        var tp = new FluxoPoint
+        {
+            Left = target.Left,
+            Right = target.Right,
+            Top = target.Top,
+            Bottom = target.Bottom
+        };
+
+        if (!String.IsNullOrWhiteSpace(this.SourcePort)
+            && source.Points.TryGetValue(this.SourcePort, out var spv))
+        {
+            sp.Left = spv.Left;
+
+            sp.Right = spv.Right;
+        }
+
+        if (!String.IsNullOrWhiteSpace(this.TargetPort)
+            && target.Points.TryGetValue(this.TargetPort, out var tpv))
+        {
+            tp.Left = tpv.Left;
+
+            tp.Right = tpv.Right;
+        }
+
+        return new FluxoLineParameter(sp, tp);
     }
 
     private DependencyObject? FindNode(string nodeId)

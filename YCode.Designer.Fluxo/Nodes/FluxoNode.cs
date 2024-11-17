@@ -20,6 +20,8 @@ public class FluxoNode : ContentControl, IFluxoItem
         _designer = designer;
 
         this.Lines = [];
+        
+        this.Points = [];
 
         this.LayoutUpdated += OnLayoutUpdateChanged;
     }
@@ -33,6 +35,9 @@ public class FluxoNode : ContentControl, IFluxoItem
     internal Point Bottom { get; private set; }
 
     internal List<FluxoLine> Lines { get; private set; }
+    
+    internal Dictionary<string, FluxoPoint> Points { get; set; }
+
 
     #region Dependency Properties
 

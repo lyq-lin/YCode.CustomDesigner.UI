@@ -1,13 +1,10 @@
 namespace YCode.Designer.Fluxo;
 
-using Position = (Point Left, Point Right, Point Top, Point Bottom);
-
-public class FluxoLineParameter((Point, Point, Point, Point) source, (Point, Point, Point, Point) target)
+public class FluxoLineParameter(FluxoPoint source, FluxoPoint target)
 {
     public Point Start { get; set; }
     public Point End { get; set; }
 
-
-    public Position Source = source;
-    public Position Target = target;
+    public FluxoPoint Source { get; set; } = source;
+    public FluxoPoint Target { get; set; } = target;
 }

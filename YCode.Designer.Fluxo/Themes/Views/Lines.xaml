@@ -19,6 +19,8 @@
     <Style TargetType="{x:Type local:FluxoLine}">
         <Setter Property="SourceId" Value="{Binding PrevId}" />
         <Setter Property="TargetId" Value="{Binding NextId}" />
+        <Setter Property="SourcePort" Value="{Binding PrevPort}" />
+        <Setter Property="TargetPort" Value="{Binding NextPort}" />
         <Setter Property="StrokeThickness" Value="3" />
         <Setter Property="Stroke" Value="{Binding LineBrush, RelativeSource={RelativeSource AncestorType=local:FluxoDesigner}}" />
         <Setter Property="Fill" Value="{Binding LineBrush, RelativeSource={RelativeSource AncestorType=local:FluxoDesigner}}" />

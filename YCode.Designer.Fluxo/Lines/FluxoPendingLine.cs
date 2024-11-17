@@ -79,9 +79,24 @@ internal class FluxoPendingLine : Adorner
     {
         _type ??= _lineFactory.GetLine(_designer.LineType);
 
-        var parameter =
-            new FluxoLineParameter((this.Source.Left, this.Source.Right, this.Source.Top, this.Source.Bottom),
-                (mouse, mouse, mouse, mouse));
+        var sp = new FluxoPoint
+        {
+            Left = this.Source.Left,
+            Right = this.Source.Right,
+            Top = this.Source.Top,
+            Bottom = this.Source.Bottom
+        };
+
+        if (!String.IsNullOrWhiteSpace(this.SourceItem)
+            && this.Source.Points.TryGetValue(this.SourceItem, out var spv))
+        {
+            sp.Left = spv.Left;
+
+            sp.Right = spv.Right;
+        }
+
+        var parameter = new FluxoLineParameter(sp,
+            new FluxoPoint { Left = mouse, Right = mouse, Top = mouse, Bottom = mouse });
 
         _type?.DrawLine(parameter, context);
     }
@@ -155,6 +170,8 @@ internal class FluxoPendingLine : Adorner
 
         this.CreateLine();
 
+        this.OnDisIsOverElement();
+        
         var layer = AdornerLayer.GetAdornerLayer(_designer.ItemsHost);
 
         layer?.Remove(this);
@@ -170,6 +187,8 @@ internal class FluxoPendingLine : Adorner
         {
             PrevId = this.Source.NodeId,
             NextId = this.Target.NodeId,
+            PrevPort = this.SourceItem,
+            NextPort = this.TargetItem
         };
 
         if (!lines.Contains(line))
@@ -212,5 +231,23 @@ internal class FluxoPendingLine : Adorner
         SetIsOverElement(node, true);
 
         this.PrevNode = node;
+    }
+
+    private void OnDisIsOverElement()
+    {
+        if (this.PrevConnector != null)
+        {
+            SetIsOverElement(this.PrevConnector, false);
+        }
+        
+        if (this.PrevItem != null)
+        {
+            SetIsOverElement(this.PrevItem, false);
+        }
+        
+        if (this.PrevNode != null)
+        {
+            SetIsOverElement(this.PrevNode, false);
+        }
     }
 }

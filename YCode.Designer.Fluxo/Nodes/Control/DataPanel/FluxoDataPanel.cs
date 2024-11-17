@@ -16,6 +16,7 @@ public class FluxoDataPanel : ItemsControl
                                throw new InvalidOperationException(
                                    $"FluxoNode is missing or is not of type {nameof(FluxoNode)}.");
 
+
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
