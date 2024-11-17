@@ -11,6 +11,9 @@ public class FluxoDataPanel : ItemsControl
     }
 
     private FluxoNode? _node;
+    private ScrollViewer? _scroll;
+
+    internal event EventHandler? Changed;
 
     internal FluxoNode Node => _node ??
                                throw new InvalidOperationException(
@@ -25,6 +28,13 @@ public class FluxoDataPanel : ItemsControl
         {
             _node = node;
         }
+
+        if (this.GetTemplateChild("PART_Scroll") is ScrollViewer scroll)
+        {
+            _scroll = scroll;
+
+            _scroll.ScrollChanged += OnScrollChanged;
+        }
     }
 
     protected override DependencyObject GetContainerForItemOverride()
@@ -35,5 +45,12 @@ public class FluxoDataPanel : ItemsControl
     protected override bool IsItemItsOwnContainerOverride(object item)
     {
         return item is FluxoDataPanelItem;
+    }
+
+    private void OnScrollChanged(object sender, ScrollChangedEventArgs e)
+    {
+        this.Changed?.Invoke(this.Node, e);
+
+        this.Node.InvalidateNode();
     }
 }

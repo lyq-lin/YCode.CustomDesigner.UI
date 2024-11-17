@@ -18,6 +18,8 @@ public class FluxoDataPanelItem : ContentControl
     {
         _panel = panel;
 
+        _panel.Changed += OnChanged;
+
         _panel.Node.Changed += OnChanged;
     }
 
