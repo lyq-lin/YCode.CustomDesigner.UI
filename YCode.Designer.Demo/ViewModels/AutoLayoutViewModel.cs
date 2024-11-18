@@ -14,7 +14,7 @@ public class AutoLayoutViewModel : FluxoNotifyPropertyChanged
         {
             Id = "Root",
             Name = "Root",
-            Location = new Point(122, 240),
+            // Location = new Point(122, 240),
             Context = new NodeContext()
             {
                 Type = NodeType.Normal
@@ -25,7 +25,7 @@ public class AutoLayoutViewModel : FluxoNotifyPropertyChanged
         {
             Id = "If1",
             Name = "Branch",
-            Location = new(399, 240),
+            // Location = new(399, 240),
             Context = new NodeContext()
             {
                 Type = NodeType.Normal
@@ -36,7 +36,7 @@ public class AutoLayoutViewModel : FluxoNotifyPropertyChanged
         {
             Id = "Process1",
             Name = "Process",
-            Location = new(799, 177),
+            // Location = new(799, 177),
             Context = new NodeContext()
             {
                 Type = NodeType.Normal
@@ -47,7 +47,7 @@ public class AutoLayoutViewModel : FluxoNotifyPropertyChanged
         {
             Id = "Process2",
             Name = "Process",
-            Location = new(799, 296.5),
+            // Location = new Point(799, 296.5),
             Context = new NodeContext()
             {
                 Type = NodeType.Normal
@@ -57,7 +57,7 @@ public class AutoLayoutViewModel : FluxoNotifyPropertyChanged
         this.Source.Nodes.Add(new FluxoNodeViewModel()
         {
             Id = "IfEnd1",
-            Location = new(1729, 303),
+            // Location = new(1729, 303),
             Context = new NodeContext()
             {
                 Type = NodeType.Empty
@@ -68,7 +68,7 @@ public class AutoLayoutViewModel : FluxoNotifyPropertyChanged
         {
             Id = "If2",
             Name = "Branch",
-            Location = new(1029, 177),
+            // Location = new(1029, 177),
             Context = new NodeContext()
             {
                 Type = NodeType.Normal
@@ -79,7 +79,7 @@ public class AutoLayoutViewModel : FluxoNotifyPropertyChanged
         {
             Id = "Process3",
             Name = "Process",
-            Location = new(1306, 228.5),
+            // Location = new(1306, 228.5),
             Context = new NodeContext()
             {
                 Type = NodeType.Normal
@@ -90,7 +90,7 @@ public class AutoLayoutViewModel : FluxoNotifyPropertyChanged
         {
             Id = "Process4",
             Name = "Process",
-            Location = new(1306, 142),
+            // Location = new(1306, 142),
             Context = new NodeContext()
             {
                 Type = NodeType.Normal
@@ -100,7 +100,7 @@ public class AutoLayoutViewModel : FluxoNotifyPropertyChanged
         this.Source.Nodes.Add(new FluxoNodeViewModel()
         {
             Id = "IfEnd2",
-            Location = new(1618, 207),
+            // Location = new(1618, 207),
             Context = new NodeContext()
             {
                 Type = NodeType.Empty
@@ -111,7 +111,7 @@ public class AutoLayoutViewModel : FluxoNotifyPropertyChanged
         {
             Id = "End",
             Name = "End",
-            Location = new(1917, 290),
+            // Location = new(1917, 290),
             Context = new NodeContext()
             {
                 Type = NodeType.Normal

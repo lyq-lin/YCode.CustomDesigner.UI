@@ -571,6 +571,83 @@ public partial class FluxoDesigner : MultiSelector
         }
     }
 
+    public void AutoLayout()
+    {
+        //TODO: AutoLayout
+
+        var nodes = this.ItemsHost.Children.OfType<FluxoNode>();
+
+        var pos = new Point(this.ViewportLocation.X + 160d, this.ViewportLocation.Y + 100d);
+
+        Sorting();
+
+        void Sorting()
+        {
+            var span = 100d;
+
+            var root = nodes.FirstOrDefault(x => x.Lines.All(y => x.NodeId.Equals(y.SourceId)));
+
+            if (root != null)
+            {
+                var tree = BuildTree(root, 0);
+
+                Hierarchy(tree, pos);
+            }
+
+            void Hierarchy(FluxoLayoutTree root, Point position)
+            {
+                if (root.Nexts.Count == 0)
+                {
+                    return;
+                }
+
+                var start = root.Node.Location.Y - (root.Nexts.Count - 1) * span / 2;
+
+                for (var i = 0; i < root.Nexts.Count; i++)
+                {
+                    var location = new Point(root.Node.Location.X + root.Node.ActualWidth + span, start + i * span);
+
+                    Translate(root.Nexts[i], location);
+
+                    Hierarchy(root.Nexts[i], location);
+                }
+            }
+
+            void Translate(FluxoLayoutTree node, Point location)
+            {
+                var dy = location.Y - node.Node.Location.Y;
+
+                node.Node.Location = location;
+
+                foreach (var child in node.Nexts)
+                {
+                    Translate(child,
+                        new Point(node.Node.Location.X + node.Node.ActualWidth + span, child.Node.Location.Y + dy));
+                }
+            }
+        }
+
+        FluxoLayoutTree BuildTree(FluxoNode root, int depth)
+        {
+            var tree = new FluxoLayoutTree(root)
+            {
+                Depth = depth
+            };
+
+            var nexts = root.Lines.Where(x => root.NodeId.Equals(x.SourceId)).Select(x => x.Target);
+
+            foreach (var next in nexts)
+            {
+                if (next != null)
+                {
+                    tree.AddNext(BuildTree(next, depth + 1));
+                }
+            }
+
+            return tree;
+        }
+    }
+
     private static void OnCanAutoPanningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is FluxoDesigner designer && e.NewValue is bool canAutoPanning)

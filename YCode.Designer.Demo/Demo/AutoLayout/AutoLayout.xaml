@@ -30,6 +30,21 @@
                     CornerRadius="3" />
         </DataTemplate>
 
+        <DataTemplate x:Key="ToolDataTemplate">
+            <Grid>
+                <Border Background="White"
+                        CornerRadius="5"
+                        Opacity="0.5" />
+                <StackPanel Margin="16"
+                            Orientation="Horizontal">
+                    <Button Height="24"
+                            Content="AutoLayout"
+                            Background="Transparent"
+                            Click="OnAutoLayoutClick" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
         <local:NodeTemplateSelector x:Key="NodeTemplateSelector"
                                     NormalTemplate="{StaticResource NormalNodeTemplate}"
                                     EmptyTemplate="{StaticResource EmptyNodeTemplate}" />
@@ -43,10 +58,11 @@
 
     <Grid Background="#1E1E1E">
         <ycode:FluxoDesigner x:Name="Designer"
-                             Source="{Binding Source}"
-                             ItemTemplateSelector="{StaticResource NodeTemplateSelector}"
-                             ItemContainerStyle="{StaticResource FluxoNodeStyle}"
+                             GridType="Dot"
                              EnableMove="False"
-                             GridType="Dot" />
+                             Source="{Binding Source}"
+                             ToolTemplate="{StaticResource ToolDataTemplate}"
+                             ItemTemplateSelector="{StaticResource NodeTemplateSelector}"
+                             ItemContainerStyle="{StaticResource FluxoNodeStyle}" />
     </Grid>
 </UserControl>
