@@ -48,10 +48,35 @@ internal class FluxoBezierLine(FluxoDesigner designer) : FluxoBaseLine(LineType.
 
     protected override void OnVertical()
     {
-        throw new NotImplementedException();
+        this.Parameter.Start = this.Parameter.Source.Top;
+
+        this.Parameter.End = this.Parameter.Target.Top;
+
+        var p1 = new Point(this.Parameter.Start.X, this.Parameter.Start.Y - 30);
+
+        var p2 = new Point(this.Parameter.End.X, this.Parameter.End.Y - 30);
+
+        if (this.Parameter.Source.Bottom.Y < this.Parameter.Target.Top.Y)
+        {
+            this.Parameter.Start = this.Parameter.Source.Bottom;
+
+            p1.Y = this.Parameter.Start.Y + 30;
+
+            p2.Y -= 30;
+        }
+        else if (this.Parameter.Target.Bottom.Y < this.Parameter.Source.Top.Y)
+        {
+            this.Parameter.End = this.Parameter.Target.Bottom;
+
+            p2.Y = this.Parameter.End.Y + 30;
+
+            p1.Y -= 30;
+        }
+
+        this.Points.AddRange([this.Parameter.Start, p1, p2, this.Parameter.End]);
     }
 
-    protected override void OnQuartet()
+    protected override void OnCross()
     {
         throw new NotImplementedException();
     }

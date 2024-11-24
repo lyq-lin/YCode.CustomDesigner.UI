@@ -122,6 +122,16 @@ public partial class FluxoDesigner : MultiSelector
     public static readonly DependencyProperty EnableMoveProperty = DependencyProperty.Register(
         nameof(EnableMove), typeof(bool), typeof(FluxoDesigner), new PropertyMetadata(true));
 
+    public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
+        nameof(Orientation), typeof(FluxoLayoutOrientation), typeof(FluxoDesigner),
+        new PropertyMetadata(FluxoLayoutOrientation.Horizontal));
+
+    public FluxoLayoutOrientation Orientation
+    {
+        get => (FluxoLayoutOrientation)GetValue(OrientationProperty);
+        set => SetValue(OrientationProperty, value);
+    }
+
     public bool EnableMove
     {
         get => (bool)GetValue(EnableMoveProperty);

@@ -38,7 +38,7 @@ public class FluxoStraightLine(FluxoDesigner designer) : FluxoBaseLine(LineType.
         throw new NotImplementedException();
     }
 
-    protected override void OnQuartet()
+    protected override void OnCross()
     {
         throw new NotImplementedException();
     }

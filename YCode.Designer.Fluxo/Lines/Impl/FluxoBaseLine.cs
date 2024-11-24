@@ -2,28 +2,45 @@ namespace YCode.Designer.Fluxo;
 
 public abstract class FluxoBaseLine(LineType type, FluxoDesigner designer) : IFluxoLineGeometry
 {
-    protected readonly FluxoDesigner _designer = designer;
+    private readonly FluxoDesigner _designer = designer;
+
     public LineType Type { get; } = type;
 
-    public FluxoLineParameter Parameter { get; set; } = default!;
+    protected FluxoLineParameter Parameter { get; set; } = default!;
     protected List<Point> Points { get; } = [];
 
     public virtual void DrawLine(FluxoLineParameter @params, StreamGeometryContext context)
     {
-        //TODO: 算法策略
+        this.Points.Clear();
 
         this.Parameter = @params;
 
-        this.Points.Clear();
-
-        this.OnHorizontal();
+        switch (_designer.Orientation)
+        {
+            case FluxoLayoutOrientation.Cross:
+            {
+                this.OnCross();
+            }
+                break;
+            case FluxoLayoutOrientation.Vertical:
+            {
+                this.OnVertical();
+            }
+                break;
+            case FluxoLayoutOrientation.Horizontal:
+            default:
+            {
+                this.OnHorizontal();
+            }
+                break;
+        }
     }
 
     protected abstract void OnHorizontal();
 
     protected abstract void OnVertical();
 
-    protected abstract void OnQuartet();
+    protected abstract void OnCross();
 
     public abstract Point GetPoint(double target);
 
