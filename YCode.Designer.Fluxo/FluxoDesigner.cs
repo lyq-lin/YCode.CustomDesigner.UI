@@ -18,8 +18,8 @@ public partial class FluxoDesigner : MultiSelector
     private bool? _isLoaded;
     private DispatcherTimer? _autoPanningTimer;
 
-    private readonly TranslateTransform _translateTransform = new();
-    private readonly ScaleTransform _scaleTransform = new();
+    private readonly TranslateTransform TranslateTransform = new();
+    private readonly ScaleTransform ScaleTransform = new();
 
     public FluxoDesigner()
     {
@@ -28,8 +28,8 @@ public partial class FluxoDesigner : MultiSelector
         this.AddHandler(FluxoNode.DragCompletedEvent, new DragCompletedEventHandler(this.OnNodeDragCompleted));
 
         var transform = new TransformGroup();
-        transform.Children.Add(_scaleTransform);
-        transform.Children.Add(_translateTransform);
+        transform.Children.Add(ScaleTransform);
+        transform.Children.Add(TranslateTransform);
 
         this.SetValue(ViewportTransformPropertyKey, transform);
 
@@ -577,7 +577,11 @@ public partial class FluxoDesigner : MultiSelector
 
         var nodes = this.ItemsHost.Children.OfType<FluxoNode>();
 
+        var dfsScope = nodes.ToDictionary(k => k, v => 0);
+
         var pos = new Point(this.ViewportLocation.X + 160d, this.ViewportLocation.Y + 100d);
+
+        var hashTree = new Dictionary<int, List<FluxoLayoutTree>>();
 
         Sorting();
 
@@ -590,6 +594,8 @@ public partial class FluxoDesigner : MultiSelector
             if (root != null)
             {
                 var tree = BuildTree(root, 0);
+
+                BuildHash(tree, 0);
 
                 Hierarchy(tree, pos);
             }
@@ -625,6 +631,20 @@ public partial class FluxoDesigner : MultiSelector
                         new Point(node.Node.Location.X + node.Node.ActualWidth + span, child.Node.Location.Y + dy));
                 }
             }
+
+            void BuildHash(FluxoLayoutTree root, int depth)
+            {
+                if (hashTree.TryGetValue(depth, out var value))
+                {
+                    value.Add(root);
+                }
+                else
+                {
+                    hashTree[depth] = [root];
+                }
+
+                root.Nexts.ForEach(node => BuildHash(node, depth + 1));
+            }
         }
 
         FluxoLayoutTree BuildTree(FluxoNode root, int depth)
@@ -634,15 +654,19 @@ public partial class FluxoDesigner : MultiSelector
                 Depth = depth
             };
 
+            dfsScope[root] = 1;
+
             var nexts = root.Lines.Where(x => root.NodeId.Equals(x.SourceId)).Select(x => x.Target);
 
             foreach (var next in nexts)
             {
-                if (next != null)
+                if (next != null && dfsScope[next] == 0)
                 {
                     tree.AddNext(BuildTree(next, depth + 1));
                 }
             }
+
+            dfsScope[root] = -1;
 
             return tree;
         }
@@ -660,9 +684,9 @@ public partial class FluxoDesigner : MultiSelector
     {
         if (d is FluxoDesigner designer && e.NewValue is Point translate)
         {
-            designer._translateTransform.X = -translate.X * designer.Zoom;
+            designer.TranslateTransform.X = -translate.X * designer.Zoom;
 
-            designer._translateTransform.Y = -translate.Y * designer.Zoom;
+            designer.TranslateTransform.Y = -translate.Y * designer.Zoom;
 
             designer.RaiseEvent(nameof(designer.ViewportUpdated), new RoutedEventArgs());
         }
