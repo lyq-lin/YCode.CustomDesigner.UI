@@ -35,7 +35,20 @@ public class FluxoStraightLine(FluxoDesigner designer) : FluxoBaseLine(LineType.
 
     protected override void OnVertical()
     {
-        throw new NotImplementedException();
+        this.Parameter.Start = this.Parameter.Source.Top;
+
+        this.Parameter.End = this.Parameter.Target.Top;
+
+        if (this.Parameter.Source.Bottom.X < this.Parameter.Target.Top.X)
+        {
+            this.Parameter.Start = this.Parameter.Source.Bottom;
+        }
+        else if (this.Parameter.Target.Bottom.X < this.Parameter.Source.Top.X)
+        {
+            this.Parameter.End = this.Parameter.Target.Bottom;
+        }
+
+        this.Points.AddRanage([this.Parameter.Start, this.Parameter.End]);
     }
 
     protected override void OnCross()
