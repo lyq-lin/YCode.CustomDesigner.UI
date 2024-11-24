@@ -7,6 +7,7 @@ public class FluxoNodeViewModel : FluxoNotifyPropertyChanged
     private string _description = String.Empty;
     private Point _location = default(Point);
     private object? _context;
+    private bool _isEmpty;
 
     public string Id
     {
@@ -30,6 +31,12 @@ public class FluxoNodeViewModel : FluxoNotifyPropertyChanged
     {
         get => _location;
         set => this.OnPropertyChanged(ref _location, value);
+    }
+
+    public bool IsEmpty
+    {
+        get => _isEmpty;
+        set => this.OnPropertyChanged(ref _isEmpty, value);
     }
 
     public object? Context

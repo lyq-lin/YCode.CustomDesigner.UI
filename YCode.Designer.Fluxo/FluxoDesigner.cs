@@ -589,6 +589,8 @@ public partial class FluxoDesigner : MultiSelector
 
         var dfsScope = nodes.ToDictionary(k => k, v => 0);
 
+        var emptyNodes = new List<FluxoLayoutTree>();
+
         var pos = new Point(this.ViewportLocation.X + 160d, this.ViewportLocation.Y + 100d);
 
         var hashTree = new Dictionary<int, List<FluxoLayoutTree>>();
@@ -608,6 +610,8 @@ public partial class FluxoDesigner : MultiSelector
                 BuildHash(tree, 0);
 
                 Hierarchy(tree, pos);
+
+                EmptyReLayout();
             }
 
             void Hierarchy(FluxoLayoutTree root, Point position)
@@ -642,6 +646,36 @@ public partial class FluxoDesigner : MultiSelector
                 }
             }
 
+            void EmptyReLayout()
+            {
+                foreach (var emptyNode in emptyNodes)
+                {
+                    var sources = emptyNode.Node.Lines
+                        .Where(x => emptyNode.Node.NodeId.Equals(x.TargetId))
+                        .Select(x => x.Source)
+                        .OrderByDescending(x => x?.Location.X);
+
+                    var maxX = sources.FirstOrDefault();
+
+                    var x = maxX != null && maxX.Location.X + maxX.ActualWidth + span > emptyNode.Node.Location.X
+                        ? maxX.Location.X + maxX.ActualWidth + span
+                        : emptyNode.Node.Location.X;
+
+                    var y = (sources.FirstOrDefault()?.Location.Y + sources.LastOrDefault()?.Location.Y +
+                             sources.LastOrDefault()?.ActualHeight) / 2 ?? emptyNode.Node.Location.Y;
+
+                    emptyNode.Node.Location = new Point(x, y);
+
+                    for (var i = 0; i < emptyNode.Nexts.Count; i++)
+                    {
+                        if (!emptyNode.Nexts[i].Node.IsEmpty)
+                        {
+                            Hierarchy(emptyNode.Nexts[i], new Point(x + span, y + i * span));
+                        }
+                    }
+                }
+            }
+
             void BuildHash(FluxoLayoutTree root, int depth)
             {
                 if (hashTree.TryGetValue(depth, out var value))
@@ -663,6 +697,11 @@ public partial class FluxoDesigner : MultiSelector
             {
                 Depth = depth
             };
+
+            if (root.IsEmpty)
+            {
+                emptyNodes.Add(tree);
+            }
 
             dfsScope[root] = 1;
 

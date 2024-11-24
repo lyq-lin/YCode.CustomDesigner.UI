@@ -60,6 +60,15 @@ public class FluxoNode : ContentControl, IFluxoItem
     public static readonly DependencyProperty SelectedBrushProperty = DependencyProperty.Register(
         nameof(SelectedBrush), typeof(Brush), typeof(FluxoNode), new PropertyMetadata(Brushes.Orange));
 
+    public static readonly DependencyProperty IsEmptyProperty = DependencyProperty.Register(
+        nameof(IsEmpty), typeof(bool), typeof(FluxoNode), new PropertyMetadata(false));
+
+    public bool IsEmpty
+    {
+        get => (bool)GetValue(IsEmptyProperty);
+        set => SetValue(IsEmptyProperty, value);
+    }
+
     public Brush SelectedBrush
     {
         get => (Brush)GetValue(SelectedBrushProperty);

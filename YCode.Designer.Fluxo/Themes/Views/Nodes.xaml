@@ -214,6 +214,7 @@
     <Style TargetType="{x:Type local:FluxoNode}">
         <Setter Property="NodeId" Value="{Binding Id}" />
         <Setter Property="Location" Value="{Binding Location}" />
+        <Setter Property="IsEmpty" Value="{Binding IsEmpty}" />
         <Setter Property="BorderThickness" Value="1.8" />
         <Setter Property="Background" Value="CadetBlue" />
         <Setter Property="BorderBrush" Value="DodgerBlue" />
@@ -234,14 +235,14 @@
                             CornerRadius="{StaticResource Radius}">
                         <ContentPresenter />
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Panel.ZIndex" Value="1" />
+                            <Setter Property="BorderBrush" Value="{Binding SelectedBrush, RelativeSource={RelativeSource Self}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Panel.ZIndex" Value="1" />
-                <Setter Property="BorderBrush" Value="{Binding SelectedBrush, RelativeSource={RelativeSource Self}}" />
-            </Trigger>
-        </Style.Triggers>
     </Style>
 </ResourceDictionary>

@@ -58,6 +58,7 @@ public class AutoLayoutViewModel : FluxoNotifyPropertyChanged
         {
             Id = "IfEnd1",
             // Location = new(1729, 303),
+            IsEmpty = true,
             Context = new NodeContext()
             {
                 Type = NodeType.Empty
@@ -101,6 +102,7 @@ public class AutoLayoutViewModel : FluxoNotifyPropertyChanged
         {
             Id = "IfEnd2",
             // Location = new(1618, 207),
+            IsEmpty = true,
             Context = new NodeContext()
             {
                 Type = NodeType.Empty

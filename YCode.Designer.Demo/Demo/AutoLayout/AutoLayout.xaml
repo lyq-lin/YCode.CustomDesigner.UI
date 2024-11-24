@@ -59,7 +59,6 @@
     <Grid Background="#1E1E1E">
         <ycode:FluxoDesigner x:Name="Designer"
                              GridType="Dot"
-                             Orientation="Vertical"
                              Source="{Binding Source}"
                              ToolTemplate="{StaticResource ToolDataTemplate}"
                              ItemTemplateSelector="{StaticResource NodeTemplateSelector}"
