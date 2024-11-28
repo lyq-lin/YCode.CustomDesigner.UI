@@ -7,4 +7,7 @@ public class FluxoLineParameter(FluxoPoint source, FluxoPoint target)
 
     public FluxoPoint Source { get; set; } = source;
     public FluxoPoint Target { get; set; } = target;
+
+    public FluxoLinePosition SourcePosition { get; set; } = FluxoLinePosition.None;
+    public FluxoLinePosition TargetPosition { get; set; } = FluxoLinePosition.None;
 }

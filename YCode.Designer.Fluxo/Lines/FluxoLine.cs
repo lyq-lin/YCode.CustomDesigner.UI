@@ -160,7 +160,7 @@ public class FluxoLine : Shape
         if (p.HasValue)
         {
             drawingContext.DrawRectangle(Brushes.Orange, new Pen(Brushes.Transparent, 1),
-                new Rect(p.Value.X-5, p.Value.Y-5, 10, 10));
+                new Rect(p.Value.X - 5, p.Value.Y - 5, 10, 10));
         }
     }
 
@@ -209,7 +209,11 @@ public class FluxoLine : Shape
             tp.Right = tpv.Right;
         }
 
-        return new FluxoLineParameter(sp, tp);
+        return new FluxoLineParameter(sp, tp)
+        {
+            SourcePosition = FluxoLinePosition.Right,
+            TargetPosition = FluxoLinePosition.Left
+        };
     }
 
     private DependencyObject? FindNode(string nodeId)
