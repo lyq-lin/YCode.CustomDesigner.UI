@@ -61,22 +61,10 @@ public class FluxoStraightLine(FluxoDesigner designer) : FluxoBaseLine(LineType.
         var start = this.Points.FirstOrDefault();
         var end = this.Points.LastOrDefault();
 
-        var currentLength = this.GetLength();
+        var x = start.X + (end.X - start.X) * target;
+        var y = start.Y + (end.Y - start.Y) * target;
 
-        var targetLength = currentLength * target;
-
-        var distance = Point.Subtract(end, start).Length;
-
-        if (currentLength + distance >= targetLength)
-        {
-            var extra = targetLength - currentLength;
-
-            var factor = extra / distance;
-
-            return new Point(start.X + factor * (end.X - start.X), start.Y + factor * (end.Y - start.Y));
-        }
-
-        return default;
+        return new Point(x, y);
     }
 
     public override double GetLength()
