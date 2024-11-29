@@ -16,7 +16,6 @@ public class FluxoLine : Shape
     private readonly FluxoDesigner _designer;
     private readonly FluxoLineContainer _container;
     private readonly StreamGeometry _geometry;
-    private readonly FluxoLineFactory _factory;
 
     public FluxoLine(FluxoDesigner designer, FluxoLineContainer container)
     {
@@ -28,8 +27,6 @@ public class FluxoLine : Shape
         {
             FillRule = FillRule.EvenOdd
         };
-
-        _factory = new FluxoLineFactory(_designer);
 
         this.Loaded += OnLoaded;
     }
@@ -153,7 +150,7 @@ public class FluxoLine : Shape
     {
         base.OnRender(drawingContext);
 
-        var line = _factory.GetLine(_designer.LineType);
+        var line = _container.GetLineProvider(_designer.LineType);
 
         var p = line?.GetPoint(0.1);
 
@@ -166,7 +163,7 @@ public class FluxoLine : Shape
 
     private (Point, Point) DrawLine(StreamGeometryContext context, FluxoNode source, FluxoNode target)
     {
-        var line = _factory.GetLine(_designer.LineType);
+        var line = _container.GetLineProvider(_designer.LineType);
 
         var @params = this.GetParameter(source, target);
 

@@ -160,8 +160,8 @@ public override Point GetPoint(double target) { var current = 0d;
             var factor = extra / distance;
 
             return new Point(
-                prePoint.X + (factor * this.Points[i].X - prePoint.X),
-                prePoint.Y + (factor * this.Points[i].Y - prePoint.Y));
+                prePoint.X + (factor * (this.Points[i].X - prePoint.X)),
+                prePoint.Y + (factor * (this.Points[i].Y - prePoint.Y)));
         }
 
         prePoint = this.Points[i];

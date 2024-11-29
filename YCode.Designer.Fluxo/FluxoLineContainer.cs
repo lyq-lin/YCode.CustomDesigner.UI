@@ -13,6 +13,7 @@ public class FluxoLineContainer : Selector
     }
 
     private FluxoDesigner? _designer;
+    private FluxoLineFactory? _factory;
 
     public override void OnApplyTemplate()
     {
@@ -21,6 +22,8 @@ public class FluxoLineContainer : Selector
         if (this.FindParent<FluxoDesigner>() is { } designer)
         {
             _designer = designer;
+
+            _factory = new FluxoLineFactory(_designer);
         }
     }
 
@@ -31,6 +34,13 @@ public class FluxoLineContainer : Selector
 
     protected override bool IsItemItsOwnContainerOverride(object item)
     {
-        return _designer?.IsLineItsOwnContainerOverride(this,item) ?? base.IsItemItsOwnContainerOverride(item);
+        return _designer?.IsLineItsOwnContainerOverride(this, item) ?? base.IsItemItsOwnContainerOverride(item);
+    }
+
+    internal IFluxoLineGeometry GetLineProvider(LineType type)
+    {
+        return _factory?.GetLine(type) ??
+               throw new InvalidOperationException(
+                   $"factory is missing {nameof(FluxoLineFactory)}.");
     }
 }
