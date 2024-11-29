@@ -137,43 +137,40 @@ public class FluxoStepLine(FluxoDesigner designer) : FluxoBaseLine(LineType.Step
         }
     }
 
-    public override Point GetPoint(double target)
+public override Point GetPoint(double target) { var current = 0d;
+    var start = this.Points[0];
+
+    var length = this.GetLength();
+
+    var targetLength = length * target;
+
+    var prePoint = new Point(start.X, start.Y);
+
+    for (var i = 1; i < this.Points.Count; i++)
     {
-        var current = 0d;
+        var pointToLength = Math.Sqrt(Math.Pow(prePoint.X - this.Points[i].X, 2) +
+                                      Math.Pow(prePoint.Y - this.Points[i].Y, 2));
 
-        var start = this.Points[0];
+        var distance = Point.Subtract(this.Points[i], prePoint).Length;
 
-        var length = this.GetLength();
-
-        var targetLength = length * target;
-
-        var prePoint = new Point(start.X, start.Y);
-
-        for (var i = 1; i < this.Points.Count; i++)
+        if (current + distance >= targetLength)
         {
-            var pointToLength = Math.Sqrt(Math.Pow(prePoint.X - this.Points[i].X, 2) +
-                                          Math.Pow(prePoint.Y - this.Points[i].Y, 2));
+            var extra = targetLength - current;
 
-            var distance = Point.Subtract(this.Points[i], prePoint).Length;
+            var factor = extra / distance;
 
-            if (current + distance >= targetLength)
-            {
-                var extra = targetLength - current;
-
-                var factor = extra / distance;
-
-                return new Point(
-                    prePoint.X + (factor * this.Points[i].X - prePoint.X),
-                    prePoint.Y + (factor * this.Points[i].Y - prePoint.Y));
-            }
-
-            prePoint = this.Points[i];
-
-            current += pointToLength;
+            return new Point(
+                prePoint.X + (factor * this.Points[i].X - prePoint.X),
+                prePoint.Y + (factor * this.Points[i].Y - prePoint.Y));
         }
 
-        return prePoint;
+        prePoint = this.Points[i];
+
+        current += pointToLength;
     }
+
+    return prePoint;
+}
 
     public override double GetLength()
     {
